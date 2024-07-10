@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login and Account Creation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header id="header-placeholder"> </header>
+    <script src="header.js"></script>
+
+    <div class="container form-container">
+        <h2>Login</h2>
+        <form id="loginForm" class="form-style">
+            <div class="form-group">
+                <label for="loginEmail">Email:</label>
+                <input type="email" id="loginEmail" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" required class="form-control">
+            </div>
+            <button type="submit" class="button">Login</button>
+        </form>
+    </div>
+
+    <div class="container form-container">
+        <h2>Create Account</h2>
+        <form id="createAccountForm" class="form-style">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="createEmail">Email:</label>
+                <input type="email" id="createEmail" required class="form-control">
+            </div>
+            <p style="margin-top: 5px; color: red;">Please do not use your actual email password.</p>
+            <div class="form-group">
+                <label for="createPassword">Password:</label>
+                <input type="password" id="createPassword" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" required class="form-control">
+            </div>
+            
+            <button type="submit" class="button">Create Account</button>
+        </form>
+    </div>
+
+    
+
+
+    <script src="login.js"></script>
+</body>
+</html>

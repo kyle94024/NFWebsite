@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Details</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Include stylesheet -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+</head>
+<body>
+    <header id="header-placeholder"></header>
+    <script src="header.js"> </script>
+
+    <div id="notification" class="notification">Article updated successfully!</div>
+    
+
+
+    <section class="main-content">
+        <div class="container article-container">
+            <h2 id="articleTitle" class="article-title">Loading...</h2>
+            <a id="article_link" target="_blank" href="#" style="display: none;">Read Original Article</a>
+            <div id="articleContent" style="margin-top: 20px;"></div>
+            <button id="editArticleButton" style="display: none;" class="button">Edit Article</button>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            const updateStatus = urlParams.get('updated');
+
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message; // Update notification message
+                notification.classList.add('show');
+
+                setTimeout(() => {
+                    notification.classList.remove('show'); // Hide after delay
+                }, 1500); // Show the notification for 3 seconds
+            }
+            console.log("at least its getting here")
+            if (updateStatus === 'success') {
+                console.log("NOTIF SHOULD BE SHOWING")
+                showNotification('Article updated successfully!');
+            }
+            const articleId = urlParams.get('id');
+            
+
+            if (articleId) {
+                fetch(`http://localhost:3000/get-article/${articleId}`, { credentials: 'include' })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(article => {
+                        document.getElementById('articleTitle').textContent = article.title || 'Article Title';
+                        document.getElementById('articleContent').innerHTML = article.innertext || 'No content available.';
+                        if (article.article_link) {
+                            const articleLinkElement = document.getElementById('article_link');
+                            articleLinkElement.href = article.article_link;
+                            articleLinkElement.textContent = article.article_link;
+                            articleLinkElement.style.color = 'blue'; // Make it standard blue link color
+                            articleLinkElement.style.textDecoration = 'underline';
+                            articleLinkElement.style.display = 'block'; // Make it visible
+                        } else {
+                            document.getElementById('article_link').style.display = 'none'; // Hide if no link
+                        }
+
+                        // Show edit button for admin users
+                        fetch('http://localhost:3000/api/session', { credentials: 'include' })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.isAdmin) {
+                                    const editButton = document.getElementById('editArticleButton');
+                                    editButton.style.display = 'inline-block';
+                                    editButton.onclick = () => {
+                                        window.location.href = `update_article.html?id=${articleId}`;
+                                    };
+                                }
+                            })
+                            .catch(error => console.error('Error fetching session data:', error));
+                    })
+                    .catch(error => {
+                        console.error('Error loading article:', error);
+                        document.getElementById('articleTitle').textContent = 'Article not found';
+                        document.getElementById('articleContent').innerHTML = '';
+                    });
+            } else {
+                document.getElementById('articleTitle').textContent = 'No Article ID Provided';
+                document.getElementById('articleContent').innerHTML = 'Please provide an article ID in the query string.';
+            }
+        });
+    </script>
+</body>
+</html>

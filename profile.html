@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header id="header-placeholder"> </header>
+    <script src="header.js"></script>
+
+    <div class="container main-content">
+        <h2>User Profile</h2>
+        <!-- Placeholder for user info -->
+        <button onclick="logout()" class="button">Log Out</button>
+    </div>
+
+    <script>
+        function logout() {
+            fetch('http://localhost:3000/logout', {
+                method: 'POST',
+                credentials: 'include'
+            })
+            .then(() => {
+                window.location.href = 'login.html'; // Redirect to login page after logout
+            })
+            .catch(error => console.error('Error logging out:', error));
+        }
+    </script>
+
+    
+</body>
+</html>

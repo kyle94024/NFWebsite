@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact us for any inquiries, requests, or to report a bug.">
+    <title>Contact Us - Neurofibromatosis Simplified</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header id="header-placeholder"> </header>
+    <script src="header.js"></script>
+
+    <section class="main-content">
+        <div class="container">
+            <!-- General Inquiries -->
+            <div class="form-section">
+                <h3>Contact Us</h3>
+                <form id="contactForm" method="POST">
+                    <input type="text" class="form-input" name="name" placeholder="Your Name" required>
+                    <input type="email" class="form-input" name="email" placeholder="Your Email" required>
+                    <textarea class="form-textarea" name="message" placeholder="Your Message" required></textarea>
+                    <button type="submit" class="form-submit">Send Message</button>
+                </form>                
+            </div>
+
+            <!-- Request an Article -->
+            <div class="form-section">
+                <h3>Request an Article</h3>
+                <form id="requestArticleForm" method="POST">
+                    <input type="url" class="form-input" name="articleLink" placeholder="Article Link" required>
+                    <button type="submit" class="form-submit">Submit Request</button>
+                </form>
+            </div>
+
+            <!-- Report a Bug -->
+            <div class="form-section">
+                <h3>Report a Bug</h3>
+                <form id="reportBugForm" method="POST" action="/report-bug" enctype="multipart/form-data">
+                    <input type="text" class="form-input" name="name" placeholder="Your Name" required>
+                    <input type="email" class="form-input" name="email" placeholder="Your Email" required>
+                    <textarea class="form-textarea" name="description" placeholder="Bug Description" required></textarea>
+                    <label class="form-file">
+                        <input type="file" name="bugFile">
+                        Attach File
+                    </label>
+                    <button type="submit" class="form-submit">Report Bug</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Neurofibromatosis Simplified. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent the default form submission
+        
+                const formData = new FormData(this);
+                console.log(formData);
+        
+                fetch('http://localhost:3000/send-inquiry', {
+                    method: 'POST',
+                    credentials: 'include', // Include credentials in the request
+                    body: new URLSearchParams(formData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json(); // or .text() if the response is text
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    console.log(data);
+                    alert('Message sent successfully!');
+                    // Clear the form or redirect the user
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+        </script>
+
+    <!-- Request an Article - JavaScript Handling -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('requestArticleForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent traditional form submission
+    
+            const articleLink = document.querySelector('#requestArticleForm input[name="articleLink"]').value;
+            
+            fetch('http://localhost:3000/request-article', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({articleLink: articleLink})
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('Article request submitted successfully');
+                // Clear the form or provide further user feedback
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('reportBugForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent traditional form submission
+    
+            const formData = new FormData(this); // 'this' refers to the form element, collecting all inputs including files
+            
+            fetch('http://localhost:3000/report-bug', {
+                method: 'POST',
+                credentials: 'include',
+                body: formData // No need to set Content-Type header when using FormData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('Bug report submitted successfully');
+                // Clear the form or provide further user feedback
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+    
+    
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+fetch('http://localhost:3000/api/session', { credentials: 'include' })
+    .then(response => response.json())
+    .then(data => {
+        const userMenu = document.querySelector('header nav ul li:last-child');
+        userMenu.innerHTML = '';
+        if (data.isLoggedIn) {
+            const emailButton = document.createElement('button');
+            emailButton.textContent = data.email;
+            emailButton.className = 'email-button'; // Apply button styling
+            emailButton.onclick = () => { window.location.href = 'profile.html'; }; // Redirect on click
+
+            if (data.isAdmin) {
+                emailButton.style.color = 'red';
+            }
+
+            userMenu.appendChild(emailButton);
+        } else {
+            const loginLink = document.createElement('a');
+            loginLink.textContent = "Log In";
+            loginLink.href = "login.html";
+            userMenu.appendChild(loginLink);
+        }
+    })
+    .catch(error => console.error('Error fetching session data:', error));
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Articles</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .article-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .article-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .article-summary {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            background-color: #007bff; /* Blue */
+            color: white;
+        }
+        .button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <header id="header-placeholder"></header>
+    <script src="header.js"></script>
+
+    <section class="main-content container">
+        <h1>Pending Articles</h1>
+        <div id="pendingArticlesContainer"></div>
+    </section>
+
+    <script>
+        async function fetchPendingArticles() {
+            try {
+                const response = await fetch('http://localhost:3000/get-pending-articles', { credentials: 'include' });
+                const articles = await response.json();
+                const container = document.getElementById('pendingArticlesContainer');
+
+                articles.forEach(article => {
+                    const articleCard = document.createElement('div');
+                    articleCard.className = 'article-card';
+
+                    const title = document.createElement('h3');
+                    title.className = 'article-title';
+                    title.textContent = article.title;
+                    articleCard.appendChild(title);
+
+                    const summary = document.createElement('p');
+                    summary.className = 'article-summary';
+                    summary.textContent = article.summary;
+                    articleCard.appendChild(summary);
+
+                    const editButton = document.createElement('button');
+                    editButton.className = 'button';
+                    editButton.textContent = 'Edit';
+                    editButton.onclick = () => window.location.href = `pending_article.html?id=${article.id}`;
+                    articleCard.appendChild(editButton);
+
+                    container.appendChild(articleCard);
+                });
+            } catch (error) {
+                console.error('Error fetching pending articles:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchPendingArticles);
+    </script>
+</body>
+</html>

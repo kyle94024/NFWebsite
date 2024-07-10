@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Article</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        input[type="text"], textarea {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+        textarea {
+            height: 300px; /* Initial height */
+            resize: vertical; /* Allows the user to vertically resize the textarea */
+        }
+        .form-input, textarea {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <!-- Include stylesheet -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+</head>
+<body>
+    <div id="notification" class="notification">Added Article!</div>
+
+    <header id="header-placeholder"> </header>
+    <script src="header.js"></script>
+
+    <section class="main-content container">
+        <form id="addArticleForm">
+            <input type="text" id="title" name="title" placeholder="Title" required>
+            <input type="url" id="articleLink" name="articleLink" placeholder="Optional Article Link" class="form-input">
+            <input type="text" id="tags" name="tags" placeholder="Tags (separated by commas)">
+            <div id="editor">
+
+            </div>
+            <script>
+                var quill = new Quill('#editor', {
+                  theme: 'snow' // Specify theme in configuration
+                });
+            </script>
+
+            <div class="units-container">
+                <input type="text" style = "width: 150px;" id="simplifyLength" placeholder="5" class="units-input">
+                <select id="simplifyUnits" class="units-dropdown">
+                    <option value="paragraphs" selected>Paragraphs</option>
+                    <option value="words">Words</option>
+                    <option value="percent of the original length">Percent</option>
+                    <option value="characters">Characters</option>
+                    <option value="sentences">Sentences</option>
+                    <option value="sections">Sections</option>
+                </select>
+            </div>
+            
+            <!-- <textarea id="innertext" name="innertext" placeholder="Content" required></textarea> -->
+            <button type="submit" class="submit-button" style="font-size: 18px;">Submit Article</button>
+        </form>
+    </section>
+
+    <script>
+        
+        document.getElementById('addArticleForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+      
+            // Getting title and tags as before
+            const formData = {
+                title: document.getElementById('title').value,
+                tags: document.getElementById('tags').value.split(',').map(tag => tag.trim()),
+                innertext: quill.root.innerHTML, // Retrieve the HTML content from Quill
+                article_link: document.getElementById('articleLink').value, // Retrieve the optional article link
+                simplifyLength: document.getElementById('simplifyLength').value + ' ' + document.getElementById('simplifyUnits').value
+            };
+
+            console.log("articleLink",formData.article_link);
+            console.log("simplifyLength", formData.simplifyLength);
+      
+            // Adding innertext from Quill's editor content
+            formData.innertext = quill.root.innerHTML; // Retrieve the HTML content from Quill
+      
+            try {
+                const response = await fetch('http://localhost:3000/add-article', {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+      
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+      
+                const result = await response.json();
+                console.log(result);
+                //alert('Article added successfully!');
+                window.location.href = 'add_article.html?added=success';
+            } catch (error) {
+                console.error('Failed to submit article:', error);
+            }
+        });
+      </script>
+
+
+   
+        <script> 
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message; // Update notification message
+                notification.classList.add('show');
+    
+                setTimeout(() => {
+                    notification.classList.remove('show'); // Hide after delay
+                }, 2000); // Show the notification for 3 seconds
+            }
+    
+            document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const addedStatus = urlParams.get('added');
+    
+            if (addedStatus === 'success') {
+                showNotification('Added Article!');
+            }
+        });
+        </script>
+</body>
+</html>

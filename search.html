@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Articles</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Additional styles specific to Discover page -->
+</head>
+<body>
+    <header id="header-placeholder"> </header>
+    <script src="header.js"></script>
+
+    <div id="discover-header">
+        <h1>Discover</h1>
+        <p>Search for articles or browse through the collection</p>
+    </div>
+    
+
+    <main class="discover-page-container">
+        <section class="search-bar-container">
+            <input type="text" id="searchInput" placeholder="Search articles..." class="search-input">
+            <button onclick="searchArticles()" class="search-button">Search</button>
+        </section>
+
+        <section class="articles-container">
+            <div id="articlesGrid" class="articles-grid">
+                <!-- Articles will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Your existing footer here -->
+    </footer>
+
+    <script src="discover.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    fetch('http://localhost:3000/api/session', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            const userMenu = document.querySelector('header nav ul li:last-child');
+            userMenu.innerHTML = '';
+            if (data.isLoggedIn) {
+                const emailButton = document.createElement('button');
+                emailButton.textContent = data.email;
+                emailButton.className = 'email-button'; // Apply button styling
+                emailButton.onclick = () => { window.location.href = 'profile.html'; }; // Redirect on click
+
+                if (data.isAdmin) {
+                    emailButton.style.color = 'red';
+                }
+
+                userMenu.appendChild(emailButton);
+            } else {
+                const loginLink = document.createElement('a');
+                loginLink.textContent = "Log In";
+                loginLink.href = "login.html";
+                userMenu.appendChild(loginLink);
+            }
+        })
+        .catch(error => console.error('Error fetching session data:', error));
+});
+
+        </script>
+
+
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your website description here">
+    <title>NF Simplified</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Database Data</title>
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('http://localhost:3000/get-data', { credentials: 'include' });
+
+                const data = await response.json();
+                console.log(data);
+                for (let i = 0; i < data.length; i++) {
+                    const article = document.createElement('article');
+                    const title = document.createElement('h3');
+                    title.textContent = data[i].title;
+                    article.appendChild(title);
+                    const content = document.createElement('p');
+                    content.textContent = data[i].content;
+                    article.appendChild(content);
+                    // Modification starts here
+                    
+                    const link = document.createElement('a');
+                    link.textContent = 'Read More';
+                    link.href = 'article' + i + '.html'; // Adjust as needed
+                    link.className = 'read-more-link'; // Make sure this class name matches the CSS
+                    article.appendChild(link);
+
+
+                    document.querySelector('#recently_added').appendChild(article);
+                }
+                document.getElementById("results").textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+                document.getElementById("results").textContent = 'Failed to fetch data.';
+            }
+        }
+    </script>
+
+    <script>
+        async function fetchAndDisplayArticles(endpoint, containerId) {
+            try {
+                const response = await fetch(`http://localhost:3000/${endpoint}`, { credentials: 'include' });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const articles = await response.json();
+                const container = document.getElementById(containerId);
+                container.innerHTML = ''; // Clear existing content
+
+                articles.forEach(article => {
+                    const articleElement = document.createElement('article');
+                    const title = document.createElement('h3');
+                    title.textContent = article.title;
+                    articleElement.appendChild(title);
+
+                    const content = document.createElement('p');
+                    
+                    // Create a temporary DOM element to parse the HTML content
+                    const tempDivElement = document.createElement('div');
+                    // Set its HTML content to your article's inner HTML
+                    // tempDivElement.innerHTML = article.innertext || ''; //old version
+                    tempDivElement.innerHTML = article.summary || '';
+                    // Extract text content, effectively stripping HTML tags
+                    const plainTextContent = tempDivElement.textContent || tempDivElement.innerText || '';
+                    
+                    // Cut the plain text content after 100 characters and add ellipsis if necessary
+                    const snippet = plainTextContent.length > 300 ? plainTextContent.substring(0, 300) + '...' : plainTextContent;
+                    content.textContent = snippet;
+                    
+                    articleElement.appendChild(content);
+
+                    const link = document.createElement('a');
+                    link.textContent = 'Read More';
+                    link.href = `/article.html?id=${article.id}`; // Updated link for fetching full article
+                    articleElement.appendChild(link);
+
+                    document.getElementById(containerId).appendChild(articleElement);
+                });
+
+            } catch (error) {
+                console.error('Failed to fetch articles:', error);
+                const container = document.getElementById(containerId);
+                container.innerHTML = '<p>Error loading articles.</p>'; // Provide an error message
+            }
+        }
+
+        async function fetchData() {
+            await fetchAndDisplayArticles('get-recent-articles', 'recently_added_container');
+            await fetchAndDisplayArticles('get-featured-articles', 'featured_container');
+        }
+
+        window.onload = fetchData;
+    </script>
+
+    <!-- Include stylesheet -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+</head>
+<body onload = "fetchData()">
+    <div id="notification" class="notification">Login Successful!</div>
+
+    
+    <!-- <header>
+        <div class="container">
+            <h1>Neurofibromatosis Simplified</h1>
+            <nav>
+                <ul>
+                    <ul id="navList">
+                        <li><a href="website.html">Home</a></li>
+                        <li><a href="search.html">Discover</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="login.html">Log In</a></li>
+                    </ul>
+                </ul>
+            </nav>
+        </div>
+    </header> -->
+    <header id="header-placeholder"> </header>
+    <script src="header.js"></script>
+    
+    <!-- Place this right after the closing </header> tag -->
+    <div class="intro-section">
+        <h1>Understanding Neurofibromatosis</h1>
+        <h2>Made Easy</h2>
+        <p>Collection of simplified NF articles certified by experts. Powered by GPT and REiNS.</p>
+    </div>
+
+  
+    <section class="main-content">
+
+
+
+        <div class="container">
+            <!-- <h1>Database Data</h1>
+            <pre id="results">Loading data...</pre> -->
+            <h2 id="featured">Featured</h2>
+            <div id="featured_container"></div>
+            <!-- Example Article -->
+            <!-- <article>
+                <h3>Breaking News: Local Park Renovation</h3>
+                <p>The city council announced a major renovation project for the central park...</p>
+                <a href="article1.html">Read More</a>
+            </article> -->
+            <h2 id="recently_added">Recently Added</h2>
+            <div id="recently_added_container"></div>
+        </div>
+    </section>
+
+    <footer style="background-color: #031e3a">
+        <div class="container">
+            <p>&copy; 2024 Beta Version.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    fetch('http://localhost:3000/api/session', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            const userMenu = document.querySelector('header nav ul li:last-child');
+            userMenu.innerHTML = '';
+            if (data.isLoggedIn) {
+                const emailButton = document.createElement('button');
+                emailButton.textContent = data.email;
+                emailButton.className = 'email-button'; // Apply button styling
+                emailButton.onclick = () => { window.location.href = 'profile.html'; }; // Redirect on click
+
+                if (data.isAdmin) {
+                    emailButton.style.color = 'red';
+                }
+
+                userMenu.appendChild(emailButton);
+            } else {
+                const loginLink = document.createElement('a');
+                loginLink.textContent = "Log In";
+                loginLink.href = "login.html";
+                userMenu.appendChild(loginLink);
+            }
+        })
+        .catch(error => console.error('Error fetching session data:', error));
+});
+
+        </script>
+
+    <script> 
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message; // Update notification message
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show'); // Hide after delay
+            }, 1500); // Show the notification for 3 seconds
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const loginStatus = urlParams.get('login');
+
+        if (loginStatus === 'success') {
+            showNotification('Login Successful!');
+        }
+    });
+    </script>
+
+
+    <!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('http://localhost:3000/api/session', { credentials: 'include' })
+            .then(response => response.json())
+            .then(data => {
+                const navList = document.getElementById('navList');
+                if (data.isLoggedIn) {
+                    const loginListItem = navList.lastElementChild;
+                    
+
+                    if (data.isAdmin) {
+                        // Add admin pages to navigation
+                        const addArticleLi = document.createElement('li');
+                        addArticleLi.innerHTML = '<a style="color: red" href="/add_article.html">Add Article</a>';
+                        // addArticleLi.style.color = 'red'; // Make the link red for admins
+                        navList.insertBefore(addArticleLi, loginListItem);
+
+                        const updateFeaturedLi = document.createElement('li');
+                        updateFeaturedLi.innerHTML = '<a style="color: red" href="/update_featured.html">Update Featured</a>';
+                        // updateFeaturedLi.style.color = 'red'; // Make the link red for admins
+                        navList.insertBefore(updateFeaturedLi, loginListItem);
+
+                        const psqlLi = document.createElement('li');
+                        psqlLi.innerHTML = '<a style="color: red" href="/psql.html">PSQL</a>';
+                        // updateFeaturedLi.style.color = 'red'; // Make the link red for admins
+                        navList.insertBefore(psqlLi, loginListItem);
+                    }
+                } else {
+                    // Ensure the login link is correct if not logged in
+                    navList.lastElementChild.innerHTML = '<a href="login.html">Log In</a>';
+                }
+            })
+            .catch(error => console.error('Error fetching session data:', error));
+    });
+</script> -->
+
+        
+</body>
+</html>

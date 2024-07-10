@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn more about us on our About page.">
+    <title>psql - Neurofibromatosis Simplified</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 0px;
+        }
+
+        .sql-command {
+            background-color: rgb(2, 20, 100);
+            color: rgb(250, 166, 166);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: monospace;
+        }
+
+        .sql-command-dangerous {
+            background-color: black;
+            color: red;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spoiler-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header id="header-placeholder"> </header>
+    <script src="header.js"></script>
+
+    <section class="main-content">
+        <div class="container">
+            <h1>PSQL COMMANDS</h1>
+            <h2>Granting Admin</h2>
+            <h3 style = "color: #606060">Replace 'admin@example.com' with Admin Email</h3>
+            <pre class="sql-command">INSERT INTO admin_users (email) VALUES ('admin@example.com');</pre>
+        
+            <h2>Revoking Admin</h2>
+            <h3 style = "color: #606060">Replace 'admin@example.com' with Admin Email</h3>
+            <pre class="sql-command">DELETE FROM admin_users WHERE email = 'admin@example.com';</pre>
+        
+            <h2>Deleting a Specific Article by ID</h2>
+            <h3 style = "color: #606060">Replace 'YOUR_ARTICLE_ID' with the Article ID (Not Viewable in Website Yet)</h3>
+            <pre class="sql-command">DELETE FROM article WHERE id = YOUR_ARTICLE_ID;</pre>
+            
+            <h2>Deleting All Articles (Dangerous)</h2>
+            <div class="sql-command-dangerous">
+                <div class="spoiler-cover" style = "color: red;">Click to reveal</div>
+                DELETE FROM article;
+            </div>
+        
+            <h2>Clearing All Featured</h2>
+            <pre class="sql-command">DELETE FROM featured;</pre>
+        
+            <h2>Clearing All Sessions in Session Table</h2>
+            <h3 style = "color: #606060">Logs out any currently logged in user (Maintenance)</h3>
+            <pre class="sql-command">DELETE FROM session;</pre>
+        
+            
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Neurofibromatosis Simplified. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('http://localhost:3000/api/session', { credentials: 'include' })
+                .then(response => response.json())
+                .then(data => {
+                    const loginLink = document.querySelector('header nav ul li:last-child a');
+                    console.log("HERE")
+                    console.log("Logged IN: ", data.isLoggedIn)
+                    if (data.isLoggedIn) {
+                        loginLink.textContent = data.email; // Change "Log In" to the user's email
+                        loginLink.href = "#"; // Update href if needed, e.g., to a profile page or logout function
+                        
+                        if (data.isAdmin) {
+                            loginLink.style.color = 'red'; // Make the email red for admins
+                        }
+                    } else {
+                        loginLink.textContent = "Log In";
+                        loginLink.href = "login.html"; // Ensure this points to your login page
+                    }
+                })
+                .catch(error => console.error('Error fetching session data:', error));
+        });
+        </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+fetch('http://localhost:3000/api/session', { credentials: 'include' })
+    .then(response => response.json())
+    .then(data => {
+        const userMenu = document.querySelector('header nav ul li:last-child');
+        userMenu.innerHTML = '';
+        if (data.isLoggedIn) {
+            const emailButton = document.createElement('button');
+            emailButton.textContent = data.email;
+            emailButton.className = 'email-button'; // Apply button styling
+            emailButton.onclick = () => { window.location.href = 'profile.html'; }; // Redirect on click
+
+            if (data.isAdmin) {
+                emailButton.style.color = 'red';
+            }
+
+            userMenu.appendChild(emailButton);
+        } else {
+            const loginLink = document.createElement('a');
+            loginLink.textContent = "Log In";
+            loginLink.href = "login.html";
+            userMenu.appendChild(loginLink);
+        }
+    })
+    .catch(error => console.error('Error fetching session data:', error));
+});
+
+    </script>
+
+    <script> 
+        document.querySelectorAll('.sql-command-dangerous').forEach(function(command) {
+        command.addEventListener('click', function() {
+            this.querySelector('.spoiler-cover').style.display = 'none';
+        });
+    });
+
+    </script>
+</body>
+</html>

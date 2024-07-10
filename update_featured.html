@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Featured Articles</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header id="header-placeholder"> </header>
+    <script src="header.js"></script>
+
+    <section class="main-content">
+        <div class="container">
+            <h2>Currently Featured</h2>
+            <div id="featured"><!-- Featured articles will be populated here --></div>
+
+            <h2>Other Articles</h2>
+            <div id="other_articles"><!-- Other articles will be populated here --></div>
+        </div>
+    </section>
+
+    <script src="update_featured.js"></script> <!-- Link to an external JS file for clarity -->
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('http://localhost:3000/api/session', { credentials: 'include' })
+                .then(response => response.json())
+                .then(data => {
+                    const loginLink = document.querySelector('header nav ul li:last-child a');
+                    console.log("HERE")
+                    console.log("Logged IN: ", data.isLoggedIn)
+                    if (data.isLoggedIn) {
+                        loginLink.textContent = data.email; // Change "Log In" to the user's email
+                        loginLink.href = "#"; // Update href if needed, e.g., to a profile page or logout function
+                        
+                        if (data.isAdmin) {
+                            loginLink.style.color = 'red'; // Make the email red for admins
+                        }
+                    } else {
+                        loginLink.textContent = "Log In";
+                        loginLink.href = "login.html"; // Ensure this points to your login page
+                    }
+                })
+                .catch(error => console.error('Error fetching session data:', error));
+        });
+        </script> -->
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+fetch('http://localhost:3000/api/session', { credentials: 'include' })
+    .then(response => response.json())
+    .then(data => {
+        const userMenu = document.querySelector('header nav ul li:last-child');
+        userMenu.innerHTML = '';
+        if (data.isLoggedIn) {
+            const emailButton = document.createElement('button');
+            emailButton.textContent = data.email;
+            emailButton.className = 'email-button'; // Apply button styling
+            emailButton.onclick = () => { window.location.href = 'profile.html'; }; // Redirect on click
+
+            if (data.isAdmin) {
+                emailButton.style.color = 'red';
+            }
+
+            userMenu.appendChild(emailButton);
+        } else {
+            const loginLink = document.createElement('a');
+            loginLink.textContent = "Log In";
+            loginLink.href = "login.html";
+            userMenu.appendChild(loginLink);
+        }
+    })
+    .catch(error => console.error('Error fetching session data:', error));
+});
+
+    </script>
+
+</body>
+</html>

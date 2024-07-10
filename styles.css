@@ -1,0 +1,846 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Header styles */
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+header h1 {
+    float: left;
+}
+
+header nav {
+    float: right;
+}
+
+header nav ul {
+    list-style: none;
+}
+
+header nav ul li {
+    display: inline;
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Main content styles */
+.main-content {
+    padding: 20px 0;
+}
+
+article {
+    background: #fff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+article h3 {
+    color: #333;
+}
+
+article p {
+    color: #666;
+}
+
+article a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+article a:hover {
+    text-decoration: underline;
+}
+
+/* Footer styles */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Button Styling */
+.button {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button.featured {
+    background-color: #28a745; /* Bootstrap success color */
+}
+
+.button.not-featured {
+    background-color: #6c757d; /* Bootstrap secondary color */
+}
+
+.button:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+}
+
+.button.featured:hover {
+    background-color: #218838; /* Darker shade for hover on featured button */
+}
+
+.button.not-featured:hover {
+    background-color: #545b62; /* Darker shade for hover on not-featured button */
+}
+
+
+.article-container {
+    max-width: 1200px; /* Adjust based on your preference */
+    margin: 20px auto; /* Center the container */
+    padding: 50px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border-radius: 10px; /* Slightly curved edges */
+}
+
+.article-title {
+    font-size: 2em; /* Big, like an article title should be */
+    margin-bottom: 20px; /* Space between title and content */
+}
+
+.article-content {
+    line-height: 1.6; /* Improve readability */
+    font-size: 1.1em; /* Slightly larger text */
+}
+
+/* Target the Quill Editor specifically */
+#editor {
+    background-color: white; /* Sets the editor background to white */
+    width: 1090px; /* Adjust as needed to match other content boxes */
+    border: 2px solid #ccc; /* Optional: adds a light border around the editor */
+    padding-top: 0px; /* Adjust based on the actual height of your toolbar */
+}
+
+
+/* Custom CSS for the Quill editor container */
+.ql-container {
+    min-height: 400px; /* Minimum starting height */
+    height: auto; /* Allows the container to expand */
+    max-height: 100000px; /* Maximum height before scrolling */
+    overflow-y: auto; /* Adds a scrollbar when content exceeds max-height */
+}
+
+
+.ql-editor {
+    min-height: 180px; /* Adjust based on your needs, accounting for padding */
+    font-size: 16px; /* Optional: sets the font size for the editor */
+}
+
+.ql-toolbar {
+    background-color: white; /* Sets the toolbar background to white */
+    width: 1090px; /* Sets the width of the toolbar */
+    border: 3px solid #ccc; /* Optional: adds a light border for definition */
+    margin-top: 10px;
+    /* Make the Quill toolbar sticky */
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensure the toolbar is above other content */
+    background-color: white; /* Match the toolbar background to your theme if needed */
+}
+
+
+.ql-font-arial {
+    font-family: Arial, sans-serif;
+}
+.ql-font-times-new-roman {
+    font-family: 'Times New Roman', serif;
+}
+.ql-font-georgia {
+    font-family: Georgia, serif;
+}
+
+.form-container {
+    background: #ffffff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Enhancements for form and contact sections */
+.form-section {
+    background-color: #f9f9f9;
+    padding: 30px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.form-section h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-input,
+.form-textarea,
+.form-submit {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.form-submit {
+    background-color: #5cb85c;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+.form-submit:hover {
+    background-color: #4cae4c;
+}
+
+/* Additional styles for better visual separation */
+.contact-section {
+    margin-bottom: 40px;
+}
+
+/* Style adjustments for file input */
+.form-file {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    margin-bottom: 15px;
+}
+
+/* Hover effect for file input */
+.form-file:hover {
+    background-color: #e8e8e8;
+}
+
+/* Enhanced Article Styling */
+article {
+    background: #fff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Slight shadow */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+article:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* More pronounced shadow on hover */
+}
+
+article h3 {
+    margin-bottom: 15px; /* More space below the title */
+}
+
+article p {
+    margin-bottom: 15px; /* More space above the read more link */
+}
+
+.read-more-link {
+    display: inline-block;
+    background-color: #007bff; /* Primary color */
+    color: #ffffff; /* White text */
+    padding: 10px 15px;
+    border-radius: 20px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    text-decoration: none; /* Removes underline */
+    font-weight: bold; /* Optional: Makes the text bold */
+}
+
+.read-more-link:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    text-decoration: none; /* Ensures text is not underlined on hover */
+}
+
+/* Dropdown Button */
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Show the dropdown menu */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .email-button {
+    background-color: #f0f0f0;
+    color: #333;
+    font-size: 15px;
+    padding: 8px 18px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.email-button:hover {
+    background-color: #e0e0e0;
+}
+
+.notification {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: -50px; /* Start hidden above the view */
+    left: 0;
+    width: 100%;
+    background-color: #28a745; /* Success green */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 16px;
+    transition: top 0.5s ease; /* Smooth transition for showing/hiding */
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.notification.show {
+    display: block;
+    top: 0; /* Slide down to show */
+}
+
+/* Intro section styles */
+.intro-section {
+    background: linear-gradient(to bottom, #175ea5 0%, #f4f4f4 100%); /* Gradient from dark blue to light grey/white */
+    color: white;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .intro-section h1 {
+    font-size: 4em;
+    margin: 0;
+  }
+  
+  .intro-section h2 {
+    font-size: 4em;
+    margin: 0;
+  }
+  
+  .intro-section p {
+    font-size: 1.2em;
+    max-width: 60%;
+    margin: 0 auto;
+    color: #525252; /* Dark text for better visibility as the background lightens */
+  }
+/* Section headers styling */
+#recently_added, #featured {
+    font-size: 1.8em;
+    margin-top: 50px; /* Increased top margin for more space */
+    margin-bottom: 30px; /* More space before articles start */
+    text-align: center;
+    color: #333; /* Dark color for contrast */
+}
+
+/* Containers for articles */
+#recently_added_container, #featured_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Adjusted for even spacing */
+    gap: 20px;
+    margin: 0 auto; /* Centering the container */
+    max-width: 1200px; /* Limiting maximum width */
+}
+
+/* Article box styling */
+#recently_added_container article, #featured_container article {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: calc(33.333% - 40px); /* Adjusting width for 3 articles per row */
+    box-shadow: none;
+    background-color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    #recently_added_container article, #featured_container article {
+        width: calc(50% - 40px); /* 2 columns layout for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    #recently_added_container article, #featured_container article {
+        width: 100%; /* Single column layout for small screens */
+    }
+}
+
+/* About Us Section Styles */
+.about-section {
+    padding: 40px 0;
+}
+
+.about-container {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-title {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+}
+
+.about-paragraph {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.about-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.about-link:hover {
+    text-decoration: underline;
+}
+
+
+.discover-page-container {
+    padding: 20px;
+}
+
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 50%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.article-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.article-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.article-summary {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.read-more-btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.read-more-btn:hover {
+    background-color: #0056b3;
+}
+
+#discover-header {
+    text-align: center;
+    background-color: #f4f4f4; /* Adjust background color as needed */
+    padding: 20px 0; /* Add more padding as needed */
+}
+
+#discover-header h1 {
+    font-size: 2.5em; /* Large font size for "Discover" */
+    color: #333; /* Adjust the color as needed */
+    margin-bottom: 10px; /* Space between the title and the description */
+}
+
+#discover-header p {
+    font-size: 1em; /* Adjust the font size as needed */
+    color: #777; /* Grey font color for the description */
+}
+
+.article-card.enhanced {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+}
+
+.article-title.enhanced {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.article-summary.enhanced {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.read-more-btn.enhanced {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.read-more-btn.enhanced:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+/* Modal styles */
+
+
+
+.pending_article-input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+.pending_article-textarea {
+    width: 90%;
+    height: 300px; /* Initial height */
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    resize: vertical; /* Allows the user to vertically resize the textarea */
+}
+
+.pending_article-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+.pending_article-save-button {
+    background-color: #007bff; /* Blue */
+    color: white;
+}
+
+.pending_article-publish-button {
+    background-color: #28a745; /* Green */
+    color: white;
+}
+
+.pending_article-delete-button {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+.pending_article-button:hover {
+    opacity: 0.9;
+}
+
+.pending_article-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.pending_article-show {
+    display: block;
+}
+
+.pending_article-modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 500;
+}
+
+.pending_article-modal-backdrop.pending_article-show {
+    display: block;
+}
+
+.pending_article-main-content {
+    margin: 20px;
+}
+
+.article-notification {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: -50px; /* Start hidden above the view */
+    left: 0;
+    width: 100%;
+    background-color: #28a745; /* Success green */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 16px;
+    transition: top 0.5s ease; /* Smooth transition for showing/hiding */
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.article-show {
+    display: block;
+    top: 0; /* Slide down to show */
+}
+
+.article-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+.article-save-button {
+    background-color: #007bff; /* Blue */
+    color: white;
+}
+
+.article-save-button:hover {
+    opacity: 0.9;
+}
+
+.article-admin-edit {
+    display: none;
+    margin-top: 20px;
+}
+
+.article-admin-edit.article-show {
+    display: block;
+}
+
+.article-textarea {
+    width: 90%;
+    height: 150px; /* Adjusted height */
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    resize: vertical; /* Allows the user to vertically resize the textarea */
+}
+
+
+.update_article-input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+.update_article-textarea {
+    width: 90%;
+    height: 200px; /* Initial height */
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    resize: vertical; /* Allows the user to vertically resize the textarea */
+}
+
+.update_article-button {
+    padding: 10px 15px;
+    height: 50px;
+    width: 250px;
+    font-size: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+.update_article-submit-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.update_article-submit-button:hover {
+    background-color: #45a049;
+}
+
+.update_article-main-content {
+    margin: 20px;
+}
+
+
+.units-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.units-input {
+    
+    padding: 10px;
+    margin-right: 5px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px 0 0 4px; /* Rounded left corners */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    width: 10px;
+}
+
+.units-dropdown {
+    padding: 10px;
+    width: 150px;
+    border: 2px solid #ccc;
+    border-radius: 0 4px 4px 0; /* Rounded right corners */
+    background-color: #fff;
+    font-family: 'Arial', sans-serif;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 20 20"><path fill="none" stroke="black" stroke-width="2" d="M0 7 L10 17 L20 7 Z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px 10px;
+}
+
+.units-dropdown option {
+    padding: 10px;
+    font-family: 'Arial', sans-serif;
+}
+
+.units-dropdown:focus {
+    outline: none;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}

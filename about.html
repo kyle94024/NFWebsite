@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn more about us on our About page.">
+    <title>About Us - Neurofibromatosis Simplified</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header id="header-placeholder"> </header>
+    <script src="header.js"></script>
+
+    <section class="main-content about-section">
+        <div class="container about-container">
+            <h2 class="about-title">About Us</h2>
+            <p class="about-paragraph">
+                Welcome to the About Us page of Neurofibromatosis Simplified. Our mission is to provide accessible, 
+                up-to-date, and comprehensive information about Neurofibromatosis (NF) to patients, families, and caregivers. 
+                We aim to empower those affected by NF with the knowledge and resources they need to navigate their journey.
+            </p>
+            <p class="about-paragraph">
+                Our website offers simplified articles on NF, added and reviewed by NF experts from REiNS. We believe in the power of education and community support to 
+                make a positive impact on the lives of those living with Neurofibromatosis.
+            </p>
+            <p class="about-paragraph">
+                For more information, questions, or to get involved, please don't hesitate to <a href="contact.html" class="about-link">contact us</a>.
+            </p>
+        </div>
+    </section>
+    
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Neurofibromatosis Simplified. All rights reserved.</p>
+        </div>
+    </footer>
+
+    
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+fetch('http://localhost:3000/api/session', { credentials: 'include' })
+    .then(response => response.json())
+    .then(data => {
+        const userMenu = document.querySelector('header nav ul li:last-child');
+        userMenu.innerHTML = '';
+        if (data.isLoggedIn) {
+            const emailButton = document.createElement('button');
+            emailButton.textContent = data.email;
+            emailButton.className = 'email-button'; // Apply button styling
+            emailButton.onclick = () => { window.location.href = 'profile.html'; }; // Redirect on click
+
+            if (data.isAdmin) {
+                emailButton.style.color = 'red';
+            }
+
+            userMenu.appendChild(emailButton);
+        } else {
+            const loginLink = document.createElement('a');
+            loginLink.textContent = "Log In";
+            loginLink.href = "login.html";
+            userMenu.appendChild(loginLink);
+        }
+    })
+    .catch(error => console.error('Error fetching session data:', error));
+});
+
+    </script>
+</body>
+</html>
