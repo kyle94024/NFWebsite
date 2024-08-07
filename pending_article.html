@@ -10,22 +10,36 @@
     <header id="header-placeholder"></header>
     <script src="header.js"></script>
 
-    <section class="pending_article-main-content container">
-        <h1>Edit Pending Article</h1>
-        <form id="editArticleForm" class="pending_article-form">
+    <section class="pending_article-main-content container" style="width: 1350px;">
+        <h1 style="color: red; margin-left: 100px; font-size: 40px;">Edit Pending Article</h1>
+        <form id="editArticleForm" class="pending_article-form" style="margin-left: 150px;">
+            <h3 style="color:deeppink; margin-top: 30px;">Title</h3>
             <input type="hidden" id="articleId" name="articleId">
             <input type="text" id="title" name="title" placeholder="Title" required class="pending_article-input">
+            <h3 style="color:deeppink; margin-top: 20px;">Source Article Link</h3>
             <input type="url" id="articleLink" name="articleLink" placeholder="Optional Article Link" class="pending_article-input">
+            <h3 style="color:deeppink; margin-top: 20px;">Tags (separated by commas)</h3>
             <input type="text" id="tags" name="tags" placeholder="Tags (separated by commas)" class="pending_article-input">
+            <h3 style="color:deeppink; margin-top: 20px;">Description (1-2 sentences)</h3>
             <textarea id="summary" name="summary" placeholder="Summary" class="pending_article-textarea"></textarea>
+            <h2 style="color:deeppink; margin-top: 20px;">Article Content</h2>
             <div id="editor"></div>
-            <div>
-                <button type="submit" class="pending_article-button pending_article-save-button">Save Edits</button>
-                <button type="button" class="pending_article-button pending_article-publish-button" onclick="showConfirmationModal('publish')">Publish</button>
-                <button type="button" class="pending_article-button pending_article-delete-button" onclick="showConfirmationModal('delete')">Delete</button>
+            <div style="margin-top: 50px; justify-content: center; width: 100%;">
+                <button type="submit" class="pending_article-button pending_article-save-button">
+                    <span class="pending_article-save-button-text">Save Edits</span>
+                </button>
+                <button type="button" class="pending_article-button pending_article-publish-button" onclick="showConfirmationModal('publish')">
+                    <span class="pending_article-publish-button-text">Publish Article</span>
+                </button>
+                <button type="button" class="pending_article-button pending_article-delete-button" onclick="showConfirmationModal('delete')">
+                    <span class="pending_article-delete-button-text">Delete Article</span>
+                </button>
             </div>
         </form>
     </section>
+    
+        
+    
 
     <div id="confirmationModal" class="pending_article-modal">
         <p id="confirmationMessage"></p>
@@ -98,6 +112,7 @@
             const confirmButton = document.getElementById('confirmButton');
 
             message.textContent = `Are you sure you want to ${action} this article?`;
+            
             confirmButton.onclick = () => handleConfirm(action);
 
             modal.classList.add('pending_article-show');

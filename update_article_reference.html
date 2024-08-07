@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Article</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header id="header-placeholder"> </header>
+    <script src="header.js"></script>
+    
+    <div style="margin-left: 150px;">
+        <section class="update_article-main-content container">
+            <h1>Update Article</h1>
+            <form id="updateArticleForm" class="update_article-form">
+                <input type="hidden" id="articleId" name="articleId">
+                <input type="text" id="title" name="title" placeholder="Title" required class="update_article-input">
+                <input type="url" id="articleLink" name="articleLink" placeholder="Optional Article Link" class="update_article-input">
+                <input type="text" id="tags" name="tags" placeholder="Tags (separated by commas)" class="update_article-input">
+                <h1>Description (1-2 sentences)</h1>
+                <textarea type="text" id="summary" name="summary" placeholder="Summary" class="update_article-textarea"></textarea>
+                <h1>Article Content</h1>
+                <div id="editor"></div>
+                
+                <button type="submit" class="update_article-button update_article-submit-button">Update Article</button>
+            </form>
+        </section>
+
+        <!-- Include the Quill library -->
+        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+        <script>
+            var quill = new Quill('#editor', {
+                theme: 'snow'
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const articleId = urlParams.get('id');
+                if (articleId) {
+                    fetch(`http://localhost:3000/get-article/${articleId}`, { credentials: 'include' })
+                        .then(response => response.json())
+                        .then(article => {
+                            document.getElementById('articleId').value = article.id;
+                            document.getElementById('title').value = article.title;
+                            document.getElementById('articleLink').value = article.article_link || '';
+                            document.getElementById('tags').value = article.tags.join(', ');
+                            document.getElementById('summary').value = article.summary || '';
+                            quill.root.innerHTML = article.innertext;
+                        })
+                        .catch(error => console.error('Error fetching article:', error));
+                }
+            });
+
+            document.getElementById('updateArticleForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = {
+                    id: document.getElementById('articleId').value,
+                    title: document.getElementById('title').value,
+                    tags: document.getElementById('tags').value.split(',').map(tag => tag.trim()),
+                    innertext: quill.root.innerHTML,
+                    summary: document.getElementById('summary').value,
+                    article_link: document.getElementById('articleLink').value
+                };
+
+                try {
+                    //console.log("SUBMISSION PROCESS FOR UPDATING ARTICLE")
+                    const response = await fetch('http://localhost:3000/update-article', {
+                        credentials: 'include',
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    console.log(result);
+                    // alert('Article updated successfully!');
+                    window.location.href = `article.html?id=${formData.id}&updated=success`;
+                } catch (error) {
+                    console.error('Failed to update article:', error);
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

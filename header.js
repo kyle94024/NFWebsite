@@ -27,8 +27,10 @@ function setupHeader() {
                         loginLink.style.color = 'red'; // Make the email red for admins
                     }
                 } else {
-                    loginLink.textContent = "Log In";
-                    loginLink.href = "login.html"; // Ensure this points to your login page
+                    if (loginLink){
+                        loginLink.textContent = "Log In";
+                        loginLink.href = "login.html"; // Ensure this points to your login page
+                    }
                 }
             })
             .catch(error => console.error('Error fetching session data:', error));
@@ -40,9 +42,9 @@ function setupHeader() {
                     addArticleLi.innerHTML = '<a style="color: red" href="/add_article.html">Add Article</a>';
                     navList.insertBefore(addArticleLi, loginListItem);
 
-                    const updateArticleLi = document.createElement('li');
-                    updateArticleLi.innerHTML = '<a style="color: red" href="/update_article.html">Update Article</a>';
-                    navList.insertBefore(updateArticleLi, loginListItem);
+                    // const updateArticleLi = document.createElement('li');
+                    // updateArticleLi.innerHTML = '<a style="color: red" href="/update_article.html">Update Article</a>';
+                    // navList.insertBefore(updateArticleLi, loginListItem);
 
                     const updateFeaturedLi = document.createElement('li');
                     updateFeaturedLi.innerHTML = '<a style="color: red" href="/update_featured.html">Update Featured</a>';
@@ -60,8 +62,39 @@ function setupHeader() {
             } else {
                 loginListItem.innerHTML = '<a href="login.html">Log In</a>';
             }
+           
+            const userMenu = document.querySelector('header nav ul li:last-child');
+            userMenu.innerHTML = '';
+            if (data.isLoggedIn) {
+                const emailButton = document.createElement('button');
+                emailButton.textContent = data.email;
+                emailButton.className = 'email-button'; // Apply button styling
+                emailButton.onclick = () => { window.location.href = 'profile.html'; }; // Redirect on click
+
+                if (data.isAdmin) {
+                    emailButton.style.color = 'red';
+                }
+
+                userMenu.appendChild(emailButton);
+            } else {
+                const loginLink = document.createElement('a');
+                loginLink.textContent = "Log In";
+                loginLink.href = "login.html";
+                userMenu.appendChild(loginLink);
+            }
+
+
+            
+
         })
         .catch(error => console.error('Error fetching session data:', error));
 }
+
+
+
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', loadHeader);

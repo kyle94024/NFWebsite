@@ -56,21 +56,37 @@
     <script src="header.js"></script>
 
     <section class="main-content container">
-        <form id="addArticleForm">
-            <input type="text" id="title" name="title" placeholder="Title" required>
-            <input type="url" id="articleLink" name="articleLink" placeholder="Optional Article Link" class="form-input">
-            <input type="text" id="tags" name="tags" placeholder="Tags (separated by commas)">
-            <div id="editor">
+        <form id="addArticleForm" style="margin-left: 100px;">
+            <!-- <span style="display: flex; justify-content: center;"> -->
+                <h2 class="gradient-text-pink" style="margin-top: 30px; width: 100%; display: flex; font-size: 20px;">Title</h2>
+                <input type="text" id="title" name="title" placeholder="Title" required style="width: 98%;">
+            <!-- </span> -->
+            <!-- <span style="display: flex; justify-content: center;"> -->
+                <h2 class="gradient-text-pink" style="margin-top: 30px; width: 100%; display: flex; font-size: 20px;">Source Article Link</h2>
+                <input type="url" id="articleLink" name="articleLink" placeholder="Optional Article Link" class="form-input" style="width: 98%;">
+            <!-- </span> -->
+            <!-- <span style="display: flex; justify-content: center;"> -->
+                <h2 class="gradient-text-pink" style="margin-top: 30px; width: 100%; display: flex; font-size: 20px;">Tags</h2>
+                <input type="text" id="tags" name="tags" placeholder="Tags (separated by commas)" style="width: 98%;">
+            <!-- </span> -->
+            <h2 class="gradient-text-pink" style="margin-top: 30px;  width: 100%; display: flex; font-size: 20px;">Content</h2>
+            <span style = "justify-content: center;">
+                <div id="editor">
+                </div>
+            </span>
 
-            </div>
             <script>
                 var quill = new Quill('#editor', {
                   theme: 'snow' // Specify theme in configuration
                 });
             </script>
 
-            <div class="units-container">
-                <input type="text" style = "width: 150px;" id="simplifyLength" placeholder="5" class="units-input">
+            
+            <h2 class="gradient-text-pink" style="margin-top: 30px; justify-content: center; width: 100%; display: flex; font-size: 30px;">Length of Summary</h2>
+
+
+            <div class="units-container" style="justify-content: center;">
+                <input type="text" style = "width: 150px;" id="simplifyLength" placeholder="Qty." class="units-input">
                 <select id="simplifyUnits" class="units-dropdown">
                     <option value="paragraphs" selected>Paragraphs</option>
                     <option value="words">Words</option>
@@ -82,7 +98,11 @@
             </div>
             
             <!-- <textarea id="innertext" name="innertext" placeholder="Content" required></textarea> -->
-            <button type="submit" class="submit-button" style="font-size: 18px;">Submit Article</button>
+            <span style = 'display: flex; justify-content: center;'>
+                <button type="submit" class="green-button" style="font-size: 18px; margin-top: 50px; width: 250px; margin-bottom: 100px;">
+            </span>
+                <span class="green-button-text" style="font-size: 20px;" >Run Simplification</span>
+            </button>
         </form>
     </section>
 

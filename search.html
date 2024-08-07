@@ -12,15 +12,15 @@
     <script src="header.js"></script>
 
     <div id="discover-header">
-        <h1>Discover</h1>
+        <h1 class="gradient-text" style="font-size: 100px; margin-top: 50px;">Discover</h1>
         <p>Search for articles or browse through the collection</p>
     </div>
     
 
     <main class="discover-page-container">
-        <section class="search-bar-container">
+        <section class="search-bar-container" style="margin-bottom: 50px; margin-top: 20px;">
             <input type="text" id="searchInput" placeholder="Search articles..." class="search-input">
-            <button onclick="searchArticles()" class="search-button">Search</button>
+            <button onclick="searchArticles()" class="search-button blue-button">Search</button>
         </section>
 
         <section class="articles-container">
@@ -60,6 +60,12 @@
                 loginLink.href = "login.html";
                 userMenu.appendChild(loginLink);
             }
+
+            // header = document.getElementById('header-placeholder');
+            // header.style = "background-color: #ababab;";
+
+
+
         })
         .catch(error => console.error('Error fetching session data:', error));
 });

@@ -9,7 +9,8 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f4f4f4;
+    /*background-color: #f4f4f4;*/
+    background-color: #ffffff;
     color: #333;
 }
 
@@ -22,8 +23,13 @@ body {
 /* Header styles */
 header {
     background: #333;
+    /* background: #3482d1; */
     color: #fff;
     padding: 20px 0;
+    z-index: 10000; /* Ensure the header is above other content */
+    
+    /* position: sticky; */
+    top: 0px;
 }
 
 header h1 {
@@ -69,7 +75,7 @@ article p {
 }
 
 article a {
-    color: #333;
+    color: #363dfa;
     text-decoration: none;
     font-weight: bold;
 }
@@ -116,6 +122,118 @@ footer {
 .button.not-featured:hover {
     background-color: #545b62; /* Darker shade for hover on not-featured button */
 }
+
+
+
+
+
+
+.blue-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 23px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+
+    font-size: 15px;
+    width: auto;
+    height: 40px;
+    font-weight: 600;
+    z-index: 1;
+    background: linear-gradient(30deg, #0d7cdd, #74dce3); /* Initial gradient background */
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 1.3s; /* Transition for background */
+}
+
+.blue-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #0d7cdd, #1874b5); /* Initial gradient background */
+    opacity: 0;
+    transition: opacity 0.3s; /* Transition for pseudo-element */
+    z-index: 1;
+}
+
+.blue-button:hover::before {
+    opacity: 0.4;
+    z-index: 1;
+}
+
+.blue-button-text {
+    background: linear-gradient(235deg, #ffffff, #ffffff); /* Gradient background */
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+    -webkit-text-fill-color: transparent; /* WebKit-specific text fill color */
+    font-size: 15px;
+    font-weight: 600;
+    z-index: 10000; /* Ensure text is above the pseudo-element */
+    transition: background 0.5s, color 0.5s; /* Optional: to add transition effects */
+}
+
+
+
+
+.green-button {
+    background-color: #0cea00;
+    color: white;
+    padding: 12px 23px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+
+    font-size: 20px;
+    width: auto;
+    height: 45px;
+    font-weight: 600;
+    z-index: 1;
+    background: linear-gradient(30deg, #48d76c, #76f184); /* Initial gradient background */
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 1.3s; /* Transition for background */
+}
+
+.green-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #33b70f, rgb(68, 227, 40)); /* Initial gradient background */
+    opacity: 0;
+    transition: opacity 0.3s; /* Transition for pseudo-element */
+    z-index: 1;
+}
+
+.green-button:hover::before {
+    opacity: 0.4;
+    z-index: 1;
+}
+
+.green-button-text {
+    background: linear-gradient(235deg, #ffffff, #ffffff); /* Gradient background */
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+    -webkit-text-fill-color: transparent; /* WebKit-specific text fill color */
+    font-size: 15px;
+    font-weight: 600;
+    z-index: 10000; /* Ensure text is above the pseudo-element */
+    transition: background 0.5s, color 0.5s; /* Optional: to add transition effects */
+}
+
+
 
 
 .article-container {
@@ -368,15 +486,17 @@ article p {
 
 /* Intro section styles */
 .intro-section {
-    background: linear-gradient(to bottom, #175ea5 0%, #f4f4f4 100%); /* Gradient from dark blue to light grey/white */
+    /* #4393e2 */
+    background: linear-gradient(to bottom, #3782cd 0%, #ffffff 100%); /* Gradient from dark blue to light grey/white */
+    /*background: linear-gradient(to bottom, #175ea5 0%, #f4f4f4 100%);*/
     color: white;
     height: 450px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     text-align: center;
-    gap: 20px;
+
   }
   
   .intro-section h1 {
@@ -536,6 +656,8 @@ article p {
     text-decoration: none;
     border-radius: 5px;
     font-size: 14px;
+
+    bottom: 10px;
 }
 
 .read-more-btn:hover {
@@ -544,7 +666,8 @@ article p {
 
 #discover-header {
     text-align: center;
-    background-color: #f4f4f4; /* Adjust background color as needed */
+    /* background-color: #f4f4f4; Adjust background color as needed */
+    background: linear-gradient(to bottom, #f4f4f4 0%, #ffffff 100%);
     padding: 20px 0; /* Add more padding as needed */
 }
 
@@ -584,11 +707,14 @@ article p {
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
+    bottom: 10px;
 }
 
 .read-more-btn.enhanced:hover {
     background-color: #0056b3;
 }
+
+
 
 
 
@@ -626,23 +752,196 @@ article p {
     margin-right: 10px;
 }
 
+/*
 .pending_article-save-button {
-    background-color: #007bff; /* Blue */
-    color: white;
+
+    width: 200px;
+    height: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    
+
+    font-weight: 900;
+    background: linear-gradient(45deg, #f5a646, #ff8b8b); 
+
+    transition: background 1.3s, color 0.5s; 
 }
+
+.pending_article-save-button-text {
+    background-clip: text;
+    font-size: 15px;
+    color: linear-gradient(45deg, #9c6018, #ff8b8b); 
+    font-weight: 900;
+}
+
+.pending_article-save-button:hover {
+    transition: background 1.3s, color 0.5s;
+    background: linear-gradient(45deg, #f79b2a, #ff5959); 
+}
+*/
+.pending_article-save-button {
+    width: 200px;
+    height: 50px;
+    margin-bottom: 50px;
+    margin-left: 15%;
+    font-weight: 900;
+    z-index: 1;
+    background: linear-gradient(45deg, #f59246, #ff8b8b); /* Initial gradient background */
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 1.3s; /* Transition for background */
+}
+
+.pending_article-save-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg,#ff7700, #ff8c00); /* Hover gradient background */
+    opacity: 0;
+    transition: opacity 0.3s; /* Transition for pseudo-element */
+    z-index: 1;
+}
+
+.pending_article-save-button:hover::before {
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.pending_article-save-button-text {
+    background: linear-gradient(170deg, #070407, #6c6c6c); /* Gradient background */
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+    -webkit-text-fill-color: transparent; /* WebKit-specific text fill color */
+    font-size: 18px;
+    font-weight: 900;
+    z-index: 10000; /* Ensure text is above the pseudo-element */
+    transition: background 0.5s, color 0.5s; /* Optional: to add transition effects */
+}
+
+
+
+/*
+.pending_article-publish-button {
+    background-color: #59de78; 
+    color: white;
+    font-weight:900;
+}
+*/
 
 .pending_article-publish-button {
-    background-color: #28a745; /* Green */
-    color: white;
+    width: 200px;
+    height: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    font-weight: 900;
+    z-index: 1;
+    background: linear-gradient(30deg, #66e67f, #59ffd5); /* Initial gradient background */
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 1.3s; /* Transition for background */
 }
+
+.pending_article-publish-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #48f376, #6ff089); /* Initial gradient background */
+    opacity: 0;
+    transition: opacity 0.3s; /* Transition for pseudo-element */
+    z-index: 1;
+}
+
+.pending_article-publish-button:hover::before {
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.pending_article-publish-button-text {
+    background: linear-gradient(235deg, #2b7442, #2d6b6b); /* Gradient background */
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+    -webkit-text-fill-color: transparent; /* WebKit-specific text fill color */
+    font-size: 18px;
+    font-weight: 900;
+    z-index: 10000; /* Ensure text is above the pseudo-element */
+    transition: background 0.5s, color 0.5s; /* Optional: to add transition effects */
+}
+
+
+
+
+
+/*
+.pending_article-delete-button {
+    background-color: #fd6d6d; 
+    color: white;
+    font-weight:900;
+}
+*/
 
 .pending_article-delete-button {
-    background-color: #dc3545; /* Red */
-    color: white;
+    width: 200px;
+    height: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    font-weight: 900;
+    z-index: 1;
+    background: linear-gradient(30deg, #f54040, #f2266a); /* Initial gradient background */
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 1.3s; /* Transition for background */
 }
 
+.pending_article-delete-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(30deg, #ff0000, #ff0000); /* Initial gradient background */
+    opacity: 0;
+    transition: opacity 0.3s; /* Transition for pseudo-element */
+    z-index: 1;
+}
+
+.pending_article-delete-button:hover::before {
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.pending_article-delete-button-text {
+    background: linear-gradient(235deg, #450909, #4a2733); /* Gradient background */
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+    -webkit-text-fill-color: transparent; /* WebKit-specific text fill color */
+    font-size: 18px;
+    font-weight: 900;
+    z-index: 10000; /* Ensure text is above the pseudo-element */
+    transition: background 0.5s, color 0.5s; /* Optional: to add transition effects */
+}
+
+
+
+
+
 .pending_article-button:hover {
-    opacity: 0.9;
+    opacity: 1;
 }
 
 .pending_article-modal {
@@ -655,7 +954,7 @@ article p {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 1001;
 }
 
 .pending_article-show {
@@ -670,7 +969,7 @@ article p {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 500;
+    z-index: 1000;
 }
 
 .pending_article-modal-backdrop.pending_article-show {
@@ -680,6 +979,284 @@ article p {
 .pending_article-main-content {
     margin: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
+
+.update_article-input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+.update_article-textarea {
+    width: 90%;
+    height: 300px; /* Initial height */
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    resize: vertical; /* Allows the user to vertically resize the textarea */
+}
+
+.update_article-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+/*
+.pending_article-save-button {
+
+    width: 200px;
+    height: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    
+
+    font-weight: 900;
+    background: linear-gradient(45deg, #f5a646, #ff8b8b); 
+
+    transition: background 1.3s, color 0.5s; 
+}
+
+.pending_article-save-button-text {
+    background-clip: text;
+    font-size: 15px;
+    color: linear-gradient(45deg, #9c6018, #ff8b8b); 
+    font-weight: 900;
+}
+
+.pending_article-save-button:hover {
+    transition: background 1.3s, color 0.5s;
+    background: linear-gradient(45deg, #f79b2a, #ff5959); 
+}
+*/
+.update_article-save-button {
+    width: 200px;
+    height: 50px;
+    margin-bottom: 50px;
+    margin-left: 15%;
+    font-weight: 900;
+    z-index: 1;
+    background: linear-gradient(45deg, #f59246, #ff8b8b); /* Initial gradient background */
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 1.3s; /* Transition for background */
+}
+
+.update_article-save-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg,#ff7700, #ff8c00); /* Hover gradient background */
+    opacity: 0;
+    transition: opacity 0.3s; /* Transition for pseudo-element */
+    z-index: 1;
+}
+
+.update_article-save-button:hover::before {
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.update_article-save-button-text {
+    background: linear-gradient(170deg, #070407, #6c6c6c); /* Gradient background */
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+    -webkit-text-fill-color: transparent; /* WebKit-specific text fill color */
+    font-size: 18px;
+    font-weight: 900;
+    z-index: 10000; /* Ensure text is above the pseudo-element */
+    transition: background 0.5s, color 0.5s; /* Optional: to add transition effects */
+}
+
+
+
+
+
+
+
+
+.update_article-retract-button {
+    width: 200px;
+    height: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    font-weight: 900;
+    z-index: 1;
+    background: linear-gradient(45deg, #b0b0af, #c7c7c7); /* Initial gradient background */
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 1.3s; /* Transition for background */
+}
+
+.update_article-retract-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg,#848383, #c7c7c7); /* Hover gradient background */
+    opacity: 0;
+    transition: opacity 0.3s; /* Transition for pseudo-element */
+    z-index: 1;
+}
+
+.update_article-retract-button:hover::before {
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.update_article-retract-button-text {
+    background: linear-gradient(170deg, #070407, #6c6c6c); /* Gradient background */
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+    -webkit-text-fill-color: transparent; /* WebKit-specific text fill color */
+    font-size: 18px;
+    font-weight: 900;
+    z-index: 10000; /* Ensure text is above the pseudo-element */
+    transition: background 0.5s, color 0.5s; /* Optional: to add transition effects */
+}
+
+
+/*
+.pending_article-delete-button {
+    background-color: #fd6d6d; 
+    color: white;
+    font-weight:900;
+}
+*/
+
+.update_article-delete-button {
+    width: 200px;
+    height: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    font-weight: 900;
+    z-index: 1;
+    background: linear-gradient(30deg, #f54040, #f2266a); /* Initial gradient background */
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 1.3s; /* Transition for background */
+}
+
+.update_article-delete-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(30deg, #ff0000, #ff0000); /* Initial gradient background */
+    opacity: 0;
+    transition: opacity 0.3s; /* Transition for pseudo-element */
+    z-index: 1;
+}
+
+.update_article-delete-button:hover::before {
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.update_article-delete-button-text {
+    background: linear-gradient(235deg, #450909, #4a2733); /* Gradient background */
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+    -webkit-text-fill-color: transparent; /* WebKit-specific text fill color */
+    font-size: 18px;
+    font-weight: 900;
+    z-index: 10000; /* Ensure text is above the pseudo-element */
+    transition: background 0.5s, color 0.5s; /* Optional: to add transition effects */
+}
+
+
+
+
+
+.update_article-button:hover {
+    opacity: 1;
+}
+
+.update_article-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+}
+
+.update_article-show {
+    display: block;
+}
+
+.update_article-modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.update_article-modal-backdrop.update_article-show {
+    display: block;
+}
+
+.update_article-main-content {
+    margin: 20px;
+}
+/* AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
+
+
+
+
+
+
 
 .article-notification {
     display: none; /* Initially hidden */
@@ -843,4 +1420,70 @@ article p {
 
 .submit-button:hover {
     background-color: #45a049;
+}
+
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes gradient-2 {
+
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+
+}
+
+@keyframes gradient-pink {
+
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+
+}
+
+
+
+.gradient-text {
+    background: linear-gradient(45deg, #f77d7d, #f3c78a, #ff73ef, #f77d7d);
+    background-size: 150% 150%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 10s ease infinite;
+    font-weight: 900;
+    font-size: 2em; /* Adjust font size as needed */
+}
+
+.gradient-text-2 {
+    background: linear-gradient(45deg, #fd99e1, #fccd8c, #fecbf7, #fef1ba, #fd99e1);
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-2 20s linear infinite;
+    font-weight: 900;
+    font-size: 2em; /* Adjust font size as needed */
+}
+
+.gradient-text-pink {
+    background: linear-gradient(45deg, #fd65d2, #fbaaf0, #fa60ff, #bd8bff);
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-pink 10s linear infinite;
+    font-weight: 900;
 }

@@ -12,6 +12,8 @@ function fetchArticles() {
                 const articleCard = document.createElement('div');
                 articleCard.className = 'article-card';
 
+                articleCard.style = "margin-top:10px; border: 1px solid #eeeeee;"
+
                 const title = document.createElement('div');
                 title.className = 'article-title';
                 title.textContent = article.title;
@@ -22,7 +24,7 @@ function fetchArticles() {
 
                 const readMoreBtn = document.createElement('a');
                 readMoreBtn.href = `/article.html?id=${article.id}`; // Adjust as needed
-                readMoreBtn.className = 'read-more-btn';
+                readMoreBtn.className = 'blue-button';
                 readMoreBtn.textContent = 'Read More';
 
                 articleCard.appendChild(title);
@@ -61,8 +63,9 @@ function searchArticles() {
                 summary.textContent = article.summary;
             
                 const readMoreBtn = document.createElement('a');
+                
                 readMoreBtn.href = `/article.html?id=${article.id}`;
-                readMoreBtn.className = 'read-more-btn enhanced';
+                readMoreBtn.className = 'blue-button';
                 readMoreBtn.textContent = 'Read More';
             
                 articleCard.appendChild(title);

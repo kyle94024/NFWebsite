@@ -2,10 +2,6 @@
   "name": "nfwebsite",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -24,5 +20,10 @@
     "pg": "^8.11.3",
     "postgres": "^3.4.4",
     "punycode": "^2.3.1"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "deploy": "vercel --prod"
   }
 }

@@ -130,9 +130,9 @@
     
     <!-- Place this right after the closing </header> tag -->
     <div class="intro-section">
-        <h1>Understanding Neurofibromatosis</h1>
-        <h2>Made Easy</h2>
-        <p>Collection of simplified NF articles certified by experts. Powered by GPT and REiNS.</p>
+        <span class="gradient-text-2" style="font-size: 70px; margin-top: 30px;">Neurofibromatosis Information</span>
+        <span class="gradient-text-2" style="font-size: 70px;">Made Simple</span>
+        <p>Collection of simplified NF articles certified by experts. Powered by REiNS.</p>
     </div>
 
   
@@ -156,12 +156,16 @@
         </div>
     </section>
 
-    <footer style="background-color: #031e3a">
-        <div class="container">
-            <p>&copy; 2024 Beta Version.</p>
+    <footer style="background-color: #72a4da">
+        <div class="container" style="height: 30px; bottom: 10px;">
+            <p>&copy; 2024 Alpha Version.</p>
         </div>
+        
+
     </footer>
+
     <script>
+
         document.addEventListener('DOMContentLoaded', function() {
     fetch('http://localhost:3000/api/session', { credentials: 'include' })
         .then(response => response.json())
@@ -185,6 +189,9 @@
                 loginLink.href = "login.html";
                 userMenu.appendChild(loginLink);
             }
+            header = document.querySelector('header');
+            header.style = 'background-color: #3482d1';
+
         })
         .catch(error => console.error('Error fetching session data:', error));
 });
@@ -248,7 +255,38 @@
             .catch(error => console.error('Error fetching session data:', error));
     });
 </script> -->
+<script>
+    window.addEventListener('scroll', function() {
+        if (!window.location.pathname.includes('website')) {return;}
+        const header = document.getElementById('header-placeholder');
+        const maxScroll = 470;
+        const scrollY = window.scrollY;
+        
+        if (scrollY > maxScroll) {
+            header.style.position = 'relative';
+            header.style.top = '470px';
+        } else {
+            header.style.position = '-webkit-sticky'; /* For Safari */
+            header.style.position = 'sticky';
+            header.style.top = '0';
+        }
 
+        function lerpColor(a, b, amount) { 
+            const [r1, g1, b1] = a.match(/\w\w/g).map(x => parseInt(x, 16));
+            const [r2, g2, b2] = b.match(/\w\w/g).map(x => parseInt(x, 16));
+            const r = Math.round(r1 + (r2 - r1) * amount);
+            const g = Math.round(g1 + (g2 - g1) * amount);
+            const bval = Math.round(b1 + (b2 - b1) * amount);
+            return `rgb(${r},${g},${bval})`;
+        }
+
+        const colorEnd = "#333333";
+        const colorStart = "#3482d1";
+        const color = lerpColor(colorStart, colorEnd, Math.min(scrollY / maxScroll, 1));
+        
+        header.style.backgroundColor = color;
+    });
+</script>
         
 </body>
 </html>

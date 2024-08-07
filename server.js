@@ -204,6 +204,31 @@ app.post('/delete-pending-article', requireAdmin, async (req, res) => {
     }
 });
 
+
+app.post('/retract-article', requireAdmin, async (req, res) => {
+    const { id } = req.body;
+    try {
+        const result = await pool.query('SELECT * FROM article WHERE id = $1', [id]);
+        const article = result.rows[0];
+
+        if (!article) {
+            return res.status(404).json({ success: false, message: 'Article not found' });
+        }
+
+        await pool.query(
+            'INSERT INTO pending_article (title, tags, innertext, summary, article_link) VALUES ($1, $2, $3, $4, $5)',
+            [article.title, article.tags, article.innertext, article.summary, article.article_link]
+        );
+
+        await pool.query('DELETE FROM article WHERE id = $1', [id]);
+        res.json({ success: true, message: 'Article retracted successfully!' });
+    } catch (err) {
+        console.error('Error retracting article:', err.stack);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+
 ///////////////////////////////
 
 
