@@ -19,11 +19,12 @@
     "openai": "^4.31.0",
     "pg": "^8.11.3",
     "postgres": "^3.4.4",
-    "punycode": "^2.3.1"
+    "punycode": "^2.3.1",
+    "vercel": "^35.2.3"
   },
-  "main": "server.js",
+  "main": "api/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node api/server.js",
     "deploy": "vercel --prod"
   }
 }
