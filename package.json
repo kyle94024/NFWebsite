@@ -22,9 +22,9 @@
     "punycode": "^2.3.1",
     "vercel": "^35.2.3"
   },
-  "main": "api/server.js",
+  "main": "api/index.js",
   "scripts": {
-    "start": "node api/server.js",
+    "start": "node api/index.js",
     "deploy": "vercel --prod"
   }
 }
