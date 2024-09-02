@@ -11,7 +11,7 @@ const upload = multer({ dest: 'uploads/' }); // Uploaded files will be stored in
 
 const app = express();
 const punycode = require('punycode/');
-app.use(express.static('public')); // 'public' is the directory where your website.html is located
+app.use(express.static('public')); // 'public' is the directory where index.html is located
 
 
 const session = require('express-session');
@@ -597,12 +597,16 @@ app.get('/admin-page', requireAdmin, (req, res) => {
 
 // Apply this middleware to all admin routes
 app.get('/admin/add-article', requireAdmin, (req, res) => {
-    res.sendFile(path.join(__dirname, '/add_article.html'));
+    res.sendFile(path.join(__dirname, '/articles/add'));
 });
 
 app.get('/admin/update-featured', requireAdmin, (req, res) => {
-    res.sendFile(path.join(__dirname, '/update_featured.html'));
+    res.sendFile(path.join(__dirname, '/featured/update'));
 });
+
+// app.get('/admin/update-featured', requireAdmin, (req, res) => { //OLD VERSION
+//     res.sendFile(path.join(__dirname, '/update_featured.html'));
+// });
 
 app.get('/search-articles', async (req, res) => {
     const searchQuery = req.query.q; // Assume the search term is passed as a query parameter "q"

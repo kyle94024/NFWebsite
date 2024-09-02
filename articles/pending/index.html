@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pending Articles</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
+    
+
     <style>
         .article-card {
             background-color: #fff;
@@ -39,7 +41,15 @@
 </head>
 <body>
     <header id="header-placeholder"></header>
-    <script src="header.js"></script>
+    <script src="/header/header.js"></script>
+
+    <script>
+        const apiUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000'
+        : 'https://www.example.com';
+    </script>
+
+    
 
     <section class="main-content container">
         <h1>Pending Articles</h1>
@@ -49,7 +59,7 @@
     <script>
         async function fetchPendingArticles() {
             try {
-                const response = await fetch('http://localhost:3000/get-pending-articles', { credentials: 'include' });
+                const response = await fetch(`${apiUrl}/get-pending-articles`, { credentials: 'include' });
                 const articles = await response.json();
                 const container = document.getElementById('pendingArticlesContainer');
 
@@ -70,7 +80,7 @@
                     const editButton = document.createElement('button');
                     editButton.className = 'blue-button';
                     editButton.textContent = 'Review';
-                    editButton.onclick = () => window.location.href = `pending_article.html?id=${article.id}`;
+                    editButton.onclick = () => window.location.href = `/articles/pending/pending_article.html?id=${article.id}`;
                     articleCard.appendChild(editButton);
 
                     container.appendChild(articleCard);

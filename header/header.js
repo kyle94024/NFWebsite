@@ -1,5 +1,5 @@
 function loadHeader() {
-    fetch('header.html')
+    fetch('/header/header.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('header-placeholder').innerHTML = data;
@@ -8,12 +8,12 @@ function loadHeader() {
 }
 
 function setupHeader() {
-    fetch('http://localhost:3000/api/session', { credentials: 'include' })
+    fetch(`${apiUrl}/api/session`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             const navList = document.getElementById('navList');
             const loginListItem = document.querySelector('header nav ul li:last-child');
-            fetch('http://localhost:3000/api/session', { credentials: 'include' })
+            fetch(`${apiUrl}/api/session`, { credentials: 'include' })
             .then(response => response.json())
             .then(data => {
                 const loginLink = document.querySelector('header nav ul li:last-child a');
@@ -29,7 +29,7 @@ function setupHeader() {
                 } else {
                     if (loginLink){
                         loginLink.textContent = "Log In";
-                        loginLink.href = "login.html"; // Ensure this points to your login page
+                        loginLink.href = "/login"; // Ensure this points to your login page
                     }
                 }
             })
@@ -39,7 +39,7 @@ function setupHeader() {
                 
                 if (data.isAdmin) {
                     const addArticleLi = document.createElement('li');
-                    addArticleLi.innerHTML = '<a style="color: red" href="/add_article.html">Add Article</a>';
+                    addArticleLi.innerHTML = '<a style="color: red" href="/articles/add">Add Article</a>';
                     navList.insertBefore(addArticleLi, loginListItem);
 
                     // const updateArticleLi = document.createElement('li');
@@ -47,20 +47,20 @@ function setupHeader() {
                     // navList.insertBefore(updateArticleLi, loginListItem);
 
                     const updateFeaturedLi = document.createElement('li');
-                    updateFeaturedLi.innerHTML = '<a style="color: red" href="/update_featured.html">Update Featured</a>';
+                    updateFeaturedLi.innerHTML = '<a style="color: red" href="/featured/update">Update Featured</a>';
                     navList.insertBefore(updateFeaturedLi, loginListItem);
 
                     const psqlLi = document.createElement('li');
-                    psqlLi.innerHTML = '<a style="color: red" href="/psql.html">PSQL</a>';
+                    psqlLi.innerHTML = '<a style="color: red" href="/psql">PSQL</a>';
                     navList.insertBefore(psqlLi, loginListItem);
 
                     const pendingArticlesLi = document.createElement('li');
-                    pendingArticlesLi.innerHTML = '<a style="color: red" href="/pending_articles.html">Pending Articles</a>';
+                    pendingArticlesLi.innerHTML = '<a style="color: red" href="/articles/pending">Pending Articles</a>';
                     navList.insertBefore(pendingArticlesLi, loginListItem);
                 }
                 
             } else {
-                loginListItem.innerHTML = '<a href="login.html">Log In</a>';
+                loginListItem.innerHTML = '<a href="/login">Log In</a>';
             }
            
             const userMenu = document.querySelector('header nav ul li:last-child');
@@ -69,7 +69,7 @@ function setupHeader() {
                 const emailButton = document.createElement('button');
                 emailButton.textContent = data.email;
                 emailButton.className = 'email-button'; // Apply button styling
-                emailButton.onclick = () => { window.location.href = 'profile.html'; }; // Redirect on click
+                emailButton.onclick = () => { window.location.href = '/profile'; }; // Redirect on click
 
                 if (data.isAdmin) {
                     emailButton.style.color = 'red';
@@ -79,7 +79,7 @@ function setupHeader() {
             } else {
                 const loginLink = document.createElement('a');
                 loginLink.textContent = "Log In";
-                loginLink.href = "login.html";
+                loginLink.href = "/login";
                 userMenu.appendChild(loginLink);
             }
 

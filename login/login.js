@@ -11,7 +11,7 @@ document.getElementById('createAccountForm').addEventListener('submit', async fu
         return;
     }
     console.log('Creating account...');
-    const response = await fetch('http://localhost:3000/create-account', {
+    const response = await fetch(`${apiUrl}/create-account`, {
         credentials: 'include',
         method: 'POST',
         headers: {
@@ -33,7 +33,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     const password = document.getElementById('loginPassword').value;
 
     try {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch(`${apiUrl}/login`, {
             credentials: 'include',
             method: 'POST',
             headers: {
@@ -45,8 +45,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         const data = await response.json();
         if (response.ok) {
             //alert('Login successful!');
-            // After login success in login.html
-            window.location.href = 'website.html?login=success';
+            // After login success in login
+            window.location.href = '/?login=success';
 
             ////////////////////////////
             const loginLink = document.querySelector('header nav ul li:last-child a');
@@ -61,7 +61,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 }
             } else {
                 loginLink.textContent = "Log In";
-                loginLink.href = "login.html"; // Ensure this points to your login page
+                loginLink.href = "/login"; // Ensure this points to your login page
             }
             ////////////////
             updateLoginUI(data.isLoggedIn, data.email, data.isAdmin);
@@ -84,7 +84,7 @@ function updateLoginUI(isLoggedIn, email, isAdmin) {
         }
     } else {
         loginLink.textContent = "Log In";
-        loginLink.href = "login.html";
+        loginLink.href = "/login";
     }
 }
 

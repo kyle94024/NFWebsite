@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Article</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
+
+    
+
     <style>
         input[type="text"], textarea {
             width: 90%;
@@ -53,7 +56,13 @@
     <div id="notification" class="notification">Added Article!</div>
 
     <header id="header-placeholder"> </header>
-    <script src="header.js"></script>
+    <script src="/header/header.js"></script>
+
+    <script>
+        const apiUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000'
+        : 'https://www.example.com';
+    </script>
 
     <section class="main-content container">
         <form id="addArticleForm" style="margin-left: 100px;">
@@ -127,7 +136,7 @@
             formData.innertext = quill.root.innerHTML; // Retrieve the HTML content from Quill
       
             try {
-                const response = await fetch('http://localhost:3000/add-article', {
+                const response = await fetch(`${apiUrl}/add-article`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
@@ -143,7 +152,7 @@
                 const result = await response.json();
                 console.log(result);
                 //alert('Article added successfully!');
-                window.location.href = 'add_article.html?added=success';
+                window.location.href = '/articles/add/?added=success';
             } catch (error) {
                 console.error('Failed to submit article:', error);
             }

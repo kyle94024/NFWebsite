@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
 async function fetchArticles() {
     // Fetch featured and all articles. This example assumes you have endpoints set up for these.
     const [featuredResp, allResp] = await Promise.all([
-        fetch('http://localhost:3000/get-featured-articles', {credentials: 'include'}),
-        fetch('http://localhost:3000/get-data', {credentials: 'include'})
+        fetch(`${apiUrl}/get-featured-articles`, {credentials: 'include'}),
+        fetch(`${apiUrl}/get-data`, {credentials: 'include'})
     ]);
     const featuredArticles = await featuredResp.json();
     const allArticles = await allResp.json();
@@ -97,7 +97,7 @@ function createArticleElement(article, isFeatured) {
 
 
 async function toggleFeatured(articleId, shouldBeFeatured) {
-    await fetch(`http://localhost:3000/update-featured-status`, {
+    await fetch(`${apiUrl}/update-featured-status`, {
         credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

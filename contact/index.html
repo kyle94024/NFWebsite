@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Contact us for any inquiries, requests, or to report a bug.">
     <title>Contact Us - Neurofibromatosis Simplified</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <header id="header-placeholder"> </header>
-    <script src="header.js"></script>
+    <script src="/header/header.js"></script>
+
+    <script>
+        const apiUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000'
+        : 'https://www.example.com';
+    </script>
 
     <section class="main-content">
         <div class="container">
@@ -64,7 +70,7 @@
                 const formData = new FormData(this);
                 console.log(formData);
         
-                fetch('http://localhost:3000/send-inquiry', {
+                fetch(`${apiUrl}/send-inquiry`, {
                     method: 'POST',
                     credentials: 'include', // Include credentials in the request
                     body: new URLSearchParams(formData)
@@ -93,7 +99,7 @@
     
             const articleLink = document.querySelector('#requestArticleForm input[name="articleLink"]').value;
             
-            fetch('http://localhost:3000/request-article', {
+            fetch(`${apiUrl}/request-article`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {'Content-Type': 'application/json'},
@@ -116,7 +122,7 @@
     
             const formData = new FormData(this); // 'this' refers to the form element, collecting all inputs including files
             
-            fetch('http://localhost:3000/report-bug', {
+            fetch(`${apiUrl}/report-bug`, {
                 method: 'POST',
                 credentials: 'include',
                 body: formData // No need to set Content-Type header when using FormData
@@ -138,7 +144,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-fetch('http://localhost:3000/api/session', { credentials: 'include' })
+fetch(`${apiUrl}/api/session`, { credentials: 'include' })
     .then(response => response.json())
     .then(data => {
         const userMenu = document.querySelector('header nav ul li:last-child');
@@ -147,7 +153,7 @@ fetch('http://localhost:3000/api/session', { credentials: 'include' })
             const emailButton = document.createElement('button');
             emailButton.textContent = data.email;
             emailButton.className = 'email-button'; // Apply button styling
-            emailButton.onclick = () => { window.location.href = 'profile.html'; }; // Redirect on click
+            emailButton.onclick = () => { window.location.href = '/profile'; }; // Redirect on click
 
             if (data.isAdmin) {
                 emailButton.style.color = 'red';
@@ -157,7 +163,7 @@ fetch('http://localhost:3000/api/session', { credentials: 'include' })
         } else {
             const loginLink = document.createElement('a');
             loginLink.textContent = "Log In";
-            loginLink.href = "login.html";
+            loginLink.href = "/login";
             userMenu.appendChild(loginLink);
         }
     })

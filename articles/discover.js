@@ -3,7 +3,7 @@ window.onload = function() {
 };
 
 function fetchArticles() {
-    fetch('http://localhost:3000/get-data', { credentials: 'include' }) // Adjust endpoint as needed
+    fetch(`${apiUrl}/get-data`, { credentials: 'include' }) // Adjust endpoint as needed
         .then(response => response.json())
         .then(articles => {
             const articlesGrid = document.getElementById('articlesGrid');
@@ -23,7 +23,7 @@ function fetchArticles() {
                 summary.textContent = article.summary; // Adjust as per your data structure
 
                 const readMoreBtn = document.createElement('a');
-                readMoreBtn.href = `/article.html?id=${article.id}`; // Adjust as needed
+                readMoreBtn.href = `/articles/article.html?id=${article.id}`; // Adjust as needed
                 readMoreBtn.className = 'blue-button';
                 readMoreBtn.textContent = 'Read More';
 
@@ -45,7 +45,7 @@ function searchArticles() {
     }
 
     // Call the search endpoint with the search term
-    fetch(`http://localhost:3000/search-articles?q=${encodeURIComponent(searchTerm)}`, { credentials: 'include' })
+    fetch(`${apiUrl}/search-articles?q=${encodeURIComponent(searchTerm)}`, { credentials: 'include' })
         .then(response => response.json())
         .then(articles => {
             const articlesGrid = document.getElementById('articlesGrid');
@@ -64,7 +64,7 @@ function searchArticles() {
             
                 const readMoreBtn = document.createElement('a');
                 
-                readMoreBtn.href = `/article.html?id=${article.id}`;
+                readMoreBtn.href = `/articles/article.html?id=${article.id}`;
                 readMoreBtn.className = 'blue-button';
                 readMoreBtn.textContent = 'Read More';
             

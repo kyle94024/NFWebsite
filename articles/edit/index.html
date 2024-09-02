@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Article</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
+    
 </head>
 <body>
     <header id="header-placeholder"></header>
-    <script src="header.js"></script>
+    <script src="/header/header.js"></script>
+
+    <script>
+        const apiUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000'
+        : 'https://www.example.com';
+    </script>
 
     <section class="update_article-main-content container" style="width: 1350px;">
         <h1 style="color: red; margin-left: 100px; font-size: 40px;"> Update Article</h1>
@@ -60,7 +67,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
             if (articleId) {
-                fetch(`http://localhost:3000/get-article/${articleId}`, { credentials: 'include' })
+                fetch(`${apiUrl}/get-article/${articleId}`, { credentials: 'include' })
                     .then(response => response.json())
                     .then(article => {
                         document.getElementById('articleId').value = article.id;
@@ -86,7 +93,7 @@
             };
 
             try {
-                const response = await fetch('http://localhost:3000/update-article', {
+                const response = await fetch(`${apiUrl}/update-article`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
@@ -96,7 +103,7 @@
                 });
 
                 if (response.ok) {
-                    window.location.href = 'article.html?id=' + formData.id + '&updated=success';
+                    window.location.href = '/articles/article.html?id=' + formData.id + '&updated=success';
                 } else {
                     console.error('Failed to update article');
                 }
@@ -157,7 +164,7 @@
 
         async function handleRetract(articleId) {
             try {
-                const response = await fetch('http://localhost:3000/retract-article', {
+                const response = await fetch(`${apiUrl}/retract-article`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
@@ -167,7 +174,7 @@
                 });
 
                 if (response.ok) {
-                    window.location.href = 'pending_articles.html?retracted=success';
+                    window.location.href = '/articles/pending?retracted=success';
                 } else {
                     console.error('Failed to retract article');
                 }
@@ -179,7 +186,7 @@
 
         async function handleDelete(articleId) {
             try {
-                const response = await fetch('http://localhost:3000/delete-update-article', {
+                const response = await fetch(`${apiUrl}/delete-update-article`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
@@ -189,7 +196,7 @@
                 });
 
                 if (response.ok) {
-                    window.location.href = 'update_articles.html?deleted=success';
+                    window.location.href = '/articles?deleted=success';
                 } else {
                     console.error('Failed to delete article');
                 }

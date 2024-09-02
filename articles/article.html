@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article Details</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 
     <!-- Include stylesheet -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
@@ -14,7 +14,13 @@
 </head>
 <body>
     <header id="header-placeholder"></header>
-    <script src="header.js"> </script>
+    <script src="/header/header.js"> </script>
+
+    <script>
+        const apiUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000'
+        : 'https://www.example.com';
+    </script>
 
     <div id="notification" class="notification">Article updated successfully!</div>
     
@@ -53,7 +59,7 @@
             
 
             if (articleId) {
-                fetch(`http://localhost:3000/get-article/${articleId}`, { credentials: 'include' })
+                fetch(`${apiUrl}/get-article/${articleId}`, { credentials: 'include' })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -75,14 +81,14 @@
                         }
 
                         // Show edit button for admin users
-                        fetch('http://localhost:3000/api/session', { credentials: 'include' })
+                        fetch(`${apiUrl}/api/session`, { credentials: 'include' })
                             .then(response => response.json())
                             .then(data => {
                                 if (data.isAdmin) {
                                     const editButton = document.getElementById('editArticleButton');
                                     editButton.style.display = 'inline-block';
                                     editButton.onclick = () => {
-                                        window.location.href = `update_article.html?id=${articleId}`;
+                                        window.location.href = `/articles/edit/?id=${articleId}`;
                                     };
                                 }
                             })

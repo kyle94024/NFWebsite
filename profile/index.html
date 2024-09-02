@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <header id="header-placeholder"> </header>
-    <script src="header.js"></script>
+    <script src=/header/header.js"></script>
+
+    <script>
+        const apiUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000'
+        : 'https://www.example.com';
+    </script>
 
     <div class="container main-content">
         <h2>User Profile</h2>
@@ -21,12 +27,12 @@
 
     <script>
         function logout() {
-            fetch('http://localhost:3000/logout', {
+            fetch(`${apiUrl}/logout`, {
                 method: 'POST',
                 credentials: 'include'
             })
             .then(() => {
-                window.location.href = 'login.html'; // Redirect to login page after logout
+                window.location.href = '/login'; // Redirect to login page after logout
             })
             .catch(error => console.error('Error logging out:', error));
         }

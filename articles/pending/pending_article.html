@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Pending Article</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <header id="header-placeholder"></header>
-    <script src="header.js"></script>
+    <script src="/header/header.js"></script>
+
+    <script>
+        const apiUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000'
+        : 'https://www.example.com';
+    </script>
 
     <section class="pending_article-main-content container" style="width: 1350px;">
         <h1 style="color: red; margin-left: 100px; font-size: 40px;">Edit Pending Article</h1>
@@ -60,7 +66,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
             if (articleId) {
-                fetch(`http://localhost:3000/get-pending-article/${articleId}`, { credentials: 'include' })
+                fetch(`${apiUrl}/get-pending-article/${articleId}`, { credentials: 'include' })
                     .then(response => response.json())
                     .then(article => {
                         document.getElementById('articleId').value = article.id;
@@ -86,7 +92,7 @@
             };
 
             try {
-                const response = await fetch('http://localhost:3000/update-pending-article', {
+                const response = await fetch(`${apiUrl}/update-pending-article`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
@@ -96,7 +102,7 @@
                 });
 
                 if (response.ok) {
-                    window.location.href = 'pending_articles.html?updated=success';
+                    window.location.href = '/articles/pending/?updated=success'; //might need / between pending and ?
                 } else {
                     console.error('Failed to update article');
                 }
@@ -104,6 +110,36 @@
                 console.error('Error updating article:', error);
             }
         });
+
+        async function updateBeforePublish() {
+            const formData = {
+                id: document.getElementById('articleId').value,
+                title: document.getElementById('title').value,
+                tags: document.getElementById('tags').value.split(',').map(tag => tag.trim()),
+                innertext: quill.root.innerHTML,
+                summary: document.getElementById('summary').value,
+                article_link: document.getElementById('articleLink').value
+            }
+
+            try {
+                const response = await fetch(`${apiUrl}/update-pending-article`, {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    window.location.href = '/articles/pending/?updated=success'; //might need / between pending and ?
+                } else {
+                    console.error('Failed to update article');
+                }
+            } catch (error) {
+                console.error('Error updating article:', error);
+            }
+        }
 
         function showConfirmationModal(action) {
             const modal = document.getElementById('confirmationModal');
@@ -119,12 +155,13 @@
             backdrop.classList.add('pending_article-show');
         }
 
-        function handleConfirm(action) {
+        async function handleConfirm(action) {
             const modal = document.getElementById('confirmationModal');
             const backdrop = document.getElementById('modalBackdrop');
             const articleId = document.getElementById('articleId').value;
 
             if (action === 'publish') {
+                await updateBeforePublish();
                 handlePublish(articleId);
             } else if (action === 'delete') {
                 handleDelete(articleId);
@@ -136,7 +173,7 @@
 
         async function handlePublish(articleId) {
             try {
-                const response = await fetch('http://localhost:3000/publish-article', {
+                const response = await fetch(`${apiUrl}/publish-article`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
@@ -146,7 +183,7 @@
                 });
 
                 if (response.ok) {
-                    window.location.href = 'pending_articles.html?published=success';
+                    window.location.href = '/articles/pending/?published=success';
                 } else {
                     console.error('Failed to publish article');
                 }
@@ -157,7 +194,7 @@
 
         async function handleDelete(articleId) {
             try {
-                const response = await fetch('http://localhost:3000/delete-pending-article', {
+                const response = await fetch(`${apiUrl}/delete-pending-article`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
@@ -167,7 +204,7 @@
                 });
 
                 if (response.ok) {
-                    window.location.href = 'pending_articles.html?deleted=success';
+                    window.location.href = '/articles/pending/?deleted=success';
                 } else {
                     console.error('Failed to delete article');
                 }

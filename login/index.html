@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Login and Account Creation</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <header id="header-placeholder"> </header>
-    <script src="header.js"></script>
+    <script src="/header/header.js"></script>
+
+    <script>
+        const apiUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000'
+        : 'https://www.example.com';
+    </script>
 
     <div class="container form-container">
         <h2>Login</h2>

@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn more about us on our About page.">
     <title>psql - Neurofibromatosis Simplified</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
+
+    <script>
+        const apiUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000'
+        : 'https://www.example.com';
+    </script>
 
     <style>
         body {
@@ -59,7 +65,7 @@
 </head>
 <body>
     <header id="header-placeholder"> </header>
-    <script src="header.js"></script>
+    <script src="/header/header.js"></script>
 
     <section class="main-content">
         <div class="container">
@@ -101,7 +107,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('http://localhost:3000/api/session', { credentials: 'include' })
+            fetch(`${apiUrl}/api/session`, { credentials: 'include' })
                 .then(response => response.json())
                 .then(data => {
                     const loginLink = document.querySelector('header nav ul li:last-child a');
@@ -116,7 +122,7 @@
                         }
                     } else {
                         loginLink.textContent = "Log In";
-                        loginLink.href = "login.html"; // Ensure this points to your login page
+                        loginLink.href = "/login"; // Ensure this points to your login page
                     }
                 })
                 .catch(error => console.error('Error fetching session data:', error));
@@ -125,7 +131,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-fetch('http://localhost:3000/api/session', { credentials: 'include' })
+fetch(`${apiUrl}/api/session`, { credentials: 'include' })
     .then(response => response.json())
     .then(data => {
         const userMenu = document.querySelector('header nav ul li:last-child');
@@ -134,7 +140,7 @@ fetch('http://localhost:3000/api/session', { credentials: 'include' })
             const emailButton = document.createElement('button');
             emailButton.textContent = data.email;
             emailButton.className = 'email-button'; // Apply button styling
-            emailButton.onclick = () => { window.location.href = 'profile.html'; }; // Redirect on click
+            emailButton.onclick = () => { window.location.href = '/profile'; }; // Redirect on click
 
             if (data.isAdmin) {
                 emailButton.style.color = 'red';
@@ -144,7 +150,7 @@ fetch('http://localhost:3000/api/session', { credentials: 'include' })
         } else {
             const loginLink = document.createElement('a');
             loginLink.textContent = "Log In";
-            loginLink.href = "login.html";
+            loginLink.href = "/login";
             userMenu.appendChild(loginLink);
         }
     })
