@@ -11,10 +11,11 @@
     <script>
         const apiUrl = window.location.hostname === 'localhost'
         ? 'http://localhost:3000'
-        : 'https://www.example.com';
+        : 'https://nfsimplified-kyle94024s-projects.vercel.app';
     </script>
 
     <script>
+        
         // async function fetchData() {
         //     try {
         //         const response = await fetch(`${apiUrl}/get-data`, { credentials: 'include' });
@@ -171,12 +172,14 @@
     </footer>
 
     <script>
+        console.log("hostname:",window.location.hostname);
 
         document.addEventListener('DOMContentLoaded', function() {
     fetch(`${apiUrl}/api/session`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             const userMenu = document.querySelector('header nav ul li:last-child');
+            
             userMenu.innerHTML = '';
             if (data.isLoggedIn) {
                 const emailButton = document.createElement('button');
@@ -205,6 +208,7 @@
         </script>
 
     <script> 
+    
         function showNotification(message) {
             const notification = document.getElementById('notification');
             notification.textContent = message; // Update notification message

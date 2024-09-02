@@ -2,11 +2,11 @@ require('dotenv').config(); // This line loads the environment variables from th
 const axios = require('axios');
 const express = require('express');
 const cors = require('cors'); // Import cors
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const { Pool } = require('pg');
+const path = require('path');
 // const pg = require('pg');
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); // Uploaded files will be stored in the 'uploads/' directory
+
 
 
 const app = express();
@@ -62,7 +62,7 @@ const port = 3000;
 const corsOptions = {
     origin: function (origin, callback) {
         // List of allowed origins
-        const allowedOrigins = ['http://localhost:5500', 'http://127.0.0.1:5500'];
+        const allowedOrigins = ['http://localhost:5500', 'http://127.0.0.1:5500', 'https://nfsimplified-kyle94024s-projects.vercel.app/'];
         
         // Check if the request's origin is in the list of allowed origins
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
@@ -503,86 +503,90 @@ app.get('/api/session', (req, res) => {
 
 
 
+// app.listen(port, () => {
+//     console.log(`Server running at http://localhost:${port}`);
+//   });
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const nodemailer = require('nodemailer');
-const e = require('express');
+// const nodemailer = require('nodemailer');
+// const e = require('express');
 
-// Configure Nodemailer transporter
-const transporter = nodemailer.createTransport({
-    service: 'gmail', // For example, Gmail. Use your email service here.
-    auth: {
-        user: process.env.EMAIL_USER, // Your email
-        pass: process.env.EMAIL_PASSWORD, // Your email password or app-specific password
-    },
-});
+// // Configure Nodemailer transporter
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail', // For example, Gmail. Use your email service here.
+//     auth: {
+//         user: process.env.EMAIL_USER, // Your email
+//         pass: process.env.EMAIL_PASSWORD, // Your email password or app-specific password
+//     },
+// });
 
-app.post('/send-inquiry', async (req, res) => {
-    const { name, email, message } = req.body;
-    console.log("nem",name,email,message);
-    // const mailOptions = {
-    //     from: email,
-    //     to: process.env.EMAIL_USER, // Where you want to receive messages
-    //     subject: 'New Inquiry from Contact Form',
-    //     text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-    // };
+// app.post('/send-inquiry', async (req, res) => {
+//     const { name, email, message } = req.body;
+//     console.log("nem",name,email,message);
+//     // const mailOptions = {
+//     //     from: email,
+//     //     to: process.env.EMAIL_USER, // Where you want to receive messages
+//     //     subject: 'New Inquiry from Contact Form',
+//     //     text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+//     // };
 
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //     if (error) {
-    //         console.log(error);
-    //         res.status(500).send('Error sending email');
-    //     } else {
-    //         console.log('Email sent: ' + info.response);
-    //         res.send('Inquiry sent successfully');
-    //     }
-    // });
-});
-
-
-app.post('/request-article', async (req, res) => {
-    const { articleLink } = req.body;
-
-    // Insert into the database
-    const queryText = 'INSERT INTO requested_articles(article_link) VALUES($1) RETURNING *';
-    try {
-        const result = await pool.query(queryText, [articleLink]);
-        // Optionally, send an email notification here using Nodemailer
-        res.json(result.rows[0]);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error requesting article');
-    }
-});
+//     // transporter.sendMail(mailOptions, (error, info) => {
+//     //     if (error) {
+//     //         console.log(error);
+//     //         res.status(500).send('Error sending email');
+//     //     } else {
+//     //         console.log('Email sent: ' + info.response);
+//     //         res.send('Inquiry sent successfully');
+//     //     }
+//     // });
+// });
 
 
-app.post('/report-bug', upload.single('bugFile'), async (req, res) => {
-    const { name, email, description } = req.body;
-    const file = req.file; // Access the uploaded file information
+// app.post('/request-article', async (req, res) => {
+//     const { articleLink } = req.body;
 
-    // // Configure the email to include the file if uploaded
-    // const mailOptions = {
-    //     from: email,
-    //     to: 'your_bug_report_email@example.com',
-    //     subject: 'New Bug Report',
-    //     text: `Name: ${name}\nEmail: ${email}\nDescription: ${description}`,
-    //     attachments: [
-    //         {
-    //             filename: file.originalname,
-    //             path: file.path,
-    //         },
-    //     ],
-    // };
+//     // Insert into the database
+//     const queryText = 'INSERT INTO requested_articles(article_link) VALUES($1) RETURNING *';
+//     try {
+//         const result = await pool.query(queryText, [articleLink]);
+//         // Optionally, send an email notification here using Nodemailer
+//         res.json(result.rows[0]);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Error requesting article');
+//     }
+// });
 
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //     if (error) {
-    //         console.log(error);
-    //         res.status(500).send('Error reporting bug');
-    //     } else {
-    //         console.log('Bug report sent: ' + info.response);
-    //         res.send('Bug reported successfully');
-    //     }
-    // });
-});
+
+// app.post('/report-bug', upload.single('bugFile'), async (req, res) => {
+//     const { name, email, description } = req.body;
+//     const file = req.file; // Access the uploaded file information
+
+//     // // Configure the email to include the file if uploaded
+//     // const mailOptions = {
+//     //     from: email,
+//     //     to: 'your_bug_report_email@example.com',
+//     //     subject: 'New Bug Report',
+//     //     text: `Name: ${name}\nEmail: ${email}\nDescription: ${description}`,
+//     //     attachments: [
+//     //         {
+//     //             filename: file.originalname,
+//     //             path: file.path,
+//     //         },
+//     //     ],
+//     // };
+
+//     // transporter.sendMail(mailOptions, (error, info) => {
+//     //     if (error) {
+//     //         console.log(error);
+//     //         res.status(500).send('Error reporting bug');
+//     //     } else {
+//     //         console.log('Bug report sent: ' + info.response);
+//     //         res.send('Bug reported successfully');
+//     //     }
+//     // });
+// });
 
 
 
@@ -658,8 +662,30 @@ app.get('/get-pending-article/:id', requireAdmin, async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+// app.use('/about', express.static('about'));
+// app.use('/articles', express.static('articles'));
+// app.use('/contact', express.static('contact'));
+// app.use('/featured', express.static('featured'));
+// app.use('/header', express.static('header'));
+// app.use('/login', express.static('login'));
+// app.use('/profile', express.static('profile'));
+// app.use('/psql', express.static('psql'));
+// app.use('/styles.css', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'styles.css'));
+// });
 
-// app.get("/", (req, res) => res.send("Express on Vercel"));
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'index.html'));
+// });
+
+
+app.get("/", (req, res) => res.send("Express on Vercel"));
+
+// if (process.env.NODE_ENV !== 'production') {
+//     app.listen(port, () => {
+//         console.log(`Server running on http://localhost:${port}`);
+//     });
+// }
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

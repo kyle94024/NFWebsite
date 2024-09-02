@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Article</title>
+    <title>Edit Pending Article</title>
     <link rel="stylesheet" href="/styles.css">
-    
 </head>
 <body>
     <header id="header-placeholder"></header>
@@ -14,32 +13,32 @@
     <script>
         const apiUrl = window.location.hostname === 'localhost'
         ? 'http://localhost:3000'
-        : 'https://www.example.com';
+        : 'https://nfsimplified-kyle94024s-projects.vercel.app';
     </script>
 
-    <section class="update_article-main-content container" style="width: 1350px;">
-        <h1 style="color: red; margin-left: 100px; font-size: 40px;"> Update Article</h1>
-        <form id="editArticleForm" class="update_article-form" style="margin-left: 150px;">
+    <section class="pending_article-main-content container" style="width: 1350px;">
+        <h1 style="color: red; margin-left: 100px; font-size: 40px;">Edit Pending Article</h1>
+        <form id="editArticleForm" class="pending_article-form" style="margin-left: 150px;">
             <h3 style="color:deeppink; margin-top: 30px;">Title</h3>
             <input type="hidden" id="articleId" name="articleId">
-            <input type="text" id="title" name="title" placeholder="Title" required class="update_article-input">
+            <input type="text" id="title" name="title" placeholder="Title" required class="pending_article-input">
             <h3 style="color:deeppink; margin-top: 20px;">Source Article Link</h3>
-            <input type="url" id="articleLink" name="articleLink" placeholder="Optional Article Link" class="update_article-input">
+            <input type="url" id="articleLink" name="articleLink" placeholder="Optional Article Link" class="pending_article-input">
             <h3 style="color:deeppink; margin-top: 20px;">Tags (separated by commas)</h3>
-            <input type="text" id="tags" name="tags" placeholder="Tags (separated by commas)" class="update_article-input">
+            <input type="text" id="tags" name="tags" placeholder="Tags (separated by commas)" class="pending_article-input">
             <h3 style="color:deeppink; margin-top: 20px;">Description (1-2 sentences)</h3>
-            <textarea id="summary" name="summary" placeholder="Summary" class="update_article-textarea"></textarea>
+            <textarea id="summary" name="summary" placeholder="Summary" class="pending_article-textarea"></textarea>
             <h2 style="color:deeppink; margin-top: 20px;">Article Content</h2>
             <div id="editor"></div>
             <div style="margin-top: 50px; justify-content: center; width: 100%;">
-                <button type="submit" class="update_article-button update_article-save-button">
-                    <span class="update_article-save-button-text">Save Edits</span>
+                <button type="submit" class="pending_article-button pending_article-save-button">
+                    <span class="pending_article-save-button-text">Save Edits</span>
                 </button>
-                <button type="button" class="update_article-button update_article-retract-button" onclick="showConfirmationModal('retract')">
-                    <span class="update_article-retract-button-text">Retract Article</span>
+                <button type="button" class="pending_article-button pending_article-publish-button" onclick="showConfirmationModal('publish')">
+                    <span class="pending_article-publish-button-text">Publish Article</span>
                 </button>
-                <button type="button" class="update_article-button update_article-delete-button" onclick="showConfirmationModal('delete')">
-                    <span class="update_article-delete-button-text">Delete Article</span>
+                <button type="button" class="pending_article-button pending_article-delete-button" onclick="showConfirmationModal('delete')">
+                    <span class="pending_article-delete-button-text">Delete Article</span>
                 </button>
             </div>
         </form>
@@ -48,12 +47,12 @@
         
     
 
-    <div id="confirmationModal" class="update_article-modal">
+    <div id="confirmationModal" class="pending_article-modal">
         <p id="confirmationMessage"></p>
-        <button id="confirmButton" class="update_article-button">Confirm</button>
-        <button id="cancelButton" class="update_article-button">Cancel</button>
+        <button id="confirmButton" class="pending_article-button">Confirm</button>
+        <button id="cancelButton" class="pending_article-button">Cancel</button>
     </div>
-    <div id="modalBackdrop" class="update_article-modal-backdrop"></div>
+    <div id="modalBackdrop" class="pending_article-modal-backdrop"></div>
 
     <!-- Include the Quill library -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
@@ -67,7 +66,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
             if (articleId) {
-                fetch(`${apiUrl}/get-article/${articleId}`, { credentials: 'include' })
+                fetch(`${apiUrl}/get-pending-article/${articleId}`, { credentials: 'include' })
                     .then(response => response.json())
                     .then(article => {
                         document.getElementById('articleId').value = article.id;
@@ -93,7 +92,7 @@
             };
 
             try {
-                const response = await fetch(`${apiUrl}/update-article`, {
+                const response = await fetch(`${apiUrl}/update-pending-article`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
@@ -103,7 +102,7 @@
                 });
 
                 if (response.ok) {
-                    window.location.href = '/articles/article.html?id=' + formData.id + '&updated=success';
+                    window.location.href = '/articles/pending/?updated=success'; //might need / between pending and ?
                 } else {
                     console.error('Failed to update article');
                 }
@@ -111,6 +110,36 @@
                 console.error('Error updating article:', error);
             }
         });
+
+        async function updateBeforePublish() {
+            const formData = {
+                id: document.getElementById('articleId').value,
+                title: document.getElementById('title').value,
+                tags: document.getElementById('tags').value.split(',').map(tag => tag.trim()),
+                innertext: quill.root.innerHTML,
+                summary: document.getElementById('summary').value,
+                article_link: document.getElementById('articleLink').value
+            }
+
+            try {
+                const response = await fetch(`${apiUrl}/update-pending-article`, {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    window.location.href = '/articles/pending/?updated=success'; //might need / between pending and ?
+                } else {
+                    console.error('Failed to update article');
+                }
+            } catch (error) {
+                console.error('Error updating article:', error);
+            }
+        }
 
         function showConfirmationModal(action) {
             const modal = document.getElementById('confirmationModal');
@@ -122,49 +151,29 @@
             
             confirmButton.onclick = () => handleConfirm(action);
 
-            modal.classList.add('update_article-show');
-            backdrop.classList.add('update_article-show');
+            modal.classList.add('pending_article-show');
+            backdrop.classList.add('pending_article-show');
         }
 
-        function handleConfirm(action) {
+        async function handleConfirm(action) {
             const modal = document.getElementById('confirmationModal');
             const backdrop = document.getElementById('modalBackdrop');
             const articleId = document.getElementById('articleId').value;
 
-            if (action === 'retract') {
-                handleRetract(articleId);
+            if (action === 'publish') {
+                await updateBeforePublish();
+                handlePublish(articleId);
             } else if (action === 'delete') {
                 handleDelete(articleId);
             }
 
-            modal.classList.remove('update_article-show');
-            backdrop.classList.remove('update_article-show');
+            modal.classList.remove('pending_article-show');
+            backdrop.classList.remove('pending_article-show');
         }
 
-        // async function handlePublish(articleId) {
-        //     try {
-        //         const response = await fetch('http://localhost:3000/publish-article', {
-        //             credentials: 'include',
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //             },
-        //             body: JSON.stringify({ id: articleId }),
-        //         });
-
-        //         if (response.ok) {
-        //             window.location.href = 'update_articles.html?published=success';
-        //         } else {
-        //             console.error('Failed to publish article');
-        //         }
-        //     } catch (error) {
-        //         console.error('Error publishing article:', error);
-        //     }
-        // }
-
-        async function handleRetract(articleId) {
+        async function handlePublish(articleId) {
             try {
-                const response = await fetch(`${apiUrl}/retract-article`, {
+                const response = await fetch(`${apiUrl}/publish-article`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
@@ -174,19 +183,18 @@
                 });
 
                 if (response.ok) {
-                    window.location.href = '/articles/pending?retracted=success';
+                    window.location.href = '/articles/pending/?published=success';
                 } else {
-                    console.error('Failed to retract article');
+                    console.error('Failed to publish article');
                 }
             } catch (error) {
-                console.error('Error retracting article:', error);
+                console.error('Error publishing article:', error);
             }
         }
 
-
         async function handleDelete(articleId) {
             try {
-                const response = await fetch(`${apiUrl}/delete-update-article`, {
+                const response = await fetch(`${apiUrl}/delete-pending-article`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
@@ -196,7 +204,7 @@
                 });
 
                 if (response.ok) {
-                    window.location.href = '/articles?deleted=success';
+                    window.location.href = '/articles/pending/?deleted=success';
                 } else {
                     console.error('Failed to delete article');
                 }
@@ -208,8 +216,8 @@
         document.getElementById('cancelButton').onclick = () => {
             const modal = document.getElementById('confirmationModal');
             const backdrop = document.getElementById('modalBackdrop');
-            modal.classList.remove('update_article-show');
-            backdrop.classList.remove('update_article-show');
+            modal.classList.remove('pending_article-show');
+            backdrop.classList.remove('pending_article-show');
         };
     </script>
 </body>
