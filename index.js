@@ -2,7 +2,7 @@ require('dotenv').config(); // This line loads the environment variables from th
 const axios = require('axios');
 const express = require('express');
 const cors = require('cors'); // Import cors
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const { Pool } = require('pg');
 // const pg = require('pg');
 const multer = require('multer');
@@ -501,9 +501,7 @@ app.get('/api/session', (req, res) => {
 //     });
 // });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -561,29 +559,29 @@ app.post('/report-bug', upload.single('bugFile'), async (req, res) => {
     const { name, email, description } = req.body;
     const file = req.file; // Access the uploaded file information
 
-    // Configure the email to include the file if uploaded
-    const mailOptions = {
-        from: email,
-        to: 'your_bug_report_email@example.com',
-        subject: 'New Bug Report',
-        text: `Name: ${name}\nEmail: ${email}\nDescription: ${description}`,
-        attachments: [
-            {
-                filename: file.originalname,
-                path: file.path,
-            },
-        ],
-    };
+    // // Configure the email to include the file if uploaded
+    // const mailOptions = {
+    //     from: email,
+    //     to: 'your_bug_report_email@example.com',
+    //     subject: 'New Bug Report',
+    //     text: `Name: ${name}\nEmail: ${email}\nDescription: ${description}`,
+    //     attachments: [
+    //         {
+    //             filename: file.originalname,
+    //             path: file.path,
+    //         },
+    //     ],
+    // };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log(error);
-            res.status(500).send('Error reporting bug');
-        } else {
-            console.log('Bug report sent: ' + info.response);
-            res.send('Bug reported successfully');
-        }
-    });
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //     if (error) {
+    //         console.log(error);
+    //         res.status(500).send('Error reporting bug');
+    //     } else {
+    //         console.log('Bug report sent: ' + info.response);
+    //         res.send('Bug reported successfully');
+    //     }
+    // });
 });
 
 
@@ -660,3 +658,11 @@ app.get('/get-pending-article/:id', requireAdmin, async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+// app.get("/", (req, res) => res.send("Express on Vercel"));
+
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+  });
+
+module.exports = app;
