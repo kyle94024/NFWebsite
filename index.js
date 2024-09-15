@@ -678,8 +678,50 @@ app.get('/get-pending-article/:id', requireAdmin, async (req, res) => {
 //     res.sendFile(path.join(__dirname, 'index.html'));
 // });
 
+//article verification for pending
+app.post('/verified-pending-article', async (req, res) => {
+    const { email, id } = req.body;  // Destructuring email and id from the request body
+    id = parseInt(id, 10); //turn into number
 
-app.get("/", (req, res) => res.send("Express on Vercel"));
+    try {
+        // Fetch the current list of verified emails for the given article id
+        const fetchResult = await pool.query('SELECT certifiedby FROM article WHERE id = $1', [id]);
+        let currentVerifiedEmails = fetchResult.rows[0]?.certifiedby || [];
+
+        // Check if the email is already in the verified list
+        if (!currentVerifiedEmails.includes(email)) {
+            // Add the email to the list if it's not already included
+            currentVerifiedEmails.push(email);
+
+            // Update the verified emails for the specific article id in the database
+            await pool.query(
+                'UPDATE article SET certifiedby = $1 WHERE id = $2',
+                [currentVerifiedEmails, id]
+            );
+
+            res.json({ message: 'Article verification status updated successfully.' });
+        } else {
+            // The email is already in the verified list
+            res.json({ message: 'Email is already verified for this article.' });
+        }
+    } catch (err) {
+        console.error('Error updating article verification status:', err.stack);
+        res.status(500).json({ error: 'Error updating article verification status' });
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// app.get("/", (req, res) => res.send("Express on Vercel"));
 
 // if (process.env.NODE_ENV !== 'production') {
 //     app.listen(port, () => {

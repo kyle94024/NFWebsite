@@ -19,9 +19,76 @@
     <section class="pending_article-main-content container" style="width: 1350px;">
         <h1 style="color: red; margin-left: 100px; font-size: 40px;">Edit Pending Article</h1>
         <form id="editArticleForm" class="pending_article-form" style="margin-left: 150px;">
+            <!-- //checkmark -->
+            <div id="pending-verified-example" class="pending-verified-container">
+                <div class="pending-verified-checkmark" onclick="toggleVerification('example')"></div>
+                <span id="pending-verified-text-example" class="pending-verified-text">Click to verify</span>
+            </div>
+
+            <script>
+                async function toggleVerification(id) {
+                    const checkmark = document.querySelector(`#pending-verified-${id} .pending-verified-checkmark`);
+                    const text = document.getElementById(`pending-verified-text-${id}`);
+
+                    if (checkmark.classList.contains('verified')) {
+                        // Unverify: Change back to original state
+                        checkmark.classList.remove('verified');
+                        text.textContent = 'Click to verify';
+                        text.classList.remove('green');
+
+                        try {
+                            fetch(`${apiUrl}/api/session`, { credentials: 'include' })
+                                .then(response => response.json())
+                                .then(async data => {
+                                    const userMenu = document.querySelector('header nav ul li:last-child');
+
+                                    userMenu.innerHTML = '';
+                                    if (data.isLoggedIn && data.isAdmin) {
+                                        const email = data.email;
+                                        
+                                        try {
+                                            const articleId = urlParams.get('id');
+                                            console.log('email to verify:', email);
+                                            if (articleId) {
+                                                const response = await fetch(`${apiUrl}/verified-pending-article`, {
+                                                    credentials: 'include',
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                    },
+                                                    body: JSON.stringify({ email, articleId }),  // Sending both email and id
+                                                });
+                                            
+
+
+                                                if (!response.ok) {
+                                                    console.error('Error verifying pending article:', response.statusText);
+                                                }
+                                            }
+                                        } catch (error) {
+                                            console.error('Error during fetch:', error);
+                                        }
+                                    }
+                                })
+                                .catch(error => console.error('Error fetching session data:', error));
+                        } catch (error) {
+                            console.error('Error in outer try block:', error);
+                        }
+
+                            
+
+                    } else {
+                        // Verify: Change to verified state
+                        checkmark.classList.add('verified');
+                        text.innerHTML = '<span class="pending-verified-verified green">Verified!</span>';
+                    }
+                }
+            </script>
             <h3 style="color:deeppink; margin-top: 30px;">Title</h3>
             <input type="hidden" id="articleId" name="articleId">
             <input type="text" id="title" name="title" placeholder="Title" required class="pending_article-input">
+            
+            
             <h3 style="color:deeppink; margin-top: 20px;">Source Article Link</h3>
             <input type="url" id="articleLink" name="articleLink" placeholder="Optional Article Link" class="pending_article-input">
             <h3 style="color:deeppink; margin-top: 20px;">Tags (separated by commas)</h3>

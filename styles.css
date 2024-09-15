@@ -1487,3 +1487,42 @@ article p {
     animation: gradient-pink 10s linear infinite;
     font-weight: 900;
 }
+
+/* Container for the checkmark and text */
+.pending-verified-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Initial style for the checkmark */
+.pending-verified-checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgb(226, 226, 226);
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* Style for the text */
+.pending-verified-text {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Style for the checkmark when verified */
+.pending-verified-checkmark.verified {
+    background-color: rgb(33, 238, 33);
+}
+
+/* Style for the text when verified */
+.pending-verified-verified {
+    color: rgb(220, 220, 220);
+}
+
+/* Style for 'Verified!' */
+.pending-verified-verified.green {
+    color: rgb(37, 184, 37);
+    font-weight: bold;
+}
