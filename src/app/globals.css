@@ -10,5 +10,257 @@ body {
     background-color: #f8fdff;
     font-family: var(--font-outfit);
     font-size: 1.6rem;
-    color: #717c7a;
+    color: #0b1618;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* custom scrolbar */
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #233437;
+    transition: all 0.2s;
+    border-radius: 3rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #233437;
+}
+
+/* text selection color */
+::-moz-selection {
+    /* Code for Firefox */
+    color: #fff;
+    background: #233437;
+}
+
+::selection {
+    color: #fff;
+    background: #233437;
+}
+
+/* // typography */
+
+/* // text variants */
+
+.heading-primary {
+    font-family: var(--font-outfit);
+    font-size: 7.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    @media only screen and (max-width: 600px) {
+        /* font-size: 36px; */
+    }
+}
+
+.heading-secondary {
+    font-family: var(--font-outfit);
+    font-size: 4.9rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.heading-tertiary {
+    font-family: var(--font-outfit);
+    font-size: 39px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+    @media only screen and (max-width: 600px) {
+        font-size: 20px;
+    }
+}
+
+.heading-quaternary {
+    font-family: var(--font-outfit);
+    font-size: 31px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+    @media only screen and (max-width: 600px) {
+        font-size: 20px;
+    }
+}
+
+.heading-quinary {
+    font-family: var(--font-outfit);
+
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    @media only screen and (max-width: 600px) {
+        font-size: 20px;
+    }
+}
+
+.body-large {
+    font-family: var(--font-outfit);
+    font-size: 20px;
+    font-style: normal;
+    line-height: normal;
+    @media only screen and (max-width: 600px) {
+        font-size: 18px;
+    }
+}
+
+.body-regular {
+    font-family: var(--font-outfit);
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: normal;
+
+    @media only screen and (max-width: 600px) {
+        font-size: 16px;
+    }
+}
+
+/* font weights */
+.w-300 {
+    font-weight: 300;
+}
+
+.w-400 {
+    font-weight: 400;
+}
+
+.w-700 {
+    font-weight: 700;
+}
+
+/* colors */
+
+.color-green {
+    color: #4cb19f;
+}
+
+.color-green-dark {
+    color: #3e5154;
+}
+
+/* utility classes */
+
+.padding {
+    padding-inline: 70px;
+}
+
+.boxed {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* global components */
+
+.btn {
+    border-radius: 10px;
+
+    border: 1px solid transparent;
+
+    padding: 1.2rem 2.5rem;
+    text-align: center;
+
+    color: #4b5762;
+    text-align: center;
+    font-family: var(--font-outfit);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    & > .text {
+        text-wrap: nowrap;
+    }
+
+    & > .icon {
+        font-size: 1.4rem;
+        font-weight: 300;
+        transition: all 0.2s;
+    }
+}
+
+.btn-primary {
+    background: #0b1618;
+    color: #fff;
+    border: 1px solid #0b1618;
+
+    transition: all 0.2s;
+
+    &:hover {
+        background-color: rgba(11, 22, 24, 0.9);
+    }
+}
+
+.btn-outlined {
+    border: 1px solid #000;
+}
+
+/* media queries for responsiveness */
+
+/* below 1200px */
+
+@media only screen and (max-width: 1200px) {
+}
+
+/* below 768px */
+
+@media only screen and (max-width: 768px) {
+    .padding {
+        padding-inline: 30px;
+    }
+}
+
+/* below 600px */
+
+@media only screen and (max-width: 600px) {
+    .padding {
+        padding-inline: 20px;
+    }
+}
+
+/* animations */
+@keyframes floating {
+    from {
+        transform: translate(0, 0px);
+    }
+    65% {
+        transform: translate(0, 15px);
+    }
+    to {
+        transform: translate(0, -0px);
+    }
+}
+@layer base {
+    :root {
+        --radius: 0.5rem;
+    }
 }
