@@ -1,0 +1,64 @@
+.article-card {
+    max-width: 420px;
+    font-family: Outfit, sans-serif;
+
+    &__image-container {
+        width: 100%;
+    }
+
+    &__image {
+        border-radius: 15px;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 16px 0 0 11px;
+    }
+
+    &__date {
+        font-size: 14px;
+        color: rgba(115, 132, 135, 1);
+        font-weight: 400;
+        line-height: 1.2;
+    }
+
+    &__title {
+        color: var(--Main-Bg, #0b1618);
+        font-size: 25px;
+        font-weight: 600;
+        margin-top: 16px;
+    }
+
+    &__summary {
+        color: rgba(115, 132, 135, 1);
+        font-size: 16px;
+        font-weight: 400;
+        margin-top: 9px;
+    }
+
+    &__read-more {
+        font-weight: 700;
+        text-decoration: underline;
+        color: rgba(76, 177, 159, 1);
+    }
+
+    &__author {
+        display: flex;
+        margin-top: 16px;
+        align-items: center;
+        gap: 9px;
+        font-size: 16px;
+        color: rgba(76, 177, 159, 1);
+        font-weight: 700;
+    }
+
+    &__author-image {
+        border-radius: 50%;
+    }
+
+    &__author-name {
+        width: 122px;
+    }
+}

@@ -3,6 +3,24 @@ import Navbar from "@/components/Navbar/Navbar";
 import { Search, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ArticleCard from "@/components/ArticleCard/ArticleCard";
+
+import img from "../assets/home/home-hero-illustration.webp";
+
+// featured articles
+
+const articles = [
+    {
+        imageUrl: img,
+        date: "30 Jan 2024",
+        title: "Testing Cabozantinib for Nerve Tumor Treatment",
+        summary:
+            "The study concluded that cabozantinib could potentially treat NF1-related nerve tumors....",
+        authorImageUrl: img,
+        authorName: "Dr. Norman Fox",
+    },
+    // Add more articles here if needed
+];
 
 export default function Home() {
     return (
@@ -66,6 +84,22 @@ export default function Home() {
                                 </Button>
                             </div>
                         </div>
+                    </div>
+                </section>
+
+                <section className="home__featured-articles padding">
+                    <div className="boxed">
+                        {articles.map((article) => (
+                            <ArticleCard
+                                key={article.title}
+                                imageUrl={article.imageUrl}
+                                date={article.date}
+                                title={article.title}
+                                summary={article.summary}
+                                authorImageUrl={article.authorImageUrl}
+                                authorName={article.authorName}
+                            />
+                        ))}
                     </div>
                 </section>
             </section>
