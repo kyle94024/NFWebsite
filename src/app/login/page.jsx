@@ -80,7 +80,7 @@ export default function LoginForm() {
                         </button>
                     </form>
                     <p className="login-form__signup">
-                        Don't have an account?{" "}
+                        Don&apos;t have an account?{" "}
                         <a href="#signup" className="login-form__signup-link">
                             Signup here
                         </a>
