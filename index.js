@@ -5,30 +5,57 @@ const cors = require('cors'); // Import cors
 const bcrypt = require('bcrypt');
 const { Pool } = require('pg');
 const path = require('path');
-// const pg = require('pg');
+// const pg = require('pg'); // PGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPG
 
 
 
 const app = express();
 const punycode = require('punycode/');
-app.use(express.static('public')); // 'public' is the directory where index.html is located
+// app.use(express.static('public')); // 'public' is the directory where index.html is located
+
+//Router work
+const router = express.Router()
 
 
 const session = require('express-session');
-// const pgSession = require('connect-pg-simple')(session);
+const pgSession = require('connect-pg-simple')(session); // PGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPG
+
+// app.use(session({
+//     secret: 'your-secret-key', // Ensure this is a strong, random value
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//         maxAge: 24 * 60 * 60 * 1000, // 1 day
+//         secure: false, // Set to true if using HTTPS
+//         httpOnly: true
+//     }
+// }));
+const pool = new Pool({
+    user: process.env.PGUSER,
+    host: process.env.PGHOST,
+    database: process.env.PGDATABASE,
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT,
+    ssl: {
+        rejectUnauthorized: false, // You might need this to avoid self-signed certificates //maybe set this to true in production
+        require: true, // This will ensure that SSL is used
+    }
+});
+
 
 app.use(session({
-    // store: new pgSession({
-    //     pool: pool, // Connection pool you created earlier
-    //     tableName: 'session' // Use another table name if you prefer
-    // }),
-    secret: 'secret-key', // Change this to a random value
+    store: new pgSession({
+      pool : pool,                // Connection pool
+      tableName : 'user_sessions',   // Use another table-name than the default "session" one,
+      createTableIfMissing: true,
+      // Insert connect-pg-simple options here
+    }),
+    secret: process.env.FOO_COOKIE_SECRET, //replace with secret key
     resave: false,
     saveUninitialized: false,
-    cookie: { 
-        maxAge: 24 * 60 * 60 * 1000, // 30 days
-        secure: false}
-}));
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+    // Insert express-session options here
+  }));
 
 app.set('trust proxy', 1); // Trust first proxy
 
@@ -57,43 +84,44 @@ const openai = new OpenAI({
     // organization is optional, add if necessary
 });
 
-const port = 3000;
+const port = process.env.PORT || 5500;
 
 const corsOptions = {
     origin: function (origin, callback) {
         // List of allowed origins
-        const allowedOrigins = ['http://localhost:5500', 'http://127.0.0.1:5500', 'https://nfsimplified-kyle94024s-projects.vercel.app/'];
-        
+        const allowedOrigins = [
+            'http://localhost:3000', 
+            'http://localhost:3002', 
+            'http://localhost:5500', 
+            'https://nfsimplified-kyle94024s-projects.vercel.app', 
+            'https://nfsimplified.com',
+            'http://nfsimplified.com',
+            'https://www.nfsimplified.com',  // Include the www version
+            'http://www.nfsimplified.com'   // Include http just in case
+        ];
+
         // Check if the request's origin is in the list of allowed origins
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true); // Allow the origin
         } else {
-            callback(new Error('CORS policy does not allow this origin'));
+            callback(new Error('CORS policy does not allow this origin: ' + origin));
         }
     },
     credentials: true, // Important for cookies, authorization headers with HTTPS
 };
+
+
 app.use(cors(corsOptions));
 
 app.use(express.json()); 
 
 // Use environment variables for the Pool configuration
-const pool = new Pool({
-    user: process.env.PGUSER,
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    password: process.env.PGPASSWORD,
-    port: process.env.PGPORT,
-    ssl: {
-        rejectUnauthorized: false, // You might need this to avoid self-signed certificates
-        require: true, // This will ensure that SSL is used
-    }
-});
+
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get('/get-data', async (req, res) => {
+router.get('/get-data', async (req, res) => {
     try {
       const result = await pool.query('SELECT * FROM article;');
       res.json(result.rows);
@@ -103,7 +131,7 @@ app.get('/get-data', async (req, res) => {
     }
   });
 
-//   app.post('/add-article', async (req, res) => {
+//   router.post('/add-article', async (req, res) => {
 //     const { title, tags, innertext , article_link} = req.body;
 //     console.log("JGEWKJWGE",article_link)
 //     try {
@@ -124,7 +152,7 @@ app.get('/get-data', async (req, res) => {
 
 // Existing imports and setup...
 
-app.post('/add-article', async (req, res) => {
+router.post('/add-article', async (req, res) => {
     const { title, tags, innertext, article_link, simplifyLength} = req.body;
     try {
         // Summarize the innertext before saving
@@ -146,7 +174,7 @@ app.post('/add-article', async (req, res) => {
 });
 
 // New endpoints to handle pending articles
-app.get('/get-pending-articles', requireAdmin, async (req, res) => {
+router.get('/get-pending-articles', requireAdmin, async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM pending_article ORDER BY created_at DESC;');
         res.json(result.rows);
@@ -156,7 +184,7 @@ app.get('/get-pending-articles', requireAdmin, async (req, res) => {
     }
 });
 
-app.post('/update-pending-article', requireAdmin, async (req, res) => {
+router.post('/update-pending-article', requireAdmin, async (req, res) => {
     const { id, title, tags, innertext, summary, article_link } = req.body;
     try {
         await pool.query(
@@ -170,7 +198,7 @@ app.post('/update-pending-article', requireAdmin, async (req, res) => {
     }
 });
 
-app.post('/publish-article', requireAdmin, async (req, res) => {
+router.post('/publish-article', requireAdmin, async (req, res) => {
     const { id } = req.body;
     try {
         const result = await pool.query('SELECT * FROM pending_article WHERE id = $1', [id]);
@@ -193,7 +221,7 @@ app.post('/publish-article', requireAdmin, async (req, res) => {
     }
 });
 
-app.post('/delete-pending-article', requireAdmin, async (req, res) => {
+router.post('/delete-pending-article', requireAdmin, async (req, res) => {
     const { id } = req.body;
     try {
         await pool.query('DELETE FROM pending_article WHERE id = $1', [id]);
@@ -205,7 +233,7 @@ app.post('/delete-pending-article', requireAdmin, async (req, res) => {
 });
 
 
-app.post('/retract-article', requireAdmin, async (req, res) => {
+router.post('/retract-article', requireAdmin, async (req, res) => {
     const { id } = req.body;
     try {
         const result = await pool.query('SELECT * FROM article WHERE id = $1', [id]);
@@ -233,7 +261,7 @@ app.post('/retract-article', requireAdmin, async (req, res) => {
 
 
 
-app.get('/get-recent-articles', async (req, res) => {
+router.get('/get-recent-articles', async (req, res) => {
     try {
         const result = await pool.query(
             'SELECT * FROM article ORDER BY id DESC LIMIT 6' // Assuming 'id' is an auto-increment column
@@ -245,7 +273,7 @@ app.get('/get-recent-articles', async (req, res) => {
     }
 });
 
-app.get('/get-featured-articles', async (req, res) => {
+router.get('/get-featured-articles', async (req, res) => {
     try {
         const featuredResult = await pool.query(
             'SELECT article_ids FROM featured LIMIT 1'
@@ -267,7 +295,7 @@ app.get('/get-featured-articles', async (req, res) => {
     }
 });
 
-app.post('/update-featured-status', async (req, res) => {
+router.post('/update-featured-status', async (req, res) => {
     const { articleId, shouldBeFeatured } = req.body;
 
     try {
@@ -298,7 +326,7 @@ app.post('/update-featured-status', async (req, res) => {
     }
 });
 
-app.get('/get-article/:id', async (req, res) => {
+router.get('/get-article/:id', async (req, res) => {
     const articleId = req.params.id;
 
     try {
@@ -325,7 +353,7 @@ app.get('/get-article/:id', async (req, res) => {
 //     apiKey: process.env.OPENAI_API_KEY
 // });
 
-app.post('/article-summarize', async (req, res) => {
+router.post('/article-summarize', async (req, res) => {
     const { content } = req.body; // Assuming 'content' holds the article text
 
     console.log(content);
@@ -351,7 +379,7 @@ app.post('/article-summarize', async (req, res) => {
 
 async function summarizeArticle(content) {
     try {
-        const response = await axios.post('http://localhost:3000/article-summarize', { content });
+        const response = await axios.post('/api/article-summarize', { content });
         if(response.data && response.data.summary) {
             return response.data.summary;
         } else {
@@ -365,7 +393,7 @@ async function summarizeArticle(content) {
 
 async function simplifyArticle(content, lengthString) {
     try {
-        const response = await axios.post('http://localhost:3000/article-simplify', { content, lengthString });
+        const response = await axios.post('/api/article-simplify', { content, lengthString });
         console.log("RESPONSE: ",response.data.simplified);
         if (response.data && response.data.simplified) {
             return response.data.simplified;
@@ -381,7 +409,7 @@ async function simplifyArticle(content, lengthString) {
 
 
 
-app.post('/article-simplify', async (req, res) => {
+router.post('/article-simplify', async (req, res) => {
     const { content, lengthString } = req.body; // Extract content and lengthString from the request body
 
     console.log(`Content: ${content}`);
@@ -407,7 +435,7 @@ app.post('/article-simplify', async (req, res) => {
 });
 
 
-app.post('/create-account', async (req, res) => {
+router.post('/create-account', async (req, res) => {
     console.log("got here, pt. 0");
     const { firstName, lastName, email, password } = req.body;
     console.log("got here, pt. 1");
@@ -432,7 +460,8 @@ app.post('/create-account', async (req, res) => {
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
+    console.log("LOGIN CALL")
     console.log(req.session)
     const { email, password } = req.body;
 
@@ -471,7 +500,7 @@ app.post('/login', async (req, res) => {
 });
 
 
-app.post('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
     req.session.loggedIn = false;
     req.session.destroy(err => {
         if (err) {
@@ -482,20 +511,25 @@ app.post('/logout', (req, res) => {
     });
 });
 
-app.get('/api/session', (req, res) => {
-    console.log("REQ.SESSION",req.session);
-    console.log("REQ.USER",req.session.user);
-    
-    if (req.session.user) {
-        res.json({ isLoggedIn: true, email: req.session.user.email, isAdmin: req.session.user.isAdmin });
-    } else {
-        console.log("NO SESSION?")
-        res.json({ isLoggedIn: false });
+router.get('/session', (req, res) => {
+    try {
+        console.log("REQ.SESSION", req.session);
+        console.log("REQ.USER", req.session.user);
+        
+        if (req.session.user) {
+            res.json({ isLoggedIn: true, email: req.session.user.email, isAdmin: req.session.user.isAdmin });
+        } else {
+            console.log("NO SESSION?")
+            res.json({ isLoggedIn: false });
+        }
+    } catch (error) {
+        console.error("Error in /session route:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
 });
 
 
-// app.get('/', (req, res) => {
+// router.get('/', (req, res) => {
 //     res.render('website', { // Assuming you're using a template engine
 //         user: req.session.user
 //     });
@@ -521,7 +555,7 @@ app.get('/api/session', (req, res) => {
 //     },
 // });
 
-// app.post('/send-inquiry', async (req, res) => {
+// router.post('/send-inquiry', async (req, res) => {
 //     const { name, email, message } = req.body;
 //     console.log("nem",name,email,message);
 //     // const mailOptions = {
@@ -543,7 +577,7 @@ app.get('/api/session', (req, res) => {
 // });
 
 
-// app.post('/request-article', async (req, res) => {
+// router.post('/request-article', async (req, res) => {
 //     const { articleLink } = req.body;
 
 //     // Insert into the database
@@ -559,7 +593,7 @@ app.get('/api/session', (req, res) => {
 // });
 
 
-// app.post('/report-bug', upload.single('bugFile'), async (req, res) => {
+// router.post('/report-bug', upload.single('bugFile'), async (req, res) => {
 //     const { name, email, description } = req.body;
 //     const file = req.file; // Access the uploaded file information
 
@@ -592,25 +626,25 @@ app.get('/api/session', (req, res) => {
 
 
 // Example protected route
-app.get('/admin-page', requireAdmin, (req, res) => {
+router.get('/admin-page', requireAdmin, (req, res) => {
     // Your logic here. You could serve an admin page or data
     res.send('Welcome, Admin!');
 });
 
 // Apply this middleware to all admin routes
-app.get('/admin/add-article', requireAdmin, (req, res) => {
+router.get('/admin/add-article', requireAdmin, (req, res) => {
     res.sendFile(path.join(__dirname, '/articles/add'));
 });
 
-app.get('/admin/update-featured', requireAdmin, (req, res) => {
+router.get('/admin/update-featured', requireAdmin, (req, res) => {
     res.sendFile(path.join(__dirname, '/featured/update'));
 });
 
-// app.get('/admin/update-featured', requireAdmin, (req, res) => { //OLD VERSION
+// router.get('/admin/update-featured', requireAdmin, (req, res) => { //OLD VERSION
 //     res.sendFile(path.join(__dirname, '/update_featured.html'));
 // });
 
-app.get('/search-articles', async (req, res) => {
+router.get('/search-articles', async (req, res) => {
     const searchQuery = req.query.q; // Assume the search term is passed as a query parameter "q"
 
     try {
@@ -629,7 +663,7 @@ app.get('/search-articles', async (req, res) => {
     }
 });
 
-app.post('/update-article', async (req, res) => {
+router.post('/update-article', async (req, res) => {
     const { id, title, tags, innertext, summary, article_link } = req.body;
     try {
         await pool.query(
@@ -645,7 +679,7 @@ app.post('/update-article', async (req, res) => {
 
 
 
-app.get('/get-pending-article/:id', requireAdmin, async (req, res) => {
+router.get('/get-pending-article/:id', requireAdmin, async (req, res) => {
     const articleId = req.params.id;
 
     try {
@@ -674,12 +708,12 @@ app.get('/get-pending-article/:id', requireAdmin, async (req, res) => {
 //     res.sendFile(path.join(__dirname, 'styles.css'));
 // });
 
-// app.get('/', (req, res) => {
+// router.get('/', (req, res) => {
 //     res.sendFile(path.join(__dirname, 'index.html'));
 // });
 
 //article verification for pending
-app.post('/verified-pending-article', async (req, res) => {
+router.post('/verified-pending-article', async (req, res) => {
     const { email, id } = req.body;  // Destructuring email and id from the request body
     id = parseInt(id, 10); //turn into number
 
@@ -721,7 +755,7 @@ app.post('/verified-pending-article', async (req, res) => {
 
 
 
-// app.get("/", (req, res) => res.send("Express on Vercel"));
+// router.get("/", (req, res) => res.send("Express on Vercel"));
 
 // if (process.env.NODE_ENV !== 'production') {
 //     app.listen(port, () => {
@@ -729,8 +763,28 @@ app.post('/verified-pending-article', async (req, res) => {
 //     });
 // }
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-  });
+//router work
+app.use('/api', router)
+
+const http = require('http');
+
+function startServer(port) {
+    const server = http.createServer(app);
+    
+    server.listen(port)
+        .on('listening', () => {
+            console.log(`Server running at http://localhost:${server.address().port}`);
+        })
+        .on('error', (err) => {
+            if (err.code === 'EADDRINUSE') {
+                console.log(`Port ${port} is already in use. Trying another port...`);
+                startServer(0); // 0 means to use any available port
+            } else {
+                console.error('Server failed to start:', err);
+            }
+        });
+}
+
+startServer(port);
 
 module.exports = app;

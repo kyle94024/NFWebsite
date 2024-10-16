@@ -12,10 +12,9 @@
     <script src="/header/header.js"></script>
 
     <script>
-        const apiUrl = window.location.hostname === 'localhost'
-        ? 'http://localhost:3000'
-        : 'https://nfsimplified-kyle94024s-projects.vercel.app';
+        const apiUrl = '/api/';
     </script>
+
 
     <section class="main-content about-section">
         <div class="container about-container">
@@ -47,7 +46,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-fetch(`${apiUrl}/api/session`, { credentials: 'include' })
+fetch(`${apiUrl}/session`, { credentials: 'include' })
     .then(response => response.json())
     .then(data => {
         const userMenu = document.querySelector('header nav ul li:last-child');

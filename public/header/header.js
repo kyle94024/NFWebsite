@@ -8,12 +8,12 @@ function loadHeader() {
 }
 
 function setupHeader() {
-    fetch(`${apiUrl}/api/session`, { credentials: 'include' })
+    fetch(`${apiUrl}/session`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             const navList = document.getElementById('navList');
             const loginListItem = document.querySelector('header nav ul li:last-child');
-            fetch(`${apiUrl}/api/session`, { credentials: 'include' })
+            fetch(`${apiUrl}session`, { credentials: 'include' })
             .then(response => response.json())
             .then(data => {
                 const loginLink = document.querySelector('header nav ul li:last-child a');

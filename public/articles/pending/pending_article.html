@@ -11,10 +11,9 @@
     <script src="/header/header.js"></script>
 
     <script>
-        const apiUrl = window.location.hostname === 'localhost'
-        ? 'http://localhost:3000'
-        : 'https://nfsimplified-kyle94024s-projects.vercel.app';
+        const apiUrl = '/api/';
     </script>
+
 
     <section class="pending_article-main-content container" style="width: 1350px;">
         <h1 style="color: red; margin-left: 100px; font-size: 40px;">Edit Pending Article</h1>
@@ -37,7 +36,7 @@
                         text.classList.remove('green');
 
                         try {
-                            fetch(`${apiUrl}/api/session`, { credentials: 'include' })
+                            fetch(`${apiUrl}/session`, { credentials: 'include' })
                                 .then(response => response.json())
                                 .then(async data => {
                                     const userMenu = document.querySelector('header nav ul li:last-child');

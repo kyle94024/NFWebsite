@@ -12,10 +12,9 @@
     <script src="/header/header.js"></script>
 
     <script>
-        const apiUrl = window.location.hostname === 'localhost'
-        ? 'http://localhost:3000'
-        : 'https://nfsimplified-kyle94024s-projects.vercel.app';
+        const apiUrl = '/api/';
     </script>
+
 
     <div id="discover-header">
         <h1 class="gradient-text" style="font-size: 100px; margin-top: 50px;">Articles</h1>
@@ -40,11 +39,11 @@
         <!-- Your existing footer here -->
     </footer>
 
-    <script src="discover.js"></script>
+    <script src="articles/discover.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    fetch(`${apiUrl}/api/session`, { credentials: 'include' })
+    fetch(`/api/session`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             const userMenu = document.querySelector('header nav ul li:last-child');

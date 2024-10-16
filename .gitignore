@@ -3,3 +3,4 @@ cosine
 .env
 .cosine
 .vercel
+node_modules

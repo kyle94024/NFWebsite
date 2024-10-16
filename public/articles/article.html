@@ -17,10 +17,9 @@
     <script src="/header/header.js"> </script>
 
     <script>
-        const apiUrl = window.location.hostname === 'localhost'
-        ? 'http://localhost:3000'
-        : 'https://nfsimplified-kyle94024s-projects.vercel.app';
+        const apiUrl = '/api/';
     </script>
+
 
     <div id="notification" class="notification">Article updated successfully!</div>
     
@@ -81,7 +80,7 @@
                         }
 
                         // Show edit button for admin users
-                        fetch(`${apiUrl}/api/session`, { credentials: 'include' })
+                        fetch(`${apiUrl}/session`, { credentials: 'include' })
                             .then(response => response.json())
                             .then(data => {
                                 if (data.isAdmin) {

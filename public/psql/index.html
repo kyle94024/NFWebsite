@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="/styles.css">
 
     <script>
-        const apiUrl = window.location.hostname === 'localhost'
-        ? 'http://localhost:3000'
-        : 'https://nfsimplified-kyle94024s-projects.vercel.app';
+        const apiUrl = '/api/';
     </script>
+
 
     <style>
         body {
@@ -107,7 +106,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch(`${apiUrl}/api/session`, { credentials: 'include' })
+            fetch(`${apiUrl}/session`, { credentials: 'include' })
                 .then(response => response.json())
                 .then(data => {
                     const loginLink = document.querySelector('header nav ul li:last-child a');
@@ -131,7 +130,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-fetch(`${apiUrl}/api/session`, { credentials: 'include' })
+fetch(`${apiUrl}/session`, { credentials: 'include' })
     .then(response => response.json())
     .then(data => {
         const userMenu = document.querySelector('header nav ul li:last-child');
