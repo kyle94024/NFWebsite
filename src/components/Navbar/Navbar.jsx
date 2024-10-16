@@ -46,7 +46,7 @@ function Navbar() {
                         </div>
                         <div className="header-right">
                             <a
-                                href="#"
+                                href="/login"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn"
@@ -54,7 +54,7 @@ function Navbar() {
                                 Login
                             </a>
                             <a
-                                href="#"
+                                href="/signup"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn btn-primary"
@@ -105,7 +105,7 @@ function Navbar() {
                             </a>
                         ))}
                         <a
-                            href="https://portal.v.ink/account/login"
+                            href="/login"
                             className="btn btn-primary"
                             target="_blank"
                             rel="noopener noreferrer"
