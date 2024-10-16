@@ -105,4 +105,21 @@
             }
         }
     }
+
+    &__featured-articles {
+        padding-top: 8rem;
+        padding-bottom: 8rem;
+
+        & > .boxed {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+
+        &__list {
+            display: flex;
+            gap: 2rem;
+        }
+    }
 }

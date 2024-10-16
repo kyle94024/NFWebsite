@@ -147,6 +147,14 @@ body {
     font-weight: 400;
 }
 
+.w-500 {
+    font-weight: 500;
+}
+
+.w-600 {
+    font-weight: 600;
+}
+
 .w-700 {
     font-weight: 700;
 }
@@ -159,6 +167,10 @@ body {
 
 .color-green-dark {
     color: #3e5154;
+}
+
+.color-light-grey {
+    color: #f5f5f5;
 }
 
 /* utility classes */
@@ -192,6 +204,8 @@ body {
 
     text-decoration: none;
 
+    transition: all 0.2s;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -213,11 +227,14 @@ body {
     color: #fff;
     border: 1px solid #0b1618;
 
-    transition: all 0.2s;
-
     &:hover {
         background-color: rgba(11, 22, 24, 0.9);
     }
+}
+
+.btn-primary-white {
+    background: #fff;
+    color: #0b1618;
 }
 
 .btn-outlined {

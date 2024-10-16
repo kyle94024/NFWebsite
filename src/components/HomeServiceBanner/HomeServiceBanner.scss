@@ -1,0 +1,27 @@
+.service-banner {
+    background: url("../../assets/home/home-cta-1-bg.webp"),
+        linear-gradient(90deg, #0b1618 0%, #233437 100%);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: top right;
+
+    padding: 7rem;
+    border-radius: 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        color: #fff;
+
+        & > .heading-quaternary {
+            width: 80%;
+        }
+    }
+}
