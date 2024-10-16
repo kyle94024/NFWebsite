@@ -7,6 +7,7 @@ import ArticleCard from "@/components/ArticleCard/ArticleCard";
 
 import img from "../assets/article-thumbnail.jpeg";
 import HomeServiceBanner from "@/components/HomeServiceBanner/HomeServiceBanner";
+import Image from "next/image";
 
 // featured articles
 
@@ -40,6 +41,10 @@ const articles = [
     },
     // Add more articles here if needed
 ];
+
+// affiliate partners
+import partnerLogos from "../assets/affiliates-logos.webp";
+import SubscriptionBanner from "@/components/SubscriptionBanner/SubscriptionBanner";
 
 export default function Home() {
     return (
@@ -105,31 +110,87 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
+            </section>
 
-                <section className="home__featured-articles padding">
-                    <div className="boxed">
-                        <h2 className="heading-tertiary">Featured Articles</h2>
-                        <div className="home__featured-articles__list">
-                            {articles.map((article) => (
-                                <ArticleCard
-                                    key={article.title}
-                                    imageUrl={article.imageUrl}
-                                    date={article.date}
-                                    title={article.title}
-                                    summary={article.summary}
-                                    authorImageUrl={article.authorImageUrl}
-                                    authorName={article.authorName}
-                                />
-                            ))}
-                        </div>
+            <section className="home__featured-articles padding">
+                <div className="boxed">
+                    <h2 className="heading-tertiary">Featured Articles</h2>
+                    <div className="home__featured-articles__list">
+                        {articles.map((article) => (
+                            <ArticleCard
+                                key={article.title}
+                                imageUrl={article.imageUrl}
+                                date={article.date}
+                                title={article.title}
+                                summary={article.summary}
+                                authorImageUrl={article.authorImageUrl}
+                                authorName={article.authorName}
+                            />
+                        ))}
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <section className="home__cta-1 padding">
-                    <div className="boxed">
-                        <HomeServiceBanner />
+            <section className="home__cta-1 padding">
+                <div className="boxed">
+                    <HomeServiceBanner />
+                </div>
+            </section>
+
+            <section className="home__recent-articles padding">
+                <div className="boxed">
+                    <h2 className="heading-tertiary">Recent Articles</h2>
+                    <div className="home__recent-articles__list">
+                        {articles.map((article) => (
+                            <ArticleCard
+                                key={article.title}
+                                imageUrl={article.imageUrl}
+                                date={article.date}
+                                title={article.title}
+                                summary={article.summary}
+                                authorImageUrl={article.authorImageUrl}
+                                authorName={article.authorName}
+                            />
+                        ))}
                     </div>
-                </section>
+                </div>
+            </section>
+
+            <section className="home__affiliates padding">
+                <div className="boxed">
+                    <Image
+                        src={partnerLogos}
+                        alt="Affiliates"
+                        className="home__affiliates__img"
+                    />
+                </div>
+            </section>
+
+            <section className="home__participate-articles padding">
+                <div className="boxed">
+                    <h2 className="heading-tertiary">
+                        Participate in Research
+                    </h2>
+                    <div className="home__participate-articles__list">
+                        {articles.map((article) => (
+                            <ArticleCard
+                                key={article.title}
+                                imageUrl={article.imageUrl}
+                                date={article.date}
+                                title={article.title}
+                                summary={article.summary}
+                                authorImageUrl={article.authorImageUrl}
+                                authorName={article.authorName}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="home__subscription-cta padding">
+                <div className="boxed">
+                    <SubscriptionBanner />
+                </div>
             </section>
         </main>
     );

@@ -1,0 +1,50 @@
+.subscription-banner {
+    border-radius: 2rem;
+    padding: 4rem 4rem 7rem;
+
+    background: url("../../assets/subscription-banner-bg-left.webp"),
+        url("../../assets/subscription-banner-bg-right.webp"),
+        linear-gradient(90deg, #4cb19f 0%, #4cb19f 100%);
+
+    background-repeat: no-repeat;
+    background-position: bottom left, top right;
+    background-size: 250px, 200px, 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+
+    & > .body-large {
+        font-size: 18px;
+    }
+
+    &__input-group {
+        display: flex;
+        gap: 1rem;
+        min-width: 50%;
+    }
+
+    &__input {
+        padding: 1.2rem 1.6rem;
+        flex: 1;
+        border-radius: 8px;
+        border: 1px solid #9cd7cc;
+        background: #429889;
+
+        outline: none;
+
+        font-size: 1.8rem;
+        color: #f5f5f5;
+
+        height: 5.4rem;
+        min-width: 300px;
+
+        &::placeholder {
+            color: #f5f5f5;
+        }
+    }
+}

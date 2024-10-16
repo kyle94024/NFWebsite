@@ -159,6 +159,10 @@ body {
     font-weight: 700;
 }
 
+.w-800 {
+    font-weight: 800;
+}
+
 /* colors */
 
 .color-green {
