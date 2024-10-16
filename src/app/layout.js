@@ -1,5 +1,6 @@
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/Footer/Footer";
 
 // Importing Outfit font from Google Fonts
 const outfitFont = Outfit({
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className={`${outfitFont.variable} antialiased`}>
                 {children}
+                <Footer />
             </body>
         </html>
     );

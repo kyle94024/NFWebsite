@@ -1,0 +1,88 @@
+.footer {
+    background-color: #e6f8f4;
+
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+
+    &__content {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        gap: 3.2rem;
+    }
+
+    &__branding {
+        max-width: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    &__logo {
+        width: 10rem;
+    }
+
+    &__description {
+        color: #676767;
+        margin-bottom: 2.4rem;
+        font-size: 1.4rem;
+        line-height: 1.5;
+    }
+
+    &__social {
+        display: flex;
+        gap: 1.6rem;
+    }
+
+    &__social-link {
+        color: #676767;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #1f2937;
+        }
+    }
+
+    &__social-icon {
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+
+    &__links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-items: end;
+        gap: 3.2rem;
+    }
+
+    &__links-column {
+        // Styles for the links column
+    }
+
+    &__links-title {
+        color: #0b1618;
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 1.6rem;
+    }
+
+    &__links-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__links-item {
+        margin-bottom: 0.8rem;
+    }
+
+    &__link {
+        color: #676767;
+        text-decoration: none;
+        font-size: 1.4rem;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #1f2937;
+        }
+    }
+}
