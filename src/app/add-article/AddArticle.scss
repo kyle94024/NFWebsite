@@ -1,0 +1,16 @@
+.add-article {
+    display: flex;
+    flex-direction: column;
+
+    &__content {
+        flex-grow: 1;
+        padding-top: 5rem;
+        padding-bottom: 8rem;
+
+        & > .boxed {
+            display: flex;
+            flex-direction: column;
+            gap: 8rem;
+        }
+    }
+}

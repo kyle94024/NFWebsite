@@ -1,0 +1,45 @@
+.search-articles {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    margin-top: 3rem;
+
+    &__bar {
+        position: relative;
+        flex-grow: 1;
+    }
+
+    &__icon {
+        position: absolute;
+        left: 1.6rem; // Increased from 1rem
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 1.6rem; // Added to scale up the icon
+    }
+
+    &__input {
+        width: 100%;
+        padding: 1.2rem 1.6rem 1.2rem 5rem; // Adjusted padding
+        border-radius: 9999px;
+        border: 1px solid #e5e7eb;
+        font-size: 1.6rem; // Added to scale up the text
+
+        height: 5rem;
+    }
+
+    &__button {
+        border-radius: 100%;
+        background-color: #111827;
+        color: white;
+
+        width: 5rem;
+        height: 5rem;
+
+        &-icon {
+            width: 2.4rem; // Increased from 1.5rem
+            height: 2.4rem; // Increased from 1.5rem
+        }
+    }
+}

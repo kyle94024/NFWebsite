@@ -45,6 +45,7 @@ const articles = [
 // affiliate partners
 import partnerLogos from "../assets/affiliates-logos.webp";
 import SubscriptionBanner from "@/components/SubscriptionBanner/SubscriptionBanner";
+import SearchArticles from "@/components/SearchArticles/SearchArticles";
 
 export default function Home() {
     return (
@@ -70,19 +71,7 @@ export default function Home() {
                                     Powered by REiNS.
                                 </span>
                             </p>
-                            <div className="home__hero__search">
-                                <div className="home__hero__search__bar">
-                                    <Search className="home__hero__search__icon" />
-                                    <Input
-                                        type="text"
-                                        placeholder="Search for articles"
-                                        className="home__hero__search__input"
-                                    />
-                                </div>
-                                <Button className="home__hero__search__button">
-                                    <ArrowRight className="home__hero__search__button-icon" />
-                                </Button>
-                            </div>
+                            <SearchArticles />
                             <div className="home__hero__filters">
                                 <div className="home__hero__filters__buttons">
                                     {[

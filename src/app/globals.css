@@ -207,6 +207,7 @@ body {
     line-height: normal;
 
     text-decoration: none;
+    text-wrap: nowrap;
 
     transition: all 0.2s;
 
@@ -239,6 +240,11 @@ body {
 .btn-primary-white {
     background: #fff;
     color: #0b1618;
+}
+
+.btn-primary-green {
+    background: #4cb19f;
+    color: #fff;
 }
 
 .btn-outlined {
