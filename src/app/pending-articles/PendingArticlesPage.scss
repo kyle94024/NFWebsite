@@ -1,0 +1,11 @@
+.pending-articles {
+    &__content {
+        padding-top: 5rem;
+        padding-bottom: 8rem;
+        & > .boxed {
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+        }
+    }
+}

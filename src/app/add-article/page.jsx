@@ -11,7 +11,10 @@ const AddArticle = () => {
 
             <div className="add-article__content padding">
                 <div className="boxed">
-                    <Link href="/" className="flex items-center gap-2">
+                    <Link
+                        href="/"
+                        className="flex items-center gap-2 font-bold"
+                    >
                         <ArrowLeft />
                         <span> Back</span>
                     </Link>
