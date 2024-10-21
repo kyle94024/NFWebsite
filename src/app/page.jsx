@@ -1,8 +1,6 @@
 import "./Home.scss";
 import Navbar from "@/components/Navbar/Navbar";
-import { Search, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import ArticleCard from "@/components/ArticleCard/ArticleCard";
 
 import img from "../assets/article-thumbnail.jpeg";
