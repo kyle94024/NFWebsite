@@ -1,10 +1,11 @@
+"use client";
 import "./PendingArticlesPage.scss";
 import ArticlesListPaginated from "@/components/ArticlesListPaginated/ArticlesListPaginated";
 import img from "../../assets/article-thumbnail.jpeg";
 import Navbar from "@/components/Navbar/Navbar";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-
+import { withAuth } from "@/components/withAuth/withAuth";
 const articles = [
     {
         imageUrl: img,
@@ -149,4 +150,4 @@ const PendingArticles = () => {
     );
 };
 
-export default PendingArticles;
+export default withAuth(PendingArticles);

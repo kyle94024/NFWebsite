@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import "./SignupForm.scss";
 import Navbar from "@/components/Navbar/Navbar";
 import { Eye, EyeOff } from "lucide-react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation"; // Import useRouter for navigation
 
 export default function CreateAccountForm() {
     const [formData, setFormData] = useState({
@@ -14,6 +17,7 @@ export default function CreateAccountForm() {
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const router = useRouter(); // Initialize useRouter
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,10 +27,38 @@ export default function CreateAccountForm() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle account creation logic here
-        console.log("Account creation submitted", formData);
+
+        if (formData.password !== formData.confirmPassword) {
+            toast.error("Passwords do not match."); // Show error toast
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/auth/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                toast.success(data.message); // Show success toast
+                // Redirect to the home page after a brief delay
+                setTimeout(() => {
+                    router.push("/"); // Redirect to home
+                }, 2000);
+            } else {
+                toast.error(data.message); // Show error toast
+            }
+        } catch (error) {
+            console.error("Signup error:", error);
+            toast.error("An error occurred while creating your account."); // Show error toast
+        }
     };
 
     const togglePasswordVisibility = (field) => {
@@ -40,6 +72,8 @@ export default function CreateAccountForm() {
     return (
         <main className="signup-page">
             <Navbar />
+            <ToastContainer />{" "}
+            {/* Include ToastContainer for displaying toasts */}
             <div className="signup-page__body">
                 <div className="create-account">
                     <h1 className="create-account__title">Create Account</h1>
@@ -176,7 +210,7 @@ export default function CreateAccountForm() {
                     </form>
                     <p className="create-account__login">
                         Already have an account?{" "}
-                        <a href="#login" className="create-account__login-link">
+                        <a href="/login" className="create-account__login-link">
                             Login Here
                         </a>
                     </p>

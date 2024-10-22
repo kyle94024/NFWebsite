@@ -9,6 +9,8 @@
         align-items: center;
         justify-content: center;
 
+        padding-block: 8rem;
+
         background-image: url("../../assets/authentication-pages-bg-top.webp"),
             url("../../assets/authentication-pages-bg-bottom.webp");
         background-repeat: no-repeat;
@@ -115,12 +117,14 @@
         &__login {
             margin-top: 1.6rem;
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: #666;
+
+            font-weight: 500;
         }
 
         &__login-link {
-            color: #4a90e2;
+            color: #4cb19f;
             text-decoration: none;
 
             &:hover {

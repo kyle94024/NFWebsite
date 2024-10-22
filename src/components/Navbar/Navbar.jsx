@@ -1,24 +1,32 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useAuthStore from "@/store/useAuthStore"; // Adjust the import path as necessary
+import { useAuth } from "@/hooks/useAuth"; // Adjust the import path as necessary
 import "./Navbar.scss";
 import Link from "next/link";
 import navbrand from "../../assets/navbrand.png";
 import Image from "next/image";
-import { Menu, X, ArrowRight } from "lucide-react"; // Importing Lucide React icons
+import { Menu, X, ArrowRight } from "lucide-react";
 
 function Navbar() {
     const [navbar, setNavbar] = useState(false);
+    const { user, isAdmin } = useAuthStore(); // Access user and admin state from Zustand
+    const { logout } = useAuth();
+    const toggleNavbar = () => setNavbar(!navbar);
 
-    const toggleNavbar = () => {
-        setNavbar(!navbar);
-    };
-
+    // Define the navigation links based on authentication and admin status
     const navLinks = [
         { name: "Home", path: "/" },
         { name: "Articles", path: "/articles" },
         { name: "About", path: "/about" },
         { name: "Contact Us", path: "/contact" },
+        ...(user ? [{ name: "Add Articles", path: "/add-article" }] : []), // Show Add Articles link if logged in
+        ...(isAdmin
+            ? [
+                  { name: "Pending Articles", path: "/pending-articles" },
+                  { name: "Featured", path: "/featured" },
+              ]
+            : []), // Show Pending and Featured links if user is admin
     ];
 
     return (
@@ -35,32 +43,41 @@ function Navbar() {
                         </Link>
                         <div className="header-left">
                             {navLinks.map((link) => (
-                                <a
+                                <Link
                                     href={link.path}
                                     className="nav-link"
                                     key={link.name}
                                 >
                                     {link.name}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                         <div className="header-right">
-                            <a
-                                href="/login"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn"
-                            >
-                                Login
-                            </a>
-                            <a
-                                href="/signup"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn btn-primary"
-                            >
-                                Sign Up
-                            </a>
+                            {!user ? ( // Show login/signup if not authenticated
+                                <>
+                                    <Link
+                                        href="/login"
+                                        rel="noopener noreferrer"
+                                        className="btn"
+                                    >
+                                        Login
+                                    </Link>
+                                    <Link
+                                        href="/signup"
+                                        rel="noopener noreferrer"
+                                        className="btn btn-primary"
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </>
+                            ) : (
+                                <button
+                                    className="btn btn-outlined"
+                                    onClick={() => logout()}
+                                >
+                                    Logout
+                                </button> // Add logout functionality
+                            )}
                         </div>
                         <div className="header-right-mob">
                             <div className="open-header" onClick={toggleNavbar}>
@@ -95,25 +112,44 @@ function Navbar() {
                     </div>
                     <div className="header-mob-body">
                         {navLinks.map((link) => (
-                            <a
-                                href="/"
+                            <Link
+                                href={link.path}
                                 className="nav-link"
                                 key={link.name}
                                 onClick={toggleNavbar}
                             >
                                 {link.name}
-                            </a>
+                            </Link>
                         ))}
-                        <a
-                            href="/login"
-                            className="btn btn-primary"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={toggleNavbar}
-                        >
-                            <span className="text">Login</span>
-                            <ArrowRight className="icon" />
-                        </a>
+                        {!user ? ( // Show login/signup if not authenticated
+                            <>
+                                <Link
+                                    href="/login"
+                                    className="btn btn-primary"
+                                    rel="noopener noreferrer"
+                                    onClick={toggleNavbar}
+                                >
+                                    <span className="text">Login</span>
+                                    <ArrowRight className="icon" />
+                                </Link>
+                                <Link
+                                    href="/signup"
+                                    className="btn btn-primary"
+                                    rel="noopener noreferrer"
+                                    onClick={toggleNavbar}
+                                >
+                                    Sign Up
+                                </Link>
+                            </>
+                        ) : (
+                            <Link
+                                href="/logout"
+                                className="btn btn-primary"
+                                onClick={() => clearUser()}
+                            >
+                                Logout
+                            </Link> // Add logout functionality
+                        )}
                     </div>
                 </div>
             </div>

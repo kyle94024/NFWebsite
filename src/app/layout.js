@@ -2,6 +2,8 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 
+import { ToastContainer } from "react-toastify";
+
 // Importing Outfit font from Google Fonts
 const outfitFont = Outfit({
     subsets: ["latin"],
@@ -18,6 +20,15 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body className={`${outfitFont.variable} antialiased`}>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    closeOnClick
+                    pauseOnHover
+                    draggable
+                />
+
                 {children}
                 <Footer />
             </body>

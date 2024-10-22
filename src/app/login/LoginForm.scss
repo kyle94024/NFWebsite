@@ -9,6 +9,8 @@
         align-items: center;
         justify-content: center;
 
+        padding-block: 8rem;
+
         background-image: url("../../assets/authentication-pages-bg-top.webp"),
             url("../../assets/authentication-pages-bg-bottom.webp");
         background-repeat: no-repeat;
@@ -33,6 +35,13 @@
             font-weight: bold;
             margin-bottom: 2.4rem;
             color: #333;
+        }
+
+        &__error {
+            color: red;
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-inline: auto;
         }
 
         &__form {

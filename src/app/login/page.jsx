@@ -3,16 +3,28 @@ import React, { useState } from "react";
 import "./LoginForm.scss";
 import Navbar from "@/components/Navbar/Navbar";
 import { Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify"; // Import toast
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const { login, error } = useAuth();
+    const router = useRouter();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle login logic here
-        console.log("Login submitted", { email, password });
+        try {
+            await login({ email, password });
+            toast.success("Login successful!"); // Show success toast
+            router.push("/pending-articles"); // Redirect after successful login
+        } catch (err) {
+            console.error("Login failed", err);
+            toast.error(error || "Login failed!"); // Show error toast
+        }
     };
 
     return (
@@ -22,6 +34,9 @@ export default function LoginForm() {
                 <div className="login-form">
                     <h1 className="login-form__title">Login to your account</h1>
                     <form className="login-form__form" onSubmit={handleSubmit}>
+                        {error && (
+                            <div className="login-form__error">{error}</div>
+                        )}
                         <div className="login-form__input-group">
                             <label
                                 htmlFor="email"
@@ -81,7 +96,7 @@ export default function LoginForm() {
                     </form>
                     <p className="login-form__signup">
                         Don&apos;t have an account?{" "}
-                        <a href="#signup" className="login-form__signup-link">
+                        <a href="/signup" className="login-form__signup-link">
                             Signup here
                         </a>
                     </p>
