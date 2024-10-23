@@ -44,6 +44,7 @@ const articles = [
 import partnerLogos from "../assets/affiliates-logos.webp";
 import SubscriptionBanner from "@/components/SubscriptionBanner/SubscriptionBanner";
 import SearchArticles from "@/components/SearchArticles/SearchArticles";
+import RecentArticlesSection from "@/components/RecentArticlesSection/RecentArticlesSection";
 
 export default function Home() {
     return (
@@ -124,24 +125,8 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="home__recent-articles padding">
-                <div className="boxed">
-                    <h2 className="heading-tertiary">Recent Articles</h2>
-                    <div className="home__recent-articles__list">
-                        {articles.map((article) => (
-                            <ArticleCard
-                                key={article.title}
-                                imageUrl={article.imageUrl}
-                                date={article.date}
-                                title={article.title}
-                                summary={article.summary}
-                                authorImageUrl={article.authorImageUrl}
-                                authorName={article.authorName}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section>
+            {/* Recent articles section */}
+            <RecentArticlesSection />
 
             <section className="home__affiliates padding">
                 <div className="boxed">

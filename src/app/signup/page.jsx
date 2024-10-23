@@ -6,6 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import Footer from "@/components/Footer/Footer";
 
 export default function CreateAccountForm() {
     const [formData, setFormData] = useState({
@@ -216,6 +217,7 @@ export default function CreateAccountForm() {
                     </p>
                 </div>
             </div>
+            <Footer />
         </main>
     );
 }

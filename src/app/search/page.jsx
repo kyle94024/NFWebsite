@@ -5,6 +5,7 @@ import SearchArticles from "@/components/SearchArticles/SearchArticles";
 import ArticlesListPaginated from "@/components/ArticlesListPaginated/ArticlesListPaginated";
 
 import img from "../../assets/article-thumbnail.jpeg";
+import Footer from "@/components/Footer/Footer";
 
 const articles = [
     {
@@ -141,6 +142,8 @@ const ArticleSearchPage = () => {
                     articlesPerPage={6}
                 />
             </div>
+
+            <Footer />
         </div>
     );
 };

@@ -1,29 +1,36 @@
 "use client";
+
 import React, { useState } from "react";
 import "./LoginForm.scss";
 import Navbar from "@/components/Navbar/Navbar";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify"; // Import toast
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Footer from "@/components/Footer/Footer";
+import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const { login, error } = useAuth();
     const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             await login({ email, password });
-            toast.success("Login successful!"); // Show success toast
-            router.push("/pending-articles"); // Redirect after successful login
+            toast.success("Login successful!");
+            router.push("/pending-articles");
         } catch (err) {
             console.error("Login failed", err);
-            toast.error(error || "Login failed!"); // Show error toast
+            toast.error(error || "Login failed!");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -90,9 +97,20 @@ export default function LoginForm() {
                         >
                             Forgot password?
                         </a>
-                        <button type="submit" className="login-form__submit">
-                            Login
-                        </button>
+                        <Button
+                            type="submit"
+                            className="login-form__submit"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? (
+                                <>
+                                    <Loader2 className="mr-2 h-8 w-8 animate-spin" />
+                                    Please wait
+                                </>
+                            ) : (
+                                "Login"
+                            )}
+                        </Button>
                     </form>
                     <p className="login-form__signup">
                         Don&apos;t have an account?{" "}
@@ -102,6 +120,7 @@ export default function LoginForm() {
                     </p>
                 </div>
             </div>
+            <Footer />
         </main>
     );
 }

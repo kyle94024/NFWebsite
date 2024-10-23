@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Loader from "@/app/loading";
 
 export const withAuth = (WrappedComponent) => {
     return function WithAuth(props) {
@@ -35,7 +36,7 @@ export const withAuth = (WrappedComponent) => {
         }, [router]);
 
         if (loading) {
-            return <div>Loading...</div>; // Display a loading state while authentication is checked
+            return <Loader />;
         }
 
         if (!authenticated) {

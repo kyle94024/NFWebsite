@@ -39,6 +39,7 @@
     }
 
     &__read-more {
+        margin-left: 0.5rem;
         font-weight: 700;
         text-decoration: underline;
         color: rgba(76, 177, 159, 1);
@@ -48,6 +49,11 @@
         display: flex;
         margin-top: 16px;
         align-items: center;
+
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        overflow: hidden;
         gap: 9px;
         font-size: 16px;
         color: rgba(76, 177, 159, 1);

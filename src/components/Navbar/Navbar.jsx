@@ -17,7 +17,7 @@ function Navbar() {
     // Define the navigation links based on authentication and admin status
     const navLinks = [
         { name: "Home", path: "/" },
-        { name: "Articles", path: "/articles" },
+        { name: "Articles", path: "/search" },
         { name: "About", path: "/about" },
         { name: "Contact Us", path: "/contact" },
         ...(user ? [{ name: "Add Articles", path: "/add-article" }] : []), // Show Add Articles link if logged in

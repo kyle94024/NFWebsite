@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { withAuth } from "@/components/withAuth/withAuth";
+import Footer from "@/components/Footer/Footer";
 const articles = [
     {
         imageUrl: img,
@@ -146,6 +147,7 @@ const PendingArticles = () => {
                     />
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

@@ -251,6 +251,43 @@ body {
     border: 1px solid #000;
 }
 
+/* loader */
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+    height: 100vh;
+}
+.loader {
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #4cb19f;
+    box-shadow: 0 0 0 0 #4cb19f;
+    animation: l2 1.5s infinite linear;
+    position: relative;
+}
+.loader:before,
+.loader:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 0 0 #4cb19f;
+    animation: inherit;
+    animation-delay: -0.5s;
+}
+.loader:after {
+    animation-delay: -1s;
+}
+@keyframes l2 {
+    100% {
+        box-shadow: 0 0 0 40px #0000;
+    }
+}
+
 /* media queries for responsiveness */
 
 /* below 1200px */
