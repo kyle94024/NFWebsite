@@ -45,6 +45,7 @@ import partnerLogos from "../assets/affiliates-logos.webp";
 import SubscriptionBanner from "@/components/SubscriptionBanner/SubscriptionBanner";
 import SearchArticles from "@/components/SearchArticles/SearchArticles";
 import RecentArticlesSection from "@/components/RecentArticlesSection/RecentArticlesSection";
+import FeaturedArticlesSection from "@/components/FeaturedArticlesSection/FeaturedArticlesSection";
 
 export default function Home() {
     return (
@@ -100,24 +101,8 @@ export default function Home() {
                 </section>
             </section>
 
-            <section className="home__featured-articles padding">
-                <div className="boxed">
-                    <h2 className="heading-tertiary">Featured Articles</h2>
-                    <div className="home__featured-articles__list">
-                        {articles.map((article) => (
-                            <ArticleCard
-                                key={article.title}
-                                imageUrl={article.imageUrl}
-                                date={article.date}
-                                title={article.title}
-                                summary={article.summary}
-                                authorImageUrl={article.authorImageUrl}
-                                authorName={article.authorName}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section>
+            {/* Featured articles section */}
+            <FeaturedArticlesSection />
 
             <section className="home__cta-1 padding">
                 <div className="boxed">

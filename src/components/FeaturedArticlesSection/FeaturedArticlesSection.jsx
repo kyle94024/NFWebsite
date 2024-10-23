@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import ArticlesSection from "../ArticlesSection/ArticlesSection";
 
-const RecentArticlesSection = () => {
+const FeaturedArticlesSection = () => {
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -10,7 +10,7 @@ const RecentArticlesSection = () => {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const response = await fetch("/api/articles/recent");
+                const response = await fetch("/api/articles/featured");
                 if (!response.ok) throw new Error("Failed to fetch articles");
                 const data = await response.json();
                 setArticles(data.slice(0, 3)); // Show only the first 3 articles
@@ -31,9 +31,9 @@ const RecentArticlesSection = () => {
             articles={articles}
             loading={loading}
             error={error}
-            sectionTitle={"Recent Articles"}
+            sectionTitle={"Featured Articles"}
         />
     );
 };
 
-export default RecentArticlesSection;
+export default FeaturedArticlesSection;

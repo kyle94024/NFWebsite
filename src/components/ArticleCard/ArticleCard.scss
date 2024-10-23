@@ -8,6 +8,7 @@
 
     &__image {
         border-radius: 15px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     &__content {
@@ -50,11 +51,8 @@
         margin-top: 16px;
         align-items: center;
 
-        width: 5rem;
-        height: 5rem;
-        border-radius: 50%;
         overflow: hidden;
-        gap: 9px;
+        gap: 1.5rem;
         font-size: 16px;
         color: rgba(76, 177, 159, 1);
         font-weight: 700;
@@ -62,10 +60,13 @@
 
     &__author-image {
         border-radius: 50%;
+        padding: 0.5rem;
+        width: 4rem;
+        height: 4rem;
         aspect-ratio: 1/1;
+        background-color: #0b1618;
     }
 
     &__author-name {
-        width: 122px;
     }
 }

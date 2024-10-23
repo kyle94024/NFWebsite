@@ -70,7 +70,8 @@ function ArticleCard({
                         <User className="article-card__author-image" />
                     )}
                     <span className="article-card__author-name">
-                        {authorName || "Anonymous"}
+                        {/* {authorName || "Anonymous"} */}
+                        Anonymous
                     </span>
                 </div>
             </div>
