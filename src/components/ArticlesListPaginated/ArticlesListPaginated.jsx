@@ -1,21 +1,23 @@
 "use client";
 import "./ArticlesListPaginated.scss";
-
 import React, { useState } from "react";
 import ArticleCard from "@/components/ArticleCard/ArticleCard";
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import { ArticleCardSkeleton } from "@/components/ArticleCardSkeleton/ArticleCardSkeleton";
+import { Unplug } from "lucide-react";
 
 export default function ArticlesListPaginated({
     articles = [],
     articlesPerPage = 10,
+    loading = false,
+    error = false,
 }) {
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -30,6 +32,29 @@ export default function ArticlesListPaginated({
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
+
+    // Conditional rendering based on loading and error state
+    if (loading) {
+        return (
+            <div className="article-list__loading">
+                {/* Render skeleton loaders */}
+                {[...Array(6)].map((_, index) => (
+                    <ArticleCardSkeleton key={index} />
+                ))}
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="article-list__error">
+                <Unplug className="article-list__error__icon" />
+                <p className="body-large">
+                    Something went wrong. Please try again later.
+                </p>
+            </div>
+        );
+    }
 
     return (
         <div className="article-list">
@@ -47,6 +72,7 @@ export default function ArticlesListPaginated({
                 ))}
             </div>
 
+            {/* Pagination */}
             <Pagination className="pagination">
                 <PaginationContent className="pagination__content">
                     <PaginationItem className="pagination__item">

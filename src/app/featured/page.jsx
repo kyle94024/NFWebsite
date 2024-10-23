@@ -1,5 +1,5 @@
 "use client";
-import "./PendingArticlesPage.scss";
+import "./FeaturedArticlesPage.scss";
 import ArticlesListPaginated from "@/components/ArticlesListPaginated/ArticlesListPaginated";
 import Navbar from "@/components/Navbar/Navbar";
 import Link from "next/link";
@@ -8,21 +8,22 @@ import { withAuth } from "@/components/withAuth/withAuth";
 import Footer from "@/components/Footer/Footer";
 import { useState, useEffect } from "react";
 
-const PendingArticles = () => {
+const FeaturedArticles = () => {
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
-    // Fetching articles from API
+    // Fetching featured articles from API
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const response = await fetch("/api/articles/pending");
-                if (!response.ok) throw new Error("Failed to fetch articles");
+                const response = await fetch("/api/articles/featured");
+                if (!response.ok)
+                    throw new Error("Failed to fetch featured articles");
                 const data = await response.json();
                 setArticles(data);
             } catch (error) {
-                console.error("Error fetching pending articles:", error);
+                console.error("Error fetching featured articles:", error);
                 setError(true);
             } finally {
                 setLoading(false);
@@ -33,9 +34,9 @@ const PendingArticles = () => {
     }, []);
 
     return (
-        <div className="pending-articles">
+        <div className="featured-articles">
             <Navbar />
-            <div className="pending-articles__content padding">
+            <div className="featured-articles__content padding">
                 <div className="boxed">
                     <Link
                         href="/"
@@ -59,4 +60,4 @@ const PendingArticles = () => {
     );
 };
 
-export default withAuth(PendingArticles);
+export default withAuth(FeaturedArticles);

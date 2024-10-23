@@ -46,6 +46,7 @@ import SubscriptionBanner from "@/components/SubscriptionBanner/SubscriptionBann
 import SearchArticles from "@/components/SearchArticles/SearchArticles";
 import RecentArticlesSection from "@/components/RecentArticlesSection/RecentArticlesSection";
 import FeaturedArticlesSection from "@/components/FeaturedArticlesSection/FeaturedArticlesSection";
+import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
     return (
@@ -149,6 +150,8 @@ export default function Home() {
                     <SubscriptionBanner />
                 </div>
             </section>
+
+            <Footer />
         </main>
     );
 }

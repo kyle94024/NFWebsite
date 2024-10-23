@@ -3,4 +3,26 @@
         padding-top: 5rem;
         padding-bottom: 8rem;
     }
+
+    &__loading {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+        row-gap: 6rem;
+    }
+
+    &__error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 3rem;
+
+        min-height: 30vh;
+
+        &__icon {
+            width: 5rem;
+            height: 5rem;
+        }
+    }
 }
