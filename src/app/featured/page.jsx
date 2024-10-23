@@ -68,16 +68,18 @@ const FeaturedArticles = () => {
                     {/* Tabs for Featured and Others */}
 
                     <Tabs defaultValue="featured">
-                        <div className="flex justify-center mt-2 mb-32">
-                            <TabsList className={"py-12 px-1"}>
+                        <div className="flex justify-center mt-2 mb-24">
+                            <TabsList
+                                className={"py-[32px] px-[4px] rounded-2xl"}
+                            >
                                 <TabsTrigger
-                                    className="body-large py-6 px-20"
+                                    className="body-large py-6 px-32 rounded-[8px]"
                                     value="featured"
                                 >
                                     Featured
                                 </TabsTrigger>
                                 <TabsTrigger
-                                    className="body-large py-6 px-20"
+                                    className="body-large py-6 px-32 rounded-[8px]"
                                     value="others"
                                 >
                                     Others
