@@ -1,29 +1,48 @@
 "use client";
 import "./FeaturedArticlesPage.scss";
+import { useState, useEffect } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ArticlesListPaginated from "@/components/ArticlesListPaginated/ArticlesListPaginated";
 import Navbar from "@/components/Navbar/Navbar";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { withAuth } from "@/components/withAuth/withAuth";
 import Footer from "@/components/Footer/Footer";
-import { useState, useEffect } from "react";
 
 const FeaturedArticles = () => {
-    const [articles, setArticles] = useState([]);
+    const [featuredArticles, setFeaturedArticles] = useState([]);
+    const [otherArticles, setOtherArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
-    // Fetching featured articles from API
+    // Fetching both featured and other articles
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const response = await fetch("/api/articles/featured");
-                if (!response.ok)
-                    throw new Error("Failed to fetch featured articles");
-                const data = await response.json();
-                setArticles(data);
+                const [featuredResp, allResp] = await Promise.all([
+                    fetch("/api/articles/featured"),
+                    fetch("/api/articles"),
+                ]);
+
+                if (!featuredResp.ok || !allResp.ok) {
+                    throw new Error("Failed to fetch articles");
+                }
+
+                const featuredData = await featuredResp.json();
+                const allData = await allResp.json();
+
+                // Filter "Others" by excluding featured articles
+                const featuredIds = new Set(
+                    featuredData.map((article) => article.id)
+                );
+                const othersData = allData.filter(
+                    (article) => !featuredIds.has(article.id)
+                );
+
+                setFeaturedArticles(featuredData);
+                setOtherArticles(othersData);
             } catch (error) {
-                console.error("Error fetching featured articles:", error);
+                console.error("Error fetching articles:", error);
                 setError(true);
             } finally {
                 setLoading(false);
@@ -43,18 +62,51 @@ const FeaturedArticles = () => {
                         className="flex items-center gap-2 font-bold"
                     >
                         <ArrowLeft />
-                        <span> Back</span>
+                        <span>Back</span>
                     </Link>
 
-                    {/* Pass loading and error to ArticlesListPaginated */}
-                    <ArticlesListPaginated
-                        articles={articles}
-                        articlesPerPage={6}
-                        loading={loading}
-                        error={error}
-                    />
+                    {/* Tabs for Featured and Others */}
+
+                    <Tabs defaultValue="featured">
+                        <div className="flex justify-center mt-2 mb-32">
+                            <TabsList className={"py-12 px-1"}>
+                                <TabsTrigger
+                                    className="body-large py-6 px-20"
+                                    value="featured"
+                                >
+                                    Featured
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    className="body-large py-6 px-20"
+                                    value="others"
+                                >
+                                    Others
+                                </TabsTrigger>
+                            </TabsList>
+                        </div>
+                        {/* Featured Articles */}
+                        <TabsContent value="featured">
+                            <ArticlesListPaginated
+                                articles={featuredArticles}
+                                articlesPerPage={6}
+                                loading={loading}
+                                error={error}
+                            />
+                        </TabsContent>
+
+                        {/* Other Articles */}
+                        <TabsContent value="others">
+                            <ArticlesListPaginated
+                                articles={otherArticles}
+                                articlesPerPage={6}
+                                loading={loading}
+                                error={error}
+                            />
+                        </TabsContent>
+                    </Tabs>
                 </div>
             </div>
+
             <Footer />
         </div>
     );
