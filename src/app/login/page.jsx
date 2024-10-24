@@ -25,7 +25,7 @@ export default function LoginForm() {
         try {
             await login({ email, password });
             toast.success("Login successful!");
-            router.push("/pending-articles");
+            router.push("/");
         } catch (err) {
             console.error("Login failed", err);
             toast.error(error || "Login failed!");

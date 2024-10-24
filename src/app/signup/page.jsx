@@ -2,11 +2,12 @@
 import React, { useState } from "react";
 import "./SignupForm.scss";
 import Navbar from "@/components/Navbar/Navbar";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react"; // Import Loader2 for loading spinner
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer/Footer";
+import { Button } from "@/components/ui/button"; // Assuming you are using the same Button component as in LoginForm
 
 export default function CreateAccountForm() {
     const [formData, setFormData] = useState({
@@ -18,7 +19,8 @@ export default function CreateAccountForm() {
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const router = useRouter(); // Initialize useRouter
+    const [isLoading, setIsLoading] = useState(false); // Add isLoading state
+    const router = useRouter();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -32,9 +34,11 @@ export default function CreateAccountForm() {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            toast.error("Passwords do not match."); // Show error toast
+            toast.error("Passwords do not match.");
             return;
         }
+
+        setIsLoading(true); // Set loading to true
 
         try {
             const response = await fetch("/api/auth/signup", {
@@ -48,17 +52,18 @@ export default function CreateAccountForm() {
             const data = await response.json();
 
             if (response.ok) {
-                toast.success(data.message); // Show success toast
-                // Redirect to the home page after a brief delay
+                toast.success(data.message);
                 setTimeout(() => {
-                    router.push("/"); // Redirect to home
+                    router.push("/login"); // Redirect to login page
                 }, 2000);
             } else {
-                toast.error(data.message); // Show error toast
+                toast.error(data.message);
             }
         } catch (error) {
             console.error("Signup error:", error);
-            toast.error("An error occurred while creating your account."); // Show error toast
+            toast.error("An error occurred while creating your account.");
+        } finally {
+            setIsLoading(false); // Set loading to false after request completes
         }
     };
 
@@ -73,8 +78,7 @@ export default function CreateAccountForm() {
     return (
         <main className="signup-page">
             <Navbar />
-            <ToastContainer />{" "}
-            {/* Include ToastContainer for displaying toasts */}
+            <ToastContainer />
             <div className="signup-page__body">
                 <div className="create-account">
                     <h1 className="create-account__title">Create Account</h1>
@@ -184,7 +188,7 @@ export default function CreateAccountForm() {
                                     id="confirmPassword"
                                     name="confirmPassword"
                                     className="create-account__input"
-                                    placeholder="Password"
+                                    placeholder="Confirm Password"
                                     value={formData.confirmPassword}
                                     onChange={handleChange}
                                     required
@@ -202,12 +206,20 @@ export default function CreateAccountForm() {
                                 </button>
                             </div>
                         </div>
-                        <button
+                        <Button
                             type="submit"
                             className="create-account__submit"
+                            disabled={isLoading} // Disable button when loading
                         >
-                            Create Account
-                        </button>
+                            {isLoading ? (
+                                <>
+                                    <Loader2 className="mr-2 h-8 w-8 animate-spin" />
+                                    Creating Account...
+                                </>
+                            ) : (
+                                "Create Account"
+                            )}
+                        </Button>
                     </form>
                     <p className="create-account__login">
                         Already have an account?{" "}
