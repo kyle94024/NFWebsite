@@ -18,6 +18,7 @@ export default function ArticlesListPaginated({
     articlesPerPage = 10,
     loading = false,
     error = false,
+    pageType = "",
 }) {
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -61,6 +62,7 @@ export default function ArticlesListPaginated({
             <div className="article-list__items">
                 {selectedArticles.map((article) => (
                     <ArticleCard
+                        pageType={pageType}
                         key={article.title}
                         id={article.id}
                         imageUrl={article.imageUrl}

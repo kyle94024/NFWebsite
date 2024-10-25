@@ -93,6 +93,7 @@ const FeaturedArticles = () => {
                                 articlesPerPage={6}
                                 loading={loading}
                                 error={error}
+                                pageType="featured"
                             />
                         </TabsContent>
 
@@ -103,6 +104,7 @@ const FeaturedArticles = () => {
                                 articlesPerPage={6}
                                 loading={loading}
                                 error={error}
+                                pageType="unfeatured"
                             />
                         </TabsContent>
                     </Tabs>

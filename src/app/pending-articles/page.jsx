@@ -51,6 +51,7 @@ const PendingArticles = () => {
                         articlesPerPage={6}
                         loading={loading}
                         error={error}
+                        pageType="pending"
                     />
                 </div>
             </div>
