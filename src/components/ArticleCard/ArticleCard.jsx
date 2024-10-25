@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
-import "./ArticleCard.scss";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 import articleThumbnailPlaceholder from "../../assets/article-thumbnail-placeholder.webp";
 import { Loader2, User } from "lucide-react";
 import { Button } from "../ui/button";
+import "./ArticleCard.scss";
 
 // Truncate helper function
 const truncateText = (text, maxLength) => {
@@ -23,6 +24,7 @@ function ArticleCard({
     authorName,
     pageType,
 }) {
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
     const handleFeatureStatus = async (shouldBeFeatured) => {
@@ -50,8 +52,8 @@ function ArticleCard({
         }
     };
 
-    const handlePendingArticle = async (shouldBePending) => {
-        alert("Review Clicked");
+    const handlePendingArticle = () => {
+        router.push(`/articles/review/${id}`);
     };
 
     const renderButton = () => {
@@ -95,7 +97,7 @@ function ArticleCard({
             return (
                 <Button
                     className="article-card__button btn btn-primary-green"
-                    onClick={() => handlePendingArticle(false)}
+                    onClick={handlePendingArticle}
                     disabled={isLoading}
                 >
                     {isLoading ? (
