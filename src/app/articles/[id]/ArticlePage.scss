@@ -1,0 +1,89 @@
+.article-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    &__content {
+        flex-grow: 1;
+        padding-top: 5rem;
+        padding-bottom: 8rem;
+    }
+
+    &__loader {
+        padding-block: 24rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__error {
+        color: #ff0000;
+        font-weight: bold;
+        text-align: center;
+        padding: 3.2rem;
+    }
+
+    &__article {
+        max-width: 128rem;
+        margin: 0 auto;
+    }
+
+    &__title {
+        font-size: 4rem;
+        margin-bottom: 2.4rem;
+    }
+
+    &__image {
+        width: 100%;
+        max-height: 64rem;
+        object-fit: cover;
+        margin-bottom: 2.4rem;
+    }
+
+    &__meta {
+        font-size: 1.44rem;
+        color: #666;
+        margin-bottom: 1.6rem;
+    }
+
+    &__id,
+    &__publisher,
+    &__certified {
+        margin-bottom: 0.8rem;
+    }
+
+    &__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-bottom: 2.4rem;
+    }
+
+    &__tag {
+        background-color: #f0f0f0;
+        padding: 0.48rem 0.96rem;
+        border-radius: 0.64rem;
+        font-size: 1.28rem;
+    }
+
+    &__summary {
+        background-color: #f9f9f9;
+        padding: 2.4rem;
+        border-radius: 0.64rem;
+        margin-bottom: 3.2rem;
+
+        &-title {
+            font-size: 1.92rem;
+            margin-bottom: 0.8rem;
+        }
+    }
+
+    &__content-text {
+        line-height: 1.6;
+        margin-bottom: 3.2rem;
+
+        p {
+            margin-bottom: 1.6rem;
+        }
+    }
+}

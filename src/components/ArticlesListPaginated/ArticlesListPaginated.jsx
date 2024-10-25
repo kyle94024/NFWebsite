@@ -62,6 +62,7 @@ export default function ArticlesListPaginated({
                 {selectedArticles.map((article) => (
                     <ArticleCard
                         key={article.title}
+                        id={article.id}
                         imageUrl={article.imageUrl}
                         date={article.date}
                         title={article.title}

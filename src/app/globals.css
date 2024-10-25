@@ -211,6 +211,8 @@ body {
 
     transition: all 0.2s;
 
+    height: 5rem;
+
     display: flex;
     align-items: center;
     justify-content: center;
