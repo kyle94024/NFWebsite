@@ -1,19 +1,22 @@
 .add-article-form {
+    & .btn {
+        height: 5rem;
+    }
     &__row {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.6rem;
-        margin-bottom: 2.4rem;
     }
 
     &__field {
-        margin-bottom: 2.4rem;
+        margin-bottom: 4rem;
     }
 
     &__label {
         display: block;
         margin-bottom: 0.8rem;
         font-weight: 600;
+        font-size: 1.6rem;
     }
 
     &__input {
@@ -87,6 +90,35 @@
 
                 border: none;
             }
+        }
+    }
+
+    &__select-content {
+        padding: 1rem;
+
+        border-radius: 10px;
+        border: 1px solid #d8d8d8;
+        background: #fff;
+        box-shadow: 0px 6px 7.7px 0px rgba(0, 0, 0, 0.05);
+    }
+
+    &__select {
+        & > svg {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+    }
+
+    &__select-item {
+        font-size: 1.6rem;
+        line-height: 2rem;
+        height: 4rem;
+
+        & svg {
+            width: 2rem;
+            height: 2rem;
+            color: #4cb19f;
+            margin-right: 1rem;
         }
     }
 

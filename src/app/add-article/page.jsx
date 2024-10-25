@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/Footer/Footer";
 import "./AddArticle.scss";
 import AddArticleForm from "@/components/AddArticleForm/AddArticleForm";
 import Navbar from "@/components/Navbar/Navbar";
@@ -23,6 +24,7 @@ const AddArticle = () => {
                     <AddArticleForm />
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
