@@ -1,12 +1,11 @@
 .about-page {
     &__content {
         padding-block: 6.4rem;
-        background-color: #f8f9fa;
     }
 
     &__hero {
         text-align: center;
-        margin-bottom: 4.8rem;
+        margin-bottom: 6rem;
     }
 
     &__title {
@@ -40,11 +39,14 @@
         border-radius: 1.2rem;
         padding: 3.2rem;
         margin-bottom: 3.2rem;
-        box-shadow: 0 0.6rem 1rem rgba(0, 0, 0, 0.1);
 
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+
+        padding: 3rem 4rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
     }
 
     &__contact-link {
