@@ -43,29 +43,31 @@ const ArticleSearchPage = () => {
             <Navbar />
 
             <div className="article-search-page__content padding">
-                <div className="max-w-[800px] mx-auto mt-10 mb-24">
-                    <SearchArticles /> {/* No need to pass props now */}
-                </div>
+                <div className="boxed">
+                    <div className="max-w-[800px] mx-auto mt-10 mb-24">
+                        <SearchArticles /> {/* No need to pass props now */}
+                    </div>
 
-                {loading ? (
-                    <div className="article-search-page__loading">
-                        {[...Array(6)].map((_, index) => (
-                            <ArticleCardSkeleton key={index} />
-                        ))}
-                    </div>
-                ) : error ? (
-                    <div className="article-search-page__error">
-                        <Unplug className="article-search-page__error__icon" />
-                        <p className="body-large">
-                            Something went wrong. Please try again later.
-                        </p>
-                    </div>
-                ) : (
-                    <ArticlesListPaginated
-                        articles={filteredArticles}
-                        articlesPerPage={6}
-                    />
-                )}
+                    {loading ? (
+                        <div className="article-search-page__loading">
+                            {[...Array(6)].map((_, index) => (
+                                <ArticleCardSkeleton key={index} />
+                            ))}
+                        </div>
+                    ) : error ? (
+                        <div className="article-search-page__error">
+                            <Unplug className="article-search-page__error__icon" />
+                            <p className="body-large">
+                                Something went wrong. Please try again later.
+                            </p>
+                        </div>
+                    ) : (
+                        <ArticlesListPaginated
+                            articles={filteredArticles}
+                            articlesPerPage={6}
+                        />
+                    )}
+                </div>
             </div>
 
             <Footer />
