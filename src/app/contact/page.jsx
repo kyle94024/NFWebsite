@@ -47,7 +47,7 @@ export default function ContactPage() {
                     <section className="contact-page__hero">
                         <h1 className="contact-page__title">Contact Us</h1>
                         <p className="contact-page__subtitle">
-                            We're here to help and listen to your feedback
+                            We&apos;re here to help and listen to your feedback
                         </p>
                     </section>
 
@@ -60,6 +60,14 @@ export default function ContactPage() {
                                 <p className="contact-page__section-description">
                                     Get in touch via email
                                 </p>
+
+                                <p className="contact-page__section-description">
+                                    Please leave a message with your inquiry,
+                                    and we&apos;ll get back to you as soon as
+                                    possible. Our team is here to assist you
+                                    with any questions or project needs.
+                                </p>
+
                                 <Link
                                     href="mailto:moazzam@devtrox.com"
                                     className="btn btn-primary"
