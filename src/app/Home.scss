@@ -5,15 +5,15 @@
 
         background-image: url("../assets/home/home-hero-illustration.webp");
         background-repeat: no-repeat;
-        background-position: top 12rem right;
+        background-position: bottom right;
         background-size: 45vw;
 
-        min-height: 100vh;
+        // min-height: 100vh;
     }
     &__hero {
         flex-grow: 1;
 
-        padding-block: 14rem; // Increased from 14rem
+        padding-block: 20rem; // Increased from 14rem
 
         & > .boxed {
             display: flex;
