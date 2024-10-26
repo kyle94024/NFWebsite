@@ -1,5 +1,6 @@
 import React from "react";
 import "./HomeServiceBanner.scss";
+import Link from "next/link";
 
 function HomeServiceBanner() {
     return (
@@ -13,7 +14,9 @@ function HomeServiceBanner() {
                     <span className="w-600 ">Powered by REiNS.</span>
                 </p>
             </div>
-            <div className="btn btn-primary-white">Explore All</div>
+            <Link href="/articles" className="btn btn-primary-white">
+                Explore All
+            </Link>
         </div>
     );
 }

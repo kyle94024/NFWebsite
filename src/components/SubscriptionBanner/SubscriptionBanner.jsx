@@ -1,24 +1,20 @@
 import "./SubscriptionBanner.scss";
-
-import { Input } from "../ui/input";
+import Link from "next/link";
+import { MessageSquare } from "lucide-react"; // Importing icon from Lucide
 
 const SubscriptionBanner = () => {
     return (
         <div className="subscription-banner">
-            <h2 className="heading-tertiary w-800">Stay Up-To-Date</h2>
+            <h2 className="heading-tertiary w-800">Get in Touch</h2>
             <p className="body-large color-light-grey">
-                Join our mailing list for news, exclusive resources, articles
-                and updates.
+                Reach out to us for any questions, partnerships, or support.
+                We&apos;re here to help!
             </p>
 
-            <div className="subscription-banner__input-group">
-                <Input
-                    type="email"
-                    placeholder="Enter Email"
-                    className="subscription-banner__input"
-                />
-                <button className="btn btn-primary-white">Subscribe</button>
-            </div>
+            <Link href="/contact" className="btn btn-primary-white">
+                <MessageSquare className="icon" />
+                <span className="text">Contact Us</span>
+            </Link>
         </div>
     );
 };
