@@ -11,7 +11,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { ArticleCardSkeleton } from "@/components/ArticleCardSkeleton/ArticleCardSkeleton";
-import { Unplug } from "lucide-react";
+import { SearchX, Unplug } from "lucide-react";
 
 export default function ArticlesListPaginated({
     articles = [],
@@ -34,11 +34,10 @@ export default function ArticlesListPaginated({
         setCurrentPage(page);
     };
 
-    // Conditional rendering based on loading and error state
+    // Conditional rendering based on loading, error state, and empty articles
     if (loading) {
         return (
             <div className="article-list__loading">
-                {/* Render skeleton loaders */}
                 {[...Array(6)].map((_, index) => (
                     <ArticleCardSkeleton key={index} />
                 ))}
@@ -52,6 +51,17 @@ export default function ArticlesListPaginated({
                 <Unplug className="article-list__error__icon" />
                 <p className="body-large">
                     Something went wrong. Please try again later.
+                </p>
+            </div>
+        );
+    }
+
+    if (selectedArticles.length === 0) {
+        return (
+            <div className="article-list__empty-state">
+                <SearchX className="article-list__empty-icon" />
+                <p className="body-large">
+                    No articles found. Try a different search!
                 </p>
             </div>
         );

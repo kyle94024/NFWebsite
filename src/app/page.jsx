@@ -1,14 +1,15 @@
+"use client";
+
 import "./Home.scss";
 import Navbar from "@/components/Navbar/Navbar";
-import { Button } from "@/components/ui/button";
 import ArticleCard from "@/components/ArticleCard/ArticleCard";
 
 import img from "../assets/article-thumbnail.jpeg";
 import HomeServiceBanner from "@/components/HomeServiceBanner/HomeServiceBanner";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-// featured articles
-
+// participate in reserach articles
 const articles = [
     {
         imageUrl: img,
@@ -42,6 +43,8 @@ const articles = [
 
 // affiliate partners
 import partnerLogos from "../assets/affiliates-logos.webp";
+
+// custom components
 import SubscriptionBanner from "@/components/SubscriptionBanner/SubscriptionBanner";
 import SearchArticles from "@/components/SearchArticles/SearchArticles";
 import RecentArticlesSection from "@/components/RecentArticlesSection/RecentArticlesSection";
@@ -49,6 +52,13 @@ import FeaturedArticlesSection from "@/components/FeaturedArticlesSection/Featur
 import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
+    const router = useRouter();
+
+    const handleSearchSubmit = (query) => {
+        // Navigate to the article search page with the query
+        router.push(`/articles}`);
+    };
+
     return (
         <main className="home">
             <section className="home__header">
@@ -72,31 +82,9 @@ export default function Home() {
                                     Powered by REiNS.
                                 </span>
                             </p>
-                            <SearchArticles />
-                            <div className="home__hero__filters">
-                                <div className="home__hero__filters__buttons">
-                                    {[
-                                        "Treatment",
-                                        "Symptoms",
-                                        "Causes",
-                                        "Findings",
-                                    ].map((label) => (
-                                        <Button
-                                            key={label}
-                                            variant="outline"
-                                            className="home__hero__filters__button"
-                                        >
-                                            {label}
-                                        </Button>
-                                    ))}
-                                </div>
-                                <Button
-                                    variant="link"
-                                    className="home__hero__filters__explore"
-                                >
-                                    Explore All
-                                </Button>
-                            </div>
+                            <SearchArticles
+                                setSearchQuery={handleSearchSubmit}
+                            />
                         </div>
                     </div>
                 </section>

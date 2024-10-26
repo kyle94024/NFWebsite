@@ -7,12 +7,13 @@ import ArticlesListPaginated from "@/components/ArticlesListPaginated/ArticlesLi
 import Footer from "@/components/Footer/Footer";
 import { Unplug } from "lucide-react";
 import { ArticleCardSkeleton } from "@/components/ArticleCardSkeleton/ArticleCardSkeleton";
+import useSearchStore from "@/store/useSearchStore"; // Import the Zustand store
 
 const ArticleSearchPage = () => {
+    const { searchQuery } = useSearchStore(); // Access the search query from Zustand
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -32,7 +33,7 @@ const ArticleSearchPage = () => {
         fetchArticles();
     }, []);
 
-    // Filter articles based on search query
+    // Filter articles based on search query from Zustand
     const filteredArticles = articles.filter((article) =>
         article.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -43,8 +44,7 @@ const ArticleSearchPage = () => {
 
             <div className="article-search-page__content padding">
                 <div className="max-w-[800px] mx-auto mt-10 mb-24">
-                    <SearchArticles setSearchQuery={setSearchQuery} />{" "}
-                    {/* Pass setter function */}
+                    <SearchArticles /> {/* No need to pass props now */}
                 </div>
 
                 {loading ? (
@@ -62,7 +62,7 @@ const ArticleSearchPage = () => {
                     </div>
                 ) : (
                     <ArticlesListPaginated
-                        articles={filteredArticles} // Use filtered articles
+                        articles={filteredArticles}
                         articlesPerPage={6}
                     />
                 )}

@@ -18,14 +18,31 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        gap: 3rem;
+        gap: 4rem;
 
         min-height: 30vh;
 
         &__icon {
             width: 5rem;
             height: 5rem;
+            color: #888;
         }
+    }
+
+    &__empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4rem;
+        padding: 20px;
+        text-align: center;
+    }
+
+    &__empty-icon {
+        width: 5rem;
+        height: 5rem;
+        color: #888;
     }
 }
 
