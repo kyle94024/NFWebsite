@@ -8,4 +8,29 @@
             gap: 2rem;
         }
     }
+
+    &__loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 3rem;
+
+        min-height: 30vh;
+    }
+
+    &__error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 3rem;
+
+        min-height: 30vh;
+
+        &__icon {
+            width: 5rem;
+            height: 5rem;
+        }
+    }
 }

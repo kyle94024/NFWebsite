@@ -3,16 +3,23 @@
 
 import dynamic from "next/dynamic";
 import React, { useState, useRef } from "react";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import { Loader2, X } from "lucide-react";
 import "react-quill/dist/quill.snow.css";
-import { X } from "lucide-react";
 import "./EditArticleForm.scss";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
-const EditArticleForm = ({ articleData, onSaveEdits }) => {
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+const EditArticleForm = ({
+    articleData,
+    onSaveEdits,
+    onPublish,
+    onDelete,
+    loadingStates,
+}) => {
     const [title, setTitle] = useState(articleData?.title || "");
     const [sourceLink, setSourceLink] = useState(
         articleData?.article_link || ""
@@ -32,6 +39,16 @@ const EditArticleForm = ({ articleData, onSaveEdits }) => {
 
     const handleRemoveTag = (tagToRemove) => {
         setTags(tags.filter((tag) => tag !== tagToRemove));
+    };
+
+    const handleSave = () => {
+        onSaveEdits({
+            title,
+            tags,
+            innertext: content,
+            summary,
+            article_link: sourceLink,
+        });
     };
 
     const modules = {
@@ -120,6 +137,13 @@ const EditArticleForm = ({ articleData, onSaveEdits }) => {
                             (e.preventDefault(), handleAddTag())
                         }
                     />
+                    <Button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={handleAddTag}
+                    >
+                        Add Tag
+                    </Button>
                 </div>
             </div>
 
@@ -148,6 +172,55 @@ const EditArticleForm = ({ articleData, onSaveEdits }) => {
                     theme="snow"
                     className="edit-article-form__editor"
                 />
+            </div>
+
+            {/* Button actions */}
+            <div className="edit-article-form__actions">
+                <Button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSave}
+                    disabled={loadingStates.saving}
+                >
+                    {loadingStates.saving ? (
+                        <>
+                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
+                            Saving...
+                        </>
+                    ) : (
+                        "Save Edits"
+                    )}
+                </Button>
+                <Button
+                    type="button"
+                    className="btn btn-primary-green"
+                    onClick={onPublish}
+                    disabled={loadingStates.publishing}
+                >
+                    {loadingStates.publishing ? (
+                        <>
+                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
+                            Publishing...
+                        </>
+                    ) : (
+                        "Publish"
+                    )}
+                </Button>
+                <Button
+                    type="button"
+                    className="btn btn-primary-red"
+                    onClick={onDelete}
+                    disabled={loadingStates.deleting}
+                >
+                    {loadingStates.deleting ? (
+                        <>
+                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
+                            Deleting...
+                        </>
+                    ) : (
+                        "Delete"
+                    )}
+                </Button>
             </div>
         </form>
     );

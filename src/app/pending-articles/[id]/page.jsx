@@ -6,10 +6,9 @@ import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
 import EditArticleForm from "@/components/EditArticleForm/EditArticleForm";
-import Loader from "@/app/loading";
 import { toast } from "react-toastify";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import "react-toastify/dist/ReactToastify.css";
+import SectionLoader from "@/components/SectionLoader/SectionLoader";
 
 const ReviewArticle = ({ params }) => {
     const { id } = params;
@@ -54,8 +53,10 @@ const ReviewArticle = ({ params }) => {
                 }
             );
             if (!response.ok) throw new Error("Failed to save changes");
+
+            // Notify success and refetch article
             toast.success("Changes saved!");
-            router.push(`/pending-articles/${id}`);
+            await fetchArticle(); // Fetch updated article data
         } catch (error) {
             console.error("Error saving edits:", error);
             toast.error("Error saving changes");
@@ -77,7 +78,7 @@ const ReviewArticle = ({ params }) => {
             );
             if (!response.ok) throw new Error("Failed to publish article");
             toast.success("Article published!");
-            router.push(`/articles/${id}`);
+            router.push("/pending-articles");
         } catch (error) {
             console.error("Error publishing article:", error);
             toast.error("Error publishing article");
@@ -108,10 +109,6 @@ const ReviewArticle = ({ params }) => {
         }
     };
 
-    const isAnyActionLoading = Object.values(loadingStates).some(
-        (state) => state
-    );
-
     return (
         <div className="review-article">
             <Navbar />
@@ -120,73 +117,21 @@ const ReviewArticle = ({ params }) => {
                     {error ? (
                         <p>Error: {error}</p>
                     ) : isLoading ? (
-                        <Loader />
+                        <div className="review-article__loading">
+                            <SectionLoader />
+                        </div>
                     ) : article ? (
-                        <>
-                            <EditArticleForm
-                                articleData={article}
-                                onSaveEdits={handleSaveEdits}
-                                onPublish={handlePublish}
-                                onDelete={handleDelete}
-                            />
-                            <div className="edit-article-form__actions">
-                                <Button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    onClick={() =>
-                                        handleSaveEdits({
-                                            title: article.title,
-                                            tags: article.tags,
-                                            innertext: article.innertext,
-                                            summary: article.summary,
-                                            article_link: article.article_link,
-                                        })
-                                    }
-                                    disabled={isAnyActionLoading}
-                                >
-                                    {loadingStates.saving ? (
-                                        <>
-                                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
-                                            Saving...
-                                        </>
-                                    ) : (
-                                        "Save Edits"
-                                    )}
-                                </Button>
-                                <Button
-                                    type="button"
-                                    className="btn btn-primary-green"
-                                    onClick={handlePublish}
-                                    disabled={isAnyActionLoading}
-                                >
-                                    {loadingStates.publishing ? (
-                                        <>
-                                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
-                                            Publishing...
-                                        </>
-                                    ) : (
-                                        "Publish"
-                                    )}
-                                </Button>
-                                <Button
-                                    type="button"
-                                    className="btn btn-primary-red"
-                                    onClick={handleDelete}
-                                    disabled={isAnyActionLoading}
-                                >
-                                    {loadingStates.deleting ? (
-                                        <>
-                                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
-                                            Deleting...
-                                        </>
-                                    ) : (
-                                        "Delete"
-                                    )}
-                                </Button>
-                            </div>
-                        </>
+                        <EditArticleForm
+                            articleData={article}
+                            onSaveEdits={handleSaveEdits}
+                            onPublish={handlePublish}
+                            onDelete={handleDelete}
+                            loadingStates={loadingStates}
+                        />
                     ) : (
-                        <Loader />
+                        <div className="review-article__loading">
+                            <SectionLoader />
+                        </div>
                     )}
                 </div>
             </div>
