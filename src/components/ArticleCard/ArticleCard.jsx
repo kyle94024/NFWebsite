@@ -53,7 +53,7 @@ function ArticleCard({
     };
 
     const handlePendingArticle = () => {
-        router.push(`/articles/review/${id}`);
+        router.push(`/pending-articles/${id}`);
     };
 
     const renderButton = () => {

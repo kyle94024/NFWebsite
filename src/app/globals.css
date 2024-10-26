@@ -249,6 +249,11 @@ body {
     color: #fff;
 }
 
+.btn-primary-red {
+    background: #ff0000;
+    color: #fff;
+}
+
 .btn-outlined {
     border: 1px solid #000;
 }

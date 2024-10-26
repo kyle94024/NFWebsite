@@ -1,36 +1,36 @@
 .footer {
     background-color: #e6f8f4;
 
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding-top: 8rem;
+    padding-bottom: 8rem;
 
     &__content {
         display: grid;
         grid-template-columns: 3fr 2fr;
-        gap: 3.2rem;
+        gap: 5.12rem;
     }
 
     &__branding {
         max-width: 80%;
         display: flex;
         flex-direction: column;
-        gap: 2.5rem;
+        gap: 4rem;
     }
 
     &__logo {
-        width: 10rem;
+        width: 18rem;
     }
 
     &__description {
         color: #676767;
-        margin-bottom: 2.4rem;
-        font-size: 1.4rem;
+
+        font-size: 1.8rem;
         line-height: 1.5;
     }
 
     &__social {
         display: flex;
-        gap: 1.6rem;
+        gap: 2.56rem;
     }
 
     &__social-link {
@@ -43,15 +43,15 @@
     }
 
     &__social-icon {
-        width: 2.4rem;
-        height: 2.4rem;
+        width: 3rem;
+        height: 3rem;
     }
 
     &__links {
         display: grid;
         grid-template-columns: 1fr 1fr;
         justify-items: end;
-        gap: 3.2rem;
+        gap: 5.12rem;
     }
 
     &__links-column {
@@ -60,9 +60,9 @@
 
     &__links-title {
         color: #0b1618;
-        font-size: 1.6rem;
+        font-size: 2rem;
         font-weight: 600;
-        margin-bottom: 1.6rem;
+        margin-bottom: 2.56rem;
     }
 
     &__links-list {
@@ -72,13 +72,14 @@
     }
 
     &__links-item {
-        margin-bottom: 0.8rem;
+        margin-bottom: 1rem;
     }
 
     &__link {
         color: #676767;
         text-decoration: none;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
+
         transition: color 0.3s ease;
 
         &:hover {

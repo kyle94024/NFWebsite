@@ -1,14 +1,14 @@
 import React from "react";
-import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import Link from "next/link";
+import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react"; // Using default icons as filled versions may not exist
 import "./Footer.scss";
 import Image from "next/image";
-
 import brandlogo from "../../assets/navbrand.png";
 
 const Footer = () => {
     return (
         <footer className="footer padding">
-            <div className=" boxed">
+            <div className="boxed">
                 <div className="footer__content">
                     <div className="footer__branding">
                         <Image
@@ -24,18 +24,18 @@ const Footer = () => {
                             resources they need to navigate their journey.
                         </p>
                         <div className="footer__social">
-                            <a href="#" className="footer__social-link">
+                            <Link href="#" className="footer__social-link">
                                 <Facebook className="footer__social-icon" />
-                            </a>
-                            <a href="#" className="footer__social-link">
+                            </Link>
+                            <Link href="#" className="footer__social-link">
                                 <Instagram className="footer__social-icon" />
-                            </a>
-                            <a href="#" className="footer__social-link">
+                            </Link>
+                            <Link href="#" className="footer__social-link">
                                 <Twitter className="footer__social-icon" />
-                            </a>
-                            <a href="#" className="footer__social-link">
+                            </Link>
+                            <Link href="#" className="footer__social-link">
                                 <Linkedin className="footer__social-icon" />
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
@@ -44,24 +44,33 @@ const Footer = () => {
                             <h3 className="footer__links-title">Main Links</h3>
                             <ul className="footer__links-list">
                                 <li className="footer__links-item">
-                                    <a href="#" className="footer__link">
+                                    <Link href="/" className="footer__link">
                                         Home
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="footer__links-item">
-                                    <a href="#" className="footer__link">
+                                    <Link
+                                        href="/articles"
+                                        className="footer__link"
+                                    >
                                         Articles
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="footer__links-item">
-                                    <a href="#" className="footer__link">
+                                    <Link
+                                        href="/contact"
+                                        className="footer__link"
+                                    >
                                         Contact Us
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="footer__links-item">
-                                    <a href="#" className="footer__link">
+                                    <Link
+                                        href="/about"
+                                        className="footer__link"
+                                    >
                                         About Us
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -69,14 +78,17 @@ const Footer = () => {
                             <h3 className="footer__links-title">Support</h3>
                             <ul className="footer__links-list">
                                 <li className="footer__links-item">
-                                    <a href="#" className="footer__link">
+                                    <Link
+                                        href="/privacy-policy"
+                                        className="footer__link"
+                                    >
                                         Privacy Policy
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="footer__links-item">
-                                    <a href="#" className="footer__link">
+                                    <Link href="/faq" className="footer__link">
                                         FAQ
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
