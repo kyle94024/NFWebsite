@@ -6,23 +6,26 @@ import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
 
 export default function AboutPage() {
+    // Define class name prefixes for easier updates
+    const aboutPageClass = "about-page";
+    const sectionTitleClass = `${aboutPageClass}__section-title`;
+    const textClass = `${aboutPageClass}__text`;
+
     return (
-        <div className="about-page">
+        <div className={aboutPageClass}>
             <Navbar />
-            <main className="about-page__content padding">
+            <main className={`${aboutPageClass}__content padding`}>
                 <div className="boxed">
-                    <section className="about-page__hero">
-                        <h1 className="about-page__title">About Us</h1>
-                        <p className="about-page__subtitle">
+                    <section className={`${aboutPageClass}__hero`}>
+                        <h1 className={`${aboutPageClass}__title`}>About Us</h1>
+                        <p className={`${aboutPageClass}__subtitle`}>
                             Empowering the Neurofibromatosis Community
                         </p>
                     </section>
 
-                    <section className="about-page__mission">
-                        <h2 className="about-page__section-title">
-                            Our Mission
-                        </h2>
-                        <p className="about-page__text">
+                    <section className={`${aboutPageClass}__mission`}>
+                        <h2 className={sectionTitleClass}>Our Mission</h2>
+                        <p className={textClass}>
                             Welcome to Neurofibromatosis Simplified. Our mission
                             is to provide accessible, up-to-date, and
                             comprehensive information about Neurofibromatosis
@@ -32,11 +35,9 @@ export default function AboutPage() {
                         </p>
                     </section>
 
-                    <section className="about-page__offerings">
-                        <h2 className="about-page__section-title">
-                            What We Offer
-                        </h2>
-                        <p className="about-page__text">
+                    <section className={`${aboutPageClass}__offerings`}>
+                        <h2 className={sectionTitleClass}>What We Offer</h2>
+                        <p className={textClass}>
                             Our website offers simplified articles on NF, added
                             and reviewed by NF experts from REiNS. We believe in
                             the power of education and community support to make
@@ -45,16 +46,16 @@ export default function AboutPage() {
                         </p>
                     </section>
 
-                    <section className="about-page__contact">
-                        <h2 className="about-page__section-title">
-                            Get in Touch
-                        </h2>
-                        <p className="about-page__text">
+                    <section className={`${aboutPageClass}__contact`}>
+                        <h2 className={sectionTitleClass}>Get in Touch</h2>
+                        <p className={textClass}>
                             For more information, questions, or to get involved,
                             please don&apos;t hesitate to contact us.
                         </p>
                         <Link href="/contact" className="btn btn-primary-green">
-                            <Mail className="about-page__contact-icon" />
+                            <Mail
+                                className={`${aboutPageClass}__contact-icon`}
+                            />
                             <span>Contact Us</span>
                         </Link>
                     </section>

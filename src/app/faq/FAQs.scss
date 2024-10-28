@@ -5,15 +5,20 @@
         justify-content: flex-start;
         align-items: center;
 
+        margin-top: 6.4rem;
+
         padding-bottom: 10rem;
+
+        display: flex;
+        flex-direction: column;
+        gap: 3.5rem;
     }
 
     &__container {
-        margin-top: 5rem;
         width: 100%;
         max-width: 1000px;
 
-        padding: 5rem;
+        padding: 1rem 5rem 3rem;
 
         border-radius: 20px;
         border: 1px solid rgba(76, 177, 159, 0.2);

@@ -8,6 +8,9 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Suspense } from "react";
+
+import Loader from "../loading";
 
 const faqsData = [
     {
@@ -37,35 +40,38 @@ const faqsData = [
 
 const FAQs = () => {
     return (
-        <div className="faq">
-            <Navbar />
-            <main className="faq__content padding">
-                <div className="faq__container boxed">
+        <Suspense fallback={<Loader />}>
+            <div className="faq">
+                <Navbar />
+                <main className="faq__content padding">
                     <h2 className="faq__title">Frequently Asked Questions</h2>
-                    <Accordion
-                        type="single"
-                        collapsible
-                        className="faq__accordion"
-                    >
-                        {faqsData.map((faq, index) => (
-                            <AccordionItem
-                                key={index}
-                                value={`item-${index}`}
-                                className="faq__item"
-                            >
-                                <AccordionTrigger className="faq__question">
-                                    {faq.question}
-                                </AccordionTrigger>
-                                <AccordionContent className="faq__answer">
-                                    {faq.answer}
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
-                </div>
-            </main>
-            <Footer />
-        </div>
+
+                    <div className="faq__container boxed">
+                        <Accordion
+                            type="single"
+                            collapsible
+                            className="faq__accordion"
+                        >
+                            {faqsData.map((faq, index) => (
+                                <AccordionItem
+                                    key={index}
+                                    value={`item-${index}`}
+                                    className="faq__item"
+                                >
+                                    <AccordionTrigger className="faq__question">
+                                        {faq.question}
+                                    </AccordionTrigger>
+                                    <AccordionContent className="faq__answer">
+                                        {faq.answer}
+                                    </AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </div>
+                </main>
+                <Footer />
+            </div>
+        </Suspense>
     );
 };
 
