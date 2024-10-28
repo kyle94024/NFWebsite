@@ -16,9 +16,10 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const EditArticleForm = ({
     articleData,
     onSaveEdits,
-    onPublish,
+    onPublishOrRetract,
     onDelete,
     loadingStates,
+    formType,
 }) => {
     const [title, setTitle] = useState(articleData?.title || "");
     const [sourceLink, setSourceLink] = useState(
@@ -194,18 +195,23 @@ const EditArticleForm = ({
                 <Button
                     type="button"
                     className="btn btn-primary-green"
-                    onClick={onPublish}
+                    onClick={onPublishOrRetract}
                     disabled={loadingStates.publishing}
                 >
                     {loadingStates.publishing ? (
                         <>
                             <Loader2 className="mr-2 h-8 w-8 animate-spin" />
-                            Publishing...
+                            {formType === "edit"
+                                ? "Retracting..."
+                                : "Publishing..."}
                         </>
+                    ) : formType === "edit" ? (
+                        "Retract"
                     ) : (
                         "Publish"
                     )}
                 </Button>
+
                 <Button
                     type="button"
                     className="btn btn-primary-red"

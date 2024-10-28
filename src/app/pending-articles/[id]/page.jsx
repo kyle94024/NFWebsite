@@ -124,9 +124,10 @@ const ReviewArticle = ({ params }) => {
                         <EditArticleForm
                             articleData={article}
                             onSaveEdits={handleSaveEdits}
-                            onPublish={handlePublish}
+                            onPublishOrRetract={handlePublish}
                             onDelete={handleDelete}
                             loadingStates={loadingStates}
+                            formType="review"
                         />
                     ) : (
                         <div className="review-article__loading">

@@ -4,16 +4,22 @@ import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
 import SectionLoader from "@/components/SectionLoader/SectionLoader";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 const ArticlePage = ({ params }) => {
+    const router = useRouter();
     const { id } = params;
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         const fetchArticle = async () => {
@@ -37,6 +43,26 @@ const ArticlePage = ({ params }) => {
 
         fetchArticle();
     }, [id]);
+
+    const handleDelete = async () => {
+        setDeleting(true);
+        try {
+            const response = await fetch(`/api/articles/actions/delete`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id }),
+            });
+            if (!response.ok) throw new Error("Failed to delete article");
+
+            toast.success("Article deleted!");
+            router.push("/articles");
+        } catch (error) {
+            console.error("Error deleting article:", error);
+            toast.error("Error deleting article");
+        } finally {
+            setDeleting(false);
+        }
+    };
 
     return (
         <div className="article-page">
@@ -111,16 +137,40 @@ const ArticlePage = ({ params }) => {
                                     __html: article.innertext,
                                 }}
                             ></div>
-                            {article.article_link && (
-                                <Button
-                                    href={article.article_link}
+                            <div className="article-page__actions">
+                                {article.article_link && (
+                                    <Link
+                                        href={article.article_link}
+                                        className="btn btn-primary-green"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Read original article
+                                    </Link>
+                                )}
+                                <Link
+                                    href={`/articles/edit/${article.id}`}
                                     className="btn btn-primary"
-                                    target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    Read original article
+                                    Edit Article
+                                </Link>
+                                <Button
+                                    type="button"
+                                    className="btn btn-primary-red"
+                                    onClick={handleDelete}
+                                    disabled={deleting}
+                                >
+                                    {deleting ? (
+                                        <>
+                                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
+                                            Deleting...
+                                        </>
+                                    ) : (
+                                        "Delete"
+                                    )}
                                 </Button>
-                            )}
+                            </div>
                         </article>
                     )}
                 </div>
