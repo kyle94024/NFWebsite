@@ -1,32 +1,39 @@
 // hooks/useAuth.js
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import useAuthStore from "@/store/useAuthStore"; // Adjust the import path as necessary
+import useAuthStore from "@/store/useAuthStore";
 
 export function useAuth() {
     const router = useRouter();
-    const { setUser, clearUser } = useAuthStore(); // Access Zustand store functions
-    const [loading, setLoading] = useState(true); // Loading state
+    const { setUser, clearUser } = useAuthStore();
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const checkAuth = async () => {
+            setLoading(true); // Start loading at the beginning of the function
             try {
-                const response = await fetch("/api/auth/session"); // Update the API endpoint
+                const response = await fetch("/api/auth/session");
                 if (response.ok) {
                     const user = await response.json();
                     if (user.isLoggedIn) {
-                        setUser(user); // Store user data in Zustand if authenticated
+                        setUser({
+                            email: user.email,
+                            userId: user.userId,
+                            name: user.name,
+                            isAdmin: user.isAdmin,
+                        }); // Pass complete user data
                     } else {
-                        clearUser(); // Clear user if not authenticated
+                        clearUser();
                     }
                 } else {
-                    clearUser(); // Clear user on error
+                    clearUser();
                 }
             } catch (error) {
-                clearUser(); // Clear user on error
+                console.error("Error checking session:", error);
+                clearUser();
             } finally {
-                setLoading(false); // Done loading
+                setLoading(false); // End loading
             }
         };
 
@@ -34,6 +41,7 @@ export function useAuth() {
     }, [setUser, clearUser]);
 
     const login = async (data) => {
+        setLoading(true); // Start loading during login
         try {
             const response = await fetch("/api/auth/login", {
                 method: "POST",
@@ -44,21 +52,23 @@ export function useAuth() {
             });
 
             if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message);
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.message);
             }
 
             const result = await response.json();
             setUser(result.user); // Store user data in Zustand
-            // router.push("/add-article"); // Redirect after login
             return result;
         } catch (error) {
             setError(error.message);
             throw error;
+        } finally {
+            setLoading(false); // End loading
         }
     };
 
     const logout = async () => {
+        setLoading(true); // Start loading during logout
         try {
             const response = await fetch("/api/auth/logout", {
                 method: "POST",
@@ -68,10 +78,12 @@ export function useAuth() {
                 throw new Error("Logout failed");
             }
 
-            clearUser(); // Clear user from Zustand
+            clearUser();
             router.push("/"); // Redirect after logout
         } catch (error) {
             console.error("Error during logout:", error);
+        } finally {
+            setLoading(false); // End loading
         }
     };
 

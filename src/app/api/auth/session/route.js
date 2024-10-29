@@ -19,6 +19,8 @@ export async function GET(req) {
             {
                 isLoggedIn: true,
                 email: decoded.email,
+                userId: decoded.id,
+                name: decoded.name,
                 isAdmin: decoded.isAdmin,
             },
             { status: 200 }

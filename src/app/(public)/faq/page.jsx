@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Suspense } from "react";
 
-import Loader from "../loading";
+import Loader from "@/app/loading";
 
 const faqsData = [
     {

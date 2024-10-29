@@ -44,7 +44,12 @@ export async function POST(req) {
 
         // Create JWT token
         const token = sign(
-            { email: user.email, isAdmin },
+            {
+                email: user.email,
+                isAdmin,
+                id: user.id,
+                name: user.first_name + " " + user.last_name,
+            },
             process.env.JWT_SECRET || "your-secret-key",
             { expiresIn: "1d" }
         );
@@ -60,7 +65,12 @@ export async function POST(req) {
 
         const response = NextResponse.json({
             message: "Login successful",
-            user: { email: user.email, isAdmin },
+            user: {
+                email: user.email,
+                userId: user.id,
+                name: user.first_name + " " + user.last_name,
+                isAdmin,
+            },
         });
 
         response.headers.set("Set-Cookie", cookie);
