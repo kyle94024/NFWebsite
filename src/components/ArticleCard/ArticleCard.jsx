@@ -14,6 +14,16 @@ const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 };
 
+// Fallback Author Image Component
+const FallbackAuthorImage = ({ authorName }) => {
+    const firstLetter = authorName ? authorName.charAt(0).toUpperCase() : "A"; // Default to "A" if name is not provided
+    return (
+        <div className="fallback-author-image">
+            <p className="body-small">{firstLetter}</p>
+        </div>
+    );
+};
+
 function ArticleCard({
     id,
     imageUrl,
@@ -29,7 +39,6 @@ function ArticleCard({
 
     const handleFeatureStatus = async (shouldBeFeatured) => {
         setIsLoading(true);
-
         try {
             const response = await fetch("/api/articles/actions/feature", {
                 method: "POST",
@@ -159,7 +168,7 @@ function ArticleCard({
                             loading="lazy"
                         />
                     ) : (
-                        <User className="article-card__author-image" />
+                        <FallbackAuthorImage authorName={authorName} />
                     )}
                     <span className="article-card__author-name">
                         {authorName || "Anonymous"}

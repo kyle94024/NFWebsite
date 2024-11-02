@@ -24,18 +24,32 @@ const ArticlesSection = ({ articles, loading, error, sectionTitle }) => {
                     </div>
                 ) : (
                     <div className="articles-section__list">
-                        {articles.map((article) => (
-                            <ArticleCard
-                                id={article.id}
-                                key={article.title}
-                                imageUrl={article.image_url}
-                                date={article.date}
-                                title={article.title}
-                                summary={article.summary}
-                                authorImageUrl={article.authorImageUrl}
-                                authorName={article.publisher}
-                            />
-                        ))}
+                        {articles.map((article) => {
+                            let authorName = "Anonymous"; // Default value
+                            try {
+                                const publisherData =
+                                    typeof article.publisher === "string"
+                                        ? JSON.parse(article.publisher)
+                                        : article.publisher;
+
+                                authorName = publisherData.name; // Get the name from the parsed object
+                            } catch (err) {
+                                console.error("Error parsing publisher:", err);
+                            }
+
+                            return (
+                                <ArticleCard
+                                    id={article.id}
+                                    key={article.title}
+                                    imageUrl={article.image_url}
+                                    date={article.date}
+                                    title={article.title}
+                                    summary={article.summary}
+                                    authorImageUrl={article.authorImageUrl}
+                                    authorName={authorName} // Pass the author's name
+                                />
+                            );
+                        })}
                     </div>
                 )}
             </div>

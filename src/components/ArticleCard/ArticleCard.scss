@@ -14,6 +14,19 @@
         border: 1px solid rgba(0, 0, 0, 0.05);
     }
 
+    .fallback-author-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px; /* Match the image size */
+        height: 40px; /* Match the image size */
+        border-radius: 50%; /* Circular shape */
+        background-color: rgb(34, 46, 49); /* Background color for the circle */
+        color: white; /* Text color */
+        font-size: 20px; /* Adjust font size as needed */
+        font-weight: bold; /* Make the letter bold */
+    }
+
     &__button {
         position: absolute;
         top: 10px;

@@ -109,10 +109,6 @@ const AddArticleForm = () => {
         }
     };
 
-    const handlePreview = () => {
-        console.log(content);
-    };
-
     const modules = {
         toolbar: [
             [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -322,14 +318,6 @@ const AddArticleForm = () => {
                     ) : (
                         "Run Simplification"
                     )}
-                </Button>
-                <Button
-                    type="button"
-                    disabled={true}
-                    className="btn btn-primary"
-                    onClick={handlePreview}
-                >
-                    Preview
                 </Button>
             </div>
         </form>
