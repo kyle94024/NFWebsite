@@ -9,6 +9,7 @@ import EditArticleForm from "@/components/EditArticleForm/EditArticleForm";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SectionLoader from "@/components/SectionLoader/SectionLoader";
+import useAuthStore from "@/store/useAuthStore";
 
 const ReviewArticle = ({ params }) => {
     const { id } = params;
@@ -21,6 +22,8 @@ const ReviewArticle = ({ params }) => {
         deleting: false,
     });
     const router = useRouter();
+
+    const { user } = useAuthStore();
 
     const fetchArticle = async () => {
         setIsLoading(true);
@@ -73,7 +76,7 @@ const ReviewArticle = ({ params }) => {
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ id }),
+                    body: JSON.stringify({ id, certifiedby: user }), // Use certifiedby field
                 }
             );
             if (!response.ok) throw new Error("Failed to publish article");

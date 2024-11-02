@@ -31,7 +31,7 @@ function ArticleCard({
         setIsLoading(true);
 
         try {
-            const response = await fetch("/api/articles/action/feature", {
+            const response = await fetch("/api/articles/actions/feature", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

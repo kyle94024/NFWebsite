@@ -70,19 +70,35 @@ export default function ArticlesListPaginated({
     return (
         <div className="article-list">
             <div className="article-list__items">
-                {selectedArticles.map((article) => (
-                    <ArticleCard
-                        pageType={pageType}
-                        key={article.title}
-                        id={article.id}
-                        imageUrl={article.imageUrl}
-                        date={article.date}
-                        title={article.title}
-                        summary={article.summary}
-                        authorImageUrl={article.authorImageUrl}
-                        authorName={article.authorName}
-                    />
-                ))}
+                {selectedArticles.map((article) => {
+                    // Parse publisher if it exists and is a JSON string
+                    let authorName = article.authorName;
+                    if (article.publisher) {
+                        try {
+                            const publisherData =
+                                typeof article.publisher === "string"
+                                    ? JSON.parse(article.publisher)
+                                    : article.publisher;
+                            authorName = publisherData.name || authorName;
+                        } catch (err) {
+                            console.error("Error parsing publisher:", err);
+                        }
+                    }
+
+                    return (
+                        <ArticleCard
+                            pageType={pageType}
+                            key={article.title}
+                            id={article.id}
+                            imageUrl={article.imageUrl}
+                            date={article.date}
+                            title={article.title}
+                            summary={article.summary}
+                            authorImageUrl={article.authorImageUrl}
+                            authorName={authorName} // Pass publisher name if available
+                        />
+                    );
+                })}
             </div>
 
             {/* Pagination */}

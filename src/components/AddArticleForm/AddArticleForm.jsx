@@ -10,6 +10,8 @@ import "./AddArticleForm.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import useAuthStore from "@/store/useAuthStore";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,6 +34,10 @@ const AddArticleForm = () => {
     const [simplifyUnit, setSimplifyUnit] = useState("words");
     const [isLoading, setIsLoading] = useState(false);
     const quillRef = useRef(null);
+
+    const { user } = useAuthStore();
+
+    console.log(user);
 
     const handleAddTag = () => {
         if (currentTag && !tags.includes(currentTag)) {
@@ -85,6 +91,7 @@ const AddArticleForm = () => {
                     innertext: content,
                     article_link: sourceLink,
                     simplifyLength: `${simplifyLength} ${simplifyUnit}`,
+                    publisher: user,
                 }),
             });
 

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 // Only allow POST method
 export async function POST(req) {
-    const { id } = await req.json(); // Parse JSON body from the request
+    const { id, certifiedby } = await req.json(); // Parse JSON body from the request
 
     try {
         // Fetch the article from the pending_article table
@@ -21,15 +21,17 @@ export async function POST(req) {
             );
         }
 
-        // Insert the article into the article table
+        // Insert the article into the article table, including the certifiedby field as JSON
         await query(
-            "INSERT INTO article (title, tags, innertext, summary, article_link) VALUES ($1, $2, $3, $4, $5)",
+            "INSERT INTO article (title, tags, innertext, summary, article_link, publisher, certifiedby) VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb)",
             [
                 article.title,
                 article.tags,
                 article.innertext,
                 article.summary,
                 article.article_link,
+                article.publisher,
+                JSON.stringify(certifiedby),
             ]
         );
 

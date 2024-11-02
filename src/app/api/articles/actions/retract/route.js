@@ -18,15 +18,16 @@ export async function POST(req) {
             );
         }
 
-        // Step 2: Insert article into pending_article table
+        // Step 2: Insert article into pending_article table, including the publisher field
         await query(
-            "INSERT INTO pending_article (title, tags, innertext, summary, article_link) VALUES ($1, $2, $3, $4, $5)",
+            "INSERT INTO pending_article (title, tags, innertext, summary, article_link, publisher) VALUES ($1, $2, $3, $4, $5, $6)",
             [
                 article.title,
                 article.tags,
                 article.innertext,
                 article.summary,
                 article.article_link,
+                article.publisher,
             ]
         );
 

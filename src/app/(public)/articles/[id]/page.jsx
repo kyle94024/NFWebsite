@@ -1,4 +1,5 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import "./ArticlePage.scss";
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
@@ -7,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
@@ -18,20 +18,15 @@ const ArticlePage = ({ params }) => {
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
     const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         const fetchArticle = async () => {
             try {
                 const response = await fetch(`/api/articles/${id}`);
-
-                if (!response.ok) {
-                    throw new Error("Error fetching article");
-                }
+                if (!response.ok) throw new Error("Error fetching article");
 
                 const data = await response.json();
-                console.log(data);
                 setArticle(data);
             } catch (err) {
                 setError(err.message);
@@ -40,7 +35,6 @@ const ArticlePage = ({ params }) => {
                 setLoading(false);
             }
         };
-
         fetchArticle();
     }, [id]);
 
@@ -57,7 +51,6 @@ const ArticlePage = ({ params }) => {
             toast.success("Article deleted!");
             router.push("/articles");
         } catch (error) {
-            console.error("Error deleting article:", error);
             toast.error("Error deleting article");
         } finally {
             setDeleting(false);
@@ -99,12 +92,48 @@ const ArticlePage = ({ params }) => {
                                 </p>
                                 {article.publisher && (
                                     <p className="article-page__publisher">
-                                        Publisher: {article.publisher}
+                                        Publisher:{" "}
+                                        {(() => {
+                                            try {
+                                                const publisherData =
+                                                    typeof article.publisher ===
+                                                    "string"
+                                                        ? JSON.parse(
+                                                              article.publisher
+                                                          )
+                                                        : article.publisher;
+                                                return publisherData.name;
+                                            } catch (err) {
+                                                console.error(
+                                                    "Error parsing publisher:",
+                                                    err
+                                                );
+                                                return "Unknown Publisher";
+                                            }
+                                        })()}
                                     </p>
                                 )}
                                 {article.certifiedby && (
                                     <p className="article-page__certified">
-                                        Certified by: {article.certifiedby}
+                                        Certified by:{" "}
+                                        {(() => {
+                                            try {
+                                                const certifiedData =
+                                                    typeof article.certifiedby ===
+                                                    "string"
+                                                        ? JSON.parse(
+                                                              article.certifiedby
+                                                          )
+                                                        : article.certifiedby;
+                                                return certifiedData.name;
+                                            } catch (err) {
+                                                console.error(
+                                                    "Error parsing certifiedby:",
+                                                    err
+                                                );
+                                                return "Unknown Certifier";
+                                            }
+                                        })()}
                                     </p>
                                 )}
                             </div>
