@@ -24,6 +24,9 @@ import {
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
 
+// Predefined list of tags
+const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS"];
+
 const AddArticleForm = () => {
     const [title, setTitle] = useState("");
     const [sourceLink, setSourceLink] = useState("");
@@ -37,13 +40,11 @@ const AddArticleForm = () => {
 
     const { user } = useAuthStore();
 
-    console.log(user);
-
-    const handleAddTag = () => {
-        if (currentTag && !tags.includes(currentTag)) {
-            setTags([...tags, currentTag]);
-            setCurrentTag("");
+    const handleAddTag = (tag) => {
+        if (tag && !tags.includes(tag)) {
+            setTags([...tags, tag]);
         }
+        setCurrentTag(""); // Clear current tag after adding
     };
 
     const handleRemoveTag = (tagToRemove) => {
@@ -133,12 +134,6 @@ const AddArticleForm = () => {
 
     return (
         <form className="add-article-form">
-            <ToastContainer
-                position="top-right"
-                autoClose={3000}
-                hideProgressBar
-            />
-
             <div className="add-article-form__row">
                 <div className="add-article-form__field">
                     <Label htmlFor="title" className="add-article-form__label">
@@ -189,26 +184,30 @@ const AddArticleForm = () => {
                         </span>
                     ))}
                 </div>
-                <div className="add-article-form__tag-input">
-                    <Input
+                <Select
+                    value={currentTag}
+                    onValueChange={(value) => handleAddTag(value)}
+                >
+                    <SelectTrigger
                         id="tags"
-                        className="add-article-form__input"
-                        value={currentTag}
-                        onChange={(e) => setCurrentTag(e.target.value)}
-                        placeholder="Add a tag"
-                        onKeyDown={(e) =>
-                            e.key === "Enter" &&
-                            (e.preventDefault(), handleAddTag())
-                        }
-                    />
-                    <Button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={handleAddTag}
+                        className="add-article-form__input add-article-form__select"
                     >
-                        Add Tag
-                    </Button>
-                </div>
+                        <SelectValue placeholder="Select tags" />
+                    </SelectTrigger>
+                    <SelectContent className="add-article-form__select-content">
+                        {predefinedTags
+                            .filter((tag) => !tags.includes(tag)) // Filter out already added tags
+                            .map((tag) => (
+                                <SelectItem
+                                    key={tag}
+                                    className="add-article-form__select-item"
+                                    value={tag}
+                                >
+                                    {tag}
+                                </SelectItem>
+                            ))}
+                    </SelectContent>
+                </Select>
             </div>
 
             <div className="add-article-form__field">
@@ -292,12 +291,6 @@ const AddArticleForm = () => {
                             >
                                 Sentences
                             </SelectItem>
-                            <SelectItem
-                                className="add-article-form__select-item"
-                                value="sections"
-                            >
-                                Sections
-                            </SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -308,9 +301,9 @@ const AddArticleForm = () => {
                     type="button"
                     className="btn btn-primary-green"
                     onClick={handleRunSimplification}
-                    disabled={isLoading} // Disable button while loading
+                    disabled={isLoading}
                 >
-                    {isLoading ? ( // Show loader while loading
+                    {isLoading ? (
                         <>
                             <Loader2 className="mr-2 h-8 w-8 animate-spin" />
                             Please wait

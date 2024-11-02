@@ -10,8 +10,17 @@ import "./EditArticleForm.scss";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../ui/select";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS"];
 
 const EditArticleForm = ({
     articleData,
@@ -31,11 +40,11 @@ const EditArticleForm = ({
     const [summary, setSummary] = useState(articleData?.summary || "");
     const quillRef = useRef(null);
 
-    const handleAddTag = () => {
-        if (currentTag && !tags.includes(currentTag)) {
-            setTags([...tags, currentTag]);
-            setCurrentTag("");
+    const handleAddTag = (tag) => {
+        if (tag && !tags.includes(tag)) {
+            setTags([...tags, tag]);
         }
+        setCurrentTag(""); // Clear current tag after adding
     };
 
     const handleRemoveTag = (tagToRemove) => {
@@ -126,26 +135,30 @@ const EditArticleForm = ({
                         </span>
                     ))}
                 </div>
-                <div className="edit-article-form__tag-input">
-                    <Input
+                <Select
+                    value={currentTag}
+                    onValueChange={(value) => handleAddTag(value)}
+                >
+                    <SelectTrigger
                         id="tags"
-                        className="edit-article-form__input"
-                        value={currentTag}
-                        onChange={(e) => setCurrentTag(e.target.value)}
-                        placeholder="Add a tag"
-                        onKeyDown={(e) =>
-                            e.key === "Enter" &&
-                            (e.preventDefault(), handleAddTag())
-                        }
-                    />
-                    <Button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={handleAddTag}
+                        className="edit-article-form__input edit-article-form__select"
                     >
-                        Add Tag
-                    </Button>
-                </div>
+                        <SelectValue placeholder="Select tags" />
+                    </SelectTrigger>
+                    <SelectContent className="edit-article-form__select-content">
+                        {predefinedTags
+                            .filter((tag) => !tags.includes(tag)) // Filter out already added tags
+                            .map((tag) => (
+                                <SelectItem
+                                    key={tag}
+                                    className="edit-article-form__select-item"
+                                    value={tag}
+                                >
+                                    {tag}
+                                </SelectItem>
+                            ))}
+                    </SelectContent>
+                </Select>
             </div>
 
             <div className="edit-article-form__field">
