@@ -52,7 +52,7 @@ const EditArticle = ({ params }) => {
             if (!response.ok) throw new Error("Failed to save changes");
 
             toast.success("Changes saved!");
-            await fetchArticle();
+            router.push(`/articles/${id}`);
         } catch (error) {
             console.error("Error saving edits:", error);
             toast.error("Error saving changes");
