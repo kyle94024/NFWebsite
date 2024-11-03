@@ -1,4 +1,3 @@
-// middleware.js
 import { NextResponse } from "next/server";
 import { verify } from "jsonwebtoken";
 
@@ -11,13 +10,17 @@ export async function middleware(req) {
         pathname.startsWith("/login") ||
         pathname.startsWith("/signup")
     ) {
-        return NextResponse.next();
+        const response = NextResponse.next();
+        response.headers.set("Cache-Control", "no-store");
+        return response;
     }
 
     const token = req.cookies.get("auth");
 
     if (!token) {
-        return NextResponse.redirect(new URL("/login", req.url));
+        const response = NextResponse.redirect(new URL("/login", req.url));
+        response.headers.set("Cache-Control", "no-store");
+        return response;
     }
 
     try {
@@ -26,9 +29,14 @@ export async function middleware(req) {
             process.env.JWT_SECRET || "your-secret-key"
         );
         req.user = decoded;
-        return NextResponse.next();
+
+        const response = NextResponse.next();
+        response.headers.set("Cache-Control", "no-store"); // Disable caching for authenticated routes
+        return response;
     } catch (error) {
-        return NextResponse.redirect(new URL("/login", req.url));
+        const response = NextResponse.redirect(new URL("/login", req.url));
+        response.headers.set("Cache-Control", "no-store"); // Disable caching on redirect
+        return response;
     }
 }
 
