@@ -1,4 +1,7 @@
 "use client";
+
+export const fetchCache = "force-no-store";
+
 import "./PendingArticlesPage.scss";
 import ArticlesListPaginated from "@/components/ArticlesListPaginated/ArticlesListPaginated";
 import Navbar from "@/components/Navbar/Navbar";
