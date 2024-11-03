@@ -1,4 +1,4 @@
-export const fetchCache = "force-no-store";
+export const revalidate = 0; // Disable caching for this API route
 
 import { query } from "@/lib/db";
 import { NextResponse } from "next/server";
