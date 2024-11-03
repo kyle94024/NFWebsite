@@ -1,4 +1,5 @@
 // app/api/articles/[id]/route.js
+export const fetchCache = "force-no-store";
 
 import { query } from "@/lib/db";
 import { NextResponse } from "next/server";
