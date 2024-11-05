@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
 import ImageUpload from "../ImageUpload/ImageUpload";
+import Image from "next/image";
 
 // Predefined list of tags
 const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS"];
@@ -102,6 +103,7 @@ const AddArticleForm = () => {
                     article_link: sourceLink,
                     simplifyLength: `${simplifyLength} ${simplifyUnit}`,
                     publisher: user,
+                    imageUrl,
                 }),
             });
 
@@ -305,15 +307,23 @@ const AddArticleForm = () => {
                 </div>
             </div>
 
-            <h2>Add Image</h2>
-            <ImageUpload onImageUpload={handleImageUpload} />
-            {imageUrl && (
-                <img
-                    src={imageUrl}
-                    alt="Uploaded image"
-                    className="w-full h-auto mt-4"
-                />
-            )}
+            <div className="add-article-form__field">
+                <Label className="add-article-form__label">
+                    Add a cover image
+                </Label>
+                <div className="add-article-form__input !h-auto">
+                    <div className="flex items-center gap-2">
+                        <ImageUpload onImageUpload={handleImageUpload} />
+                        {imageUrl && (
+                            <img
+                                src={imageUrl}
+                                alt="Uploaded image"
+                                className="w-full h-auto mt-4"
+                            />
+                        )}
+                    </div>
+                </div>
+            </div>
 
             <div className="add-article-form__actions">
                 <Button

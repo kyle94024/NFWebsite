@@ -11,16 +11,25 @@ export async function POST(req) {
             article_link,
             simplifyLength,
             publisher,
+            image_url,
         } = await req.json();
 
         // Generate the summary and simplified content
         const summary = await summarizeArticle(innertext);
         const simplified = await simplifyArticle(innertext, simplifyLength);
 
-        // Use the query helper to insert into the database, including the publisher
+        // Insert into the database, including the publisher and image URL
         const result = await query(
-            "INSERT INTO pending_article (title, tags, innertext, summary, article_link, publisher) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;",
-            [title, tags, simplified, summary, article_link, publisher]
+            "INSERT INTO pending_article (title, tags, innertext, summary, article_link, publisher, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
+            [
+                title,
+                tags,
+                simplified,
+                summary,
+                article_link,
+                publisher,
+                image_url,
+            ]
         );
 
         return NextResponse.json(result.rows[0]);
