@@ -23,6 +23,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
+import ImageUpload from "../ImageUpload/ImageUpload";
 
 // Predefined list of tags
 const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS"];
@@ -36,9 +37,17 @@ const AddArticleForm = () => {
     const [simplifyLength, setSimplifyLength] = useState(100);
     const [simplifyUnit, setSimplifyUnit] = useState("words");
     const [isLoading, setIsLoading] = useState(false);
+    const [imageUrl, setImageUrl] = useState(null);
+
     const quillRef = useRef(null);
 
     const { user } = useAuthStore();
+
+    const handleImageUpload = (url) => {
+        console.log("Image uploaded: ", url);
+        setImageUrl(url);
+        // You can save the URL to your database or state here
+    };
 
     const handleAddTag = (tag) => {
         if (tag && !tags.includes(tag)) {
@@ -295,6 +304,16 @@ const AddArticleForm = () => {
                     </Select>
                 </div>
             </div>
+
+            <h2>Add Image</h2>
+            <ImageUpload onImageUpload={handleImageUpload} />
+            {imageUrl && (
+                <img
+                    src={imageUrl}
+                    alt="Uploaded image"
+                    className="w-full h-auto mt-4"
+                />
+            )}
 
             <div className="add-article-form__actions">
                 <Button
