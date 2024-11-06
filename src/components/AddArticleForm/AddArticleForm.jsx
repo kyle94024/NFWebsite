@@ -312,13 +312,17 @@ const AddArticleForm = () => {
                     Add a cover image
                 </Label>
                 <div className="add-article-form__input !h-auto">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-16">
                         <ImageUpload onImageUpload={handleImageUpload} />
                         {imageUrl && (
-                            <img
+                            <Image
                                 src={imageUrl}
-                                alt="Uploaded image"
-                                className="w-full h-auto mt-4"
+                                alt={title}
+                                width={320}
+                                height={200}
+                                objectFit="contain"
+                                objectPosition="center"
+                                loading="lazy"
                             />
                         )}
                     </div>
