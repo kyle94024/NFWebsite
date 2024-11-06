@@ -34,10 +34,13 @@
     }
 
     &__image {
-        width: 100%;
-        max-height: 64rem;
-        object-fit: cover;
+        width: 50%;
+        max-height: 300px;
+        object-fit: contain;
         margin-bottom: 2.4rem;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 0.64rem;
+        margin-left: auto;
     }
 
     &__meta {

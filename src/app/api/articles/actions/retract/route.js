@@ -6,7 +6,7 @@ export async function POST(req) {
     const { id } = await req.json(); // Parse JSON body from the request
 
     try {
-        // Step 1: Retrieve the article
+        // Step 1: Retrieve the article, including image_url
         const result = await query("SELECT * FROM article WHERE id = $1", [id]);
         const article = result.rows[0];
 
@@ -18,9 +18,9 @@ export async function POST(req) {
             );
         }
 
-        // Step 2: Insert article into pending_article table, including the publisher field
+        // Step 2: Insert article into pending_article table, including the image_url field
         await query(
-            "INSERT INTO pending_article (title, tags, innertext, summary, article_link, publisher) VALUES ($1, $2, $3, $4, $5, $6)",
+            "INSERT INTO pending_article (title, tags, innertext, summary, article_link, publisher, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7)",
             [
                 article.title,
                 article.tags,
@@ -28,6 +28,7 @@ export async function POST(req) {
                 article.summary,
                 article.article_link,
                 article.publisher,
+                article.image_url,
             ]
         );
 

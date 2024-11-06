@@ -71,86 +71,92 @@ const ArticlePage = ({ params }) => {
                         <div className="article-page__error">{error}</div>
                     ) : (
                         <article className="article-page__article">
-                            <h1 className="article-page__title heading-tertiary">
-                                {article.title}
-                            </h1>
-                            {article.image_url && (
-                                <Image
-                                    className="article-page__image"
-                                    src={article.image_url}
-                                    alt={article.title}
-                                    width={420}
-                                    height={290}
-                                    objectFit="contain"
-                                    objectPosition="center"
-                                    loading="lazy"
-                                />
-                            )}
-                            <div className="article-page__meta">
-                                <p className="article-page__id">
-                                    Article ID: {article.id}
-                                </p>
-                                {article.publisher && (
-                                    <p className="article-page__publisher">
-                                        Publisher:{" "}
-                                        {(() => {
-                                            try {
-                                                const publisherData =
-                                                    typeof article.publisher ===
-                                                    "string"
-                                                        ? JSON.parse(
-                                                              article.publisher
-                                                          )
-                                                        : article.publisher;
-                                                return publisherData.name;
-                                            } catch (err) {
-                                                console.error(
-                                                    "Error parsing publisher:",
-                                                    err
-                                                );
-                                                return "Unknown Publisher";
-                                            }
-                                        })()}
-                                    </p>
-                                )}
-                                {article.certifiedby && (
-                                    <p className="article-page__certified">
-                                        Certified by:{" "}
-                                        {(() => {
-                                            try {
-                                                const certifiedData =
-                                                    typeof article.certifiedby ===
-                                                    "string"
-                                                        ? JSON.parse(
-                                                              article.certifiedby
-                                                          )
-                                                        : article.certifiedby;
-                                                return certifiedData.name;
-                                            } catch (err) {
-                                                console.error(
-                                                    "Error parsing certifiedby:",
-                                                    err
-                                                );
-                                                return "Unknown Certifier";
-                                            }
-                                        })()}
-                                    </p>
-                                )}
-                            </div>
-                            <div className="article-page__tags">
-                                {article.tags && article.tags.length > 0 ? (
-                                    article.tags.map((tag, index) => (
-                                        <span
-                                            key={index}
-                                            className="article-page__tag"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))
-                                ) : (
-                                    <span className="article-page__no-tags">
-                                        No tags
-                                    </span>
+                            <div className="flex  gap-16">
+                                <div className="article-page__article-details">
+                                    <h1 className="article-page__title heading-tertiary">
+                                        {article.title}
+                                    </h1>
+
+                                    <div className="article-page__meta">
+                                        <p className="article-page__id">
+                                            Article ID: {article.id}
+                                        </p>
+                                        {article.publisher && (
+                                            <p className="article-page__publisher">
+                                                Publisher:{" "}
+                                                {(() => {
+                                                    try {
+                                                        const publisherData =
+                                                            typeof article.publisher ===
+                                                            "string"
+                                                                ? JSON.parse(
+                                                                      article.publisher
+                                                                  )
+                                                                : article.publisher;
+                                                        return publisherData.name;
+                                                    } catch (err) {
+                                                        console.error(
+                                                            "Error parsing publisher:",
+                                                            err
+                                                        );
+                                                        return "Unknown Publisher";
+                                                    }
+                                                })()}
+                                            </p>
+                                        )}
+                                        {article.certifiedby && (
+                                            <p className="article-page__certified">
+                                                Certified by:{" "}
+                                                {(() => {
+                                                    try {
+                                                        const certifiedData =
+                                                            typeof article.certifiedby ===
+                                                            "string"
+                                                                ? JSON.parse(
+                                                                      article.certifiedby
+                                                                  )
+                                                                : article.certifiedby;
+                                                        return certifiedData.name;
+                                                    } catch (err) {
+                                                        console.error(
+                                                            "Error parsing certifiedby:",
+                                                            err
+                                                        );
+                                                        return "Unknown Certifier";
+                                                    }
+                                                })()}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="article-page__tags">
+                                        {article.tags &&
+                                        article.tags.length > 0 ? (
+                                            article.tags.map((tag, index) => (
+                                                <span
+                                                    key={index}
+                                                    className="article-page__tag"
+                                                >
+                                                    {tag}
+                                                </span>
+                                            ))
+                                        ) : (
+                                            <span className="article-page__no-tags">
+                                                No tags
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>{" "}
+                                {article.image_url && (
+                                    <Image
+                                        className="article-page__image"
+                                        src={article.image_url}
+                                        alt={article.title}
+                                        width={420}
+                                        height={290}
+                                        objectFit="contain"
+                                        objectPosition="center"
+                                        loading="lazy"
+                                    />
                                 )}
                             </div>
 

@@ -133,8 +133,6 @@ function ArticleCard({
                     layout="responsive"
                     width={420}
                     height={290}
-                    objectFit="contain"
-                    objectPosition="center"
                     loading="lazy"
                 />
                 {renderButton()}

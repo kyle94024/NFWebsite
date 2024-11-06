@@ -6,7 +6,7 @@ export async function POST(req) {
     const { id, certifiedby } = await req.json(); // Parse JSON body from the request
 
     try {
-        // Fetch the article from the pending_article table
+        // Fetch the article from the pending_article table, including image_url
         const result = await query(
             "SELECT * FROM pending_article WHERE id = $1",
             [id]
@@ -21,9 +21,9 @@ export async function POST(req) {
             );
         }
 
-        // Insert the article into the article table, including the certifiedby field as JSON
+        // Insert the article into the article table, including the certifiedby and image_url fields
         await query(
-            "INSERT INTO article (title, tags, innertext, summary, article_link, publisher, certifiedby) VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb)",
+            "INSERT INTO article (title, tags, innertext, summary, article_link, publisher, certifiedby, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8)",
             [
                 article.title,
                 article.tags,
@@ -32,6 +32,7 @@ export async function POST(req) {
                 article.article_link,
                 article.publisher,
                 JSON.stringify(certifiedby),
+                article.image_url, // Include image_url in the insertion
             ]
         );
 

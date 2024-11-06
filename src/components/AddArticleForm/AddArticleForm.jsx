@@ -103,7 +103,7 @@ const AddArticleForm = () => {
                     article_link: sourceLink,
                     simplifyLength: `${simplifyLength} ${simplifyUnit}`,
                     publisher: user,
-                    imageUrl,
+                    image_url: imageUrl,
                 }),
             });
 

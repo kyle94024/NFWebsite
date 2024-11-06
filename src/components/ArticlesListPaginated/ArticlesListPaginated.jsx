@@ -30,6 +30,8 @@ export default function ArticlesListPaginated({
         startIndex + articlesPerPage
     );
 
+    console.log(articles);
+
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -90,12 +92,12 @@ export default function ArticlesListPaginated({
                             pageType={pageType}
                             key={article.title}
                             id={article.id}
-                            imageUrl={article.imageUrl}
+                            imageUrl={article.image_url}
                             date={article.date}
                             title={article.title}
                             summary={article.summary}
                             authorImageUrl={article.authorImageUrl}
-                            authorName={authorName} // Pass publisher name if available
+                            authorName={authorName}
                         />
                     );
                 })}
