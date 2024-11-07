@@ -1,4 +1,3 @@
-// File: app/components/EditArticleForm/EditArticleForm.jsx
 "use client";
 
 import dynamic from "next/dynamic";
@@ -6,6 +5,7 @@ import React, { useState, useRef } from "react";
 import { Loader2, X } from "lucide-react";
 import "react-quill/dist/quill.snow.css";
 import "./EditArticleForm.scss";
+import Image from "next/image";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,6 +17,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select";
+import ImageUpload from "../ImageUpload/ImageUpload";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -38,6 +39,7 @@ const EditArticleForm = ({
     const [currentTag, setCurrentTag] = useState("");
     const [content, setContent] = useState(articleData?.innertext || "");
     const [summary, setSummary] = useState(articleData?.summary || "");
+    const [imageUrl, setImageUrl] = useState(articleData?.image_url || null);
     const quillRef = useRef(null);
 
     const handleAddTag = (tag) => {
@@ -51,6 +53,11 @@ const EditArticleForm = ({
         setTags(tags.filter((tag) => tag !== tagToRemove));
     };
 
+    const handleImageUpload = (url) => {
+        console.log("Image uploaded: ", url);
+        setImageUrl(url);
+    };
+
     const handleSave = () => {
         onSaveEdits({
             title,
@@ -58,6 +65,7 @@ const EditArticleForm = ({
             innertext: content,
             summary,
             article_link: sourceLink,
+            image_url: imageUrl,
         });
     };
 
@@ -147,7 +155,7 @@ const EditArticleForm = ({
                     </SelectTrigger>
                     <SelectContent className="edit-article-form__select-content">
                         {predefinedTags
-                            .filter((tag) => !tags.includes(tag)) // Filter out already added tags
+                            .filter((tag) => !tags.includes(tag))
                             .map((tag) => (
                                 <SelectItem
                                     key={tag}
@@ -186,6 +194,29 @@ const EditArticleForm = ({
                     theme="snow"
                     className="edit-article-form__editor"
                 />
+            </div>
+
+            <div className="edit-article-form__field">
+                <Label className="edit-article-form__label">Cover image</Label>
+                <div className="edit-article-form__input !h-auto">
+                    <div className="flex items-center gap-16">
+                        <ImageUpload
+                            onImageUpload={handleImageUpload}
+                            initialImageUrl={articleData?.image_url}
+                        />
+                        {imageUrl && (
+                            <Image
+                                src={imageUrl}
+                                alt={title}
+                                width={320}
+                                height={200}
+                                objectFit="contain"
+                                objectPosition="center"
+                                loading="lazy"
+                            />
+                        )}
+                    </div>
+                </div>
             </div>
 
             {/* Button actions */}
