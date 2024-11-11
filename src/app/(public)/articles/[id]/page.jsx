@@ -73,7 +73,7 @@ const ArticlePage = ({ params }) => {
                         <div className="article-page__error">{error}</div>
                     ) : (
                         <article className="article-page__article">
-                            <div className="flex  gap-16">
+                            <div className="flex flex-col md:flex-row gap-16">
                                 <div className="article-page__article-details">
                                     <h1 className="article-page__title heading-tertiary">
                                         {article.title}

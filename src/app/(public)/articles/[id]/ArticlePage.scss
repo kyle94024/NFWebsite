@@ -96,3 +96,32 @@
         gap: 2rem;
     }
 }
+
+// media queries for responsiveness
+
+@media only screen and (max-width: 850px) {
+    .article-page {
+        min-height: unset;
+
+        &__content {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        &__title {
+            font-size: 2.4rem;
+            margin-bottom: 2.4rem;
+        }
+
+        &__image {
+            width: 100%;
+            height: 300px;
+        }
+
+        &__actions {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+    }
+}
