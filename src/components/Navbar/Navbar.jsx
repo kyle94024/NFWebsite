@@ -99,7 +99,6 @@ function Navbar() {
                                 alt="Logo"
                                 className="navbrand-img"
                             />
-                            <p className="navbrand-text">Luuped</p>
                         </Link>
                         <div className="header-mob-head-right">
                             <div
