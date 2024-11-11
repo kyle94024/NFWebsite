@@ -74,10 +74,10 @@
 }
 
 // Responsive adjustments
-@media (max-width: 768px) {
+@media (max-width: 850px) {
     .about-page {
         &__content {
-            padding: 3.2rem 0;
+            padding-block: 4rem;
         }
 
         &__title {
