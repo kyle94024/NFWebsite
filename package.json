@@ -22,6 +22,7 @@
     "cookie": "^1.0.1",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.451.0",
+    "marked": "^15.0.0",
     "multer": "^1.4.5-lts.1",
     "next": "14.2.14",
     "openai": "^4.68.4",
