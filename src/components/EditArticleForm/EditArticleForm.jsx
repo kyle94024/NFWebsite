@@ -199,7 +199,7 @@ const EditArticleForm = ({
             <div className="edit-article-form__field">
                 <Label className="edit-article-form__label">Cover image</Label>
                 <div className="edit-article-form__input !h-auto">
-                    <div className="flex items-center gap-16">
+                    <div className="flex flex-col-reverse md:flex-row items-center gap-16">
                         <ImageUpload
                             onImageUpload={handleImageUpload}
                             initialImageUrl={articleData?.image_url}

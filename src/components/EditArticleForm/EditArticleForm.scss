@@ -129,3 +129,54 @@
         gap: 1.6rem;
     }
 }
+
+// media queries for responsiveness
+
+@media only screen and (max-width: 850px) {
+    .edit-article-form {
+        &__row {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        &__field {
+            margin-bottom: 2rem;
+        }
+
+        &__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        &__tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: #4cb19f;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.4rem;
+            font-size: 1.4rem;
+
+            &-remove {
+                background: none;
+                border: none;
+                color: white;
+                cursor: pointer;
+                margin-left: 0.4rem;
+                padding: 0;
+            }
+        }
+
+        &__tag-input {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        &__actions {
+            flex-direction: column;
+            margin-top: 4rem;
+        }
+    }
+}

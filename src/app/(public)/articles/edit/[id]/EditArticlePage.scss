@@ -34,3 +34,14 @@
         }
     }
 }
+
+// media queries for responsiveness
+
+@media screen and (max-width: 850px) {
+    .edit-article {
+        &__content {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+    }
+}

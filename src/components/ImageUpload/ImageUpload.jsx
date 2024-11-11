@@ -97,7 +97,7 @@ const ImageUpload = ({ onImageUpload, initialImageUrl }) => {
             <input
                 type="file"
                 onChange={handleChange}
-                className="image-upload__input file:mr-2.4rem file:py-[2rem] file:mr-8 file:mb-8 file:px-[3.5rem] file:rounded-[10px] file:border-0 file:text-2.1rem file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                className="image-upload__input w-full md:w-max file:mr-2.4rem file:py-[2rem] file:mr-8 file:mb-8 file:px-[3.5rem] file:rounded-[10px] file:border-0 file:text-2.1rem file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
                 accept="image/*"
                 disabled={uploading} // Only disable during upload, not when image exists
             />
