@@ -30,8 +30,6 @@ export default function ArticlesListPaginated({
         startIndex + articlesPerPage
     );
 
-    console.log(articles);
-
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
