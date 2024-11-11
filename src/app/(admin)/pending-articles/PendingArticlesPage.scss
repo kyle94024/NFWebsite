@@ -9,3 +9,14 @@
         }
     }
 }
+
+// responsiveness media queries
+
+@media only screen and (max-width: 850px) {
+    .pending-articles {
+        &__content {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+    }
+}
