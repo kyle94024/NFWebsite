@@ -141,13 +141,12 @@ function Navbar() {
                                 </Link>
                             </>
                         ) : (
-                            <Link
-                                href="/logout"
-                                className="btn btn-primary"
-                                onClick={() => clearUser()}
+                            <button
+                                className="btn btn-outlined"
+                                onClick={() => logout()}
                             >
                                 Logout
-                            </Link> // Add logout functionality
+                            </button> // Add logout functionality
                         )}
                     </div>
                 </div>
