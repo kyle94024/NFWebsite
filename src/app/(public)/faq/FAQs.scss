@@ -26,12 +26,6 @@
         box-shadow: 0px 6px 7.7px 0px rgba(0, 0, 0, 0.05);
     }
 
-    &__title {
-        font-size: 4.8rem;
-        color: #2c3e50;
-        margin-bottom: 1.6rem;
-    }
-
     &__accordion {
         width: 100%;
         margin-top: 5rem;
@@ -68,6 +62,61 @@
         margin-top: 2rem;
         padding-bottom: 1rem;
         line-height: 120%;
-        color: var(--muted-foreground);
+    }
+}
+
+// media queries for responsiveness
+
+@media only screen and (max-width: 850px) {
+    .faq {
+        &__content {
+            margin-top: 4rem;
+
+            padding-bottom: 6rem;
+
+            display: flex;
+            flex-direction: column;
+            gap: 3.5rem;
+        }
+
+        &__container {
+            width: 100%;
+            max-width: 1000px;
+
+            padding: 1rem 2rem 3rem;
+        }
+
+        &__accordion {
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        &__item {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            padding-inline: 0;
+        }
+
+        &__question {
+            font-size: 2rem;
+
+            text-align: left;
+            line-height: 120%;
+
+            &:hover {
+                text-decoration: none;
+            }
+
+            & > svg {
+                margin-left: 1rem;
+            }
+        }
+
+        &__answer {
+            font-size: 1.6rem;
+            margin-top: 1rem;
+            padding-bottom: 1rem;
+            line-height: 120%;
+        }
     }
 }

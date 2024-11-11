@@ -44,7 +44,9 @@ const FAQs = () => {
             <div className="faq">
                 <Navbar />
                 <main className="faq__content padding">
-                    <h2 className="faq__title">Frequently Asked Questions</h2>
+                    <h2 className="heading-secondary text-center">
+                        Frequently Asked Questions
+                    </h2>
 
                     <div className="faq__container boxed">
                         <Accordion
