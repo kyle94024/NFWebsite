@@ -154,3 +154,35 @@
         }
     }
 }
+
+// media queries for responsiveness
+
+@media screen and (max-width: 850px) {
+    .add-article-form {
+        &__row {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        &__field {
+            margin-bottom: 2rem;
+        }
+
+        &__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        &__tag-input {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        &__actions {
+            flex-direction: column;
+            margin-top: 4rem;
+        }
+    }
+}

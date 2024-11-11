@@ -112,7 +112,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="home__participate-articles padding">
+            {/* <section className="home__participate-articles padding">
                 <div className="boxed">
                     <h2 className="heading-tertiary">
                         Participate in Research
@@ -131,7 +131,7 @@ export default function Home() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             <section className="home__subscription-cta padding">
                 <div className="boxed">
