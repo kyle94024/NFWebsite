@@ -78,8 +78,8 @@
     }
 
     &__affiliates {
-        padding-top: 6rem;
-        padding-bottom: 6rem;
+        padding-top: 8rem;
+        padding-bottom: 8rem;
 
         & > .boxed {
             display: flex;
@@ -88,7 +88,7 @@
         }
 
         &__img {
-            max-width: 800px;
+            max-width: 600px;
         }
     }
 
