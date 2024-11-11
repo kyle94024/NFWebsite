@@ -172,3 +172,56 @@
         height: 2.88rem;
     }
 }
+
+// media queries for responsiveness
+
+@media only screen and (max-width: 850px) {
+    .contact-page {
+        &__content {
+            padding-block: 4rem;
+        }
+
+        &__hero {
+            margin-bottom: 4rem;
+        }
+
+        &__section {
+            padding: 3rem 2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+        }
+
+        &__email-link {
+            display: inline-flex;
+            align-items: center;
+            font-size: 2.88rem;
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: #2980b9;
+            }
+        }
+
+        &__email-icon {
+            width: 2.4rem;
+            height: 2.4rem;
+        }
+
+        &__forms {
+            flex-direction: column;
+            gap: 2rem;
+
+            &__set {
+                flex-direction: column;
+            }
+        }
+
+        &__button-icon {
+            margin-right: 1.28rem;
+            width: 2.4rem;
+            height: 2.4rem;
+        }
+    }
+}
