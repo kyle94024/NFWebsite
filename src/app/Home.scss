@@ -109,3 +109,48 @@
         }
     }
 }
+
+// Media queries for responsiveness
+
+@media screen and (max-width: 850px) {
+    .home {
+        &__header {
+            background-size: 45vw;
+
+            // min-height: 100vh;
+        }
+        &__hero {
+            flex-grow: 1;
+
+            padding-block: 6rem;
+
+            &__content {
+                width: 100%;
+            }
+        }
+
+        &__featured-articles {
+            padding-bottom: 4rem;
+        }
+
+        &__affiliates {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+
+            &__img {
+                max-width: 800px;
+                width: 100%;
+            }
+        }
+
+        &__participate-articles {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+
+            &__list {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+    }
+}

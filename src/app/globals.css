@@ -59,6 +59,8 @@ body {
 
 /* // text variants */
 
+/* Typography with media queries for max-width: 850px */
+
 .heading-primary {
     font-family: var(--font-outfit);
     font-size: 7.6rem;
@@ -66,8 +68,8 @@ body {
     font-weight: 600;
     line-height: normal;
 
-    @media only screen and (max-width: 600px) {
-        /* font-size: 36px; */
+    @media only screen and (max-width: 850px) {
+        font-size: 3.6rem;
     }
 }
 
@@ -77,64 +79,68 @@ body {
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+
+    @media only screen and (max-width: 850px) {
+        font-size: 3rem;
+    }
 }
 
 .heading-tertiary {
     font-family: var(--font-outfit);
-    font-size: 39px;
+    font-size: 3.9rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
 
-    @media only screen and (max-width: 600px) {
-        font-size: 20px;
+    @media only screen and (max-width: 850px) {
+        font-size: 2.5rem;
     }
 }
 
 .heading-quaternary {
     font-family: var(--font-outfit);
-    font-size: 31px;
+    font-size: 3.1rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
 
-    @media only screen and (max-width: 600px) {
-        font-size: 20px;
+    @media only screen and (max-width: 850px) {
+        font-size: 2.3rem;
     }
 }
 
 .heading-quinary {
     font-family: var(--font-outfit);
-
-    font-size: 25px;
+    font-size: 2.5rem;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
 
-    @media only screen and (max-width: 600px) {
-        font-size: 20px;
+    @media only screen and (max-width: 850px) {
+        font-size: 2rem;
     }
 }
 
 .body-large {
     font-family: var(--font-outfit);
-    font-size: 20px;
+    font-size: 2rem;
     font-style: normal;
     line-height: normal;
-    @media only screen and (max-width: 600px) {
-        font-size: 18px;
+
+    @media only screen and (max-width: 850px) {
+        font-size: 1.8rem;
     }
 }
 
 .body-regular {
     font-family: var(--font-outfit);
-    font-size: 16px;
+    font-size: 1.6rem;
     font-weight: 400;
     font-style: normal;
     line-height: normal;
 
-    @media only screen and (max-width: 600px) {
-        font-size: 16px;
+    @media only screen and (max-width: 850px) {
+        font-size: 1.4rem;
     }
 }
 

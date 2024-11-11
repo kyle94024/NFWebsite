@@ -31,3 +31,28 @@
         }
     }
 }
+
+// Media queries
+@media screen and (max-width: 850px) {
+    .service-banner {
+        margin-block: 4rem;
+
+        background-size: cover;
+
+        padding: 4rem 2rem;
+        border-radius: 2rem;
+
+        flex-direction: column;
+        text-align: center;
+
+        &__content {
+            & > .heading-quaternary {
+                width: 100%;
+            }
+
+            & > .body-large {
+                font-size: 1.6rem;
+            }
+        }
+    }
+}

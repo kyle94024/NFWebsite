@@ -38,3 +38,47 @@
         }
     }
 }
+
+// Media Queries
+@media only screen and (max-width: 850px) {
+    .articles-section {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+
+        & > .boxed {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+
+        &__list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        &__error {
+            width: 100%;
+
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            align-items: center;
+            justify-content: center;
+            margin-top: 5rem;
+            margin-bottom: 5rem;
+
+            &__icon {
+                height: 5rem;
+                width: 5rem;
+            }
+
+            & > .body-small {
+                text-align: center;
+                color: #4b5762;
+            }
+        }
+    }
+}

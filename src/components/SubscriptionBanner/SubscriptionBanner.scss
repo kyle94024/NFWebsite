@@ -44,3 +44,20 @@
         }
     }
 }
+
+// MEDIA QUERIES
+
+@media screen and (max-width: 850px) {
+    .subscription-banner {
+        margin-block: 6rem;
+        border-radius: 2rem;
+        padding: 4rem 2rem;
+
+        background-size: 100px, 70px, 100%;
+        text-align: center;
+
+        & > .body-large {
+            font-size: 16px;
+        }
+    }
+}
