@@ -87,3 +87,49 @@
         }
     }
 }
+
+// Media queries for responsiveness
+
+@media screen and (max-width: 850px) {
+    .article-list {
+        &__items {
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+        }
+
+        &__loading {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6rem;
+        }
+    }
+
+    .pagination {
+        &__content {
+            display: flex;
+            justify-content: center;
+            margin-top: 8rem;
+        }
+
+        &__item {
+            margin: 0 0.2rem;
+        }
+
+        &__link {
+            padding: 1.5rem; // Adjusted for the 10px = 1rem ratio
+            font-size: 1.4rem;
+
+            &--active {
+                background-color: #4cb19f;
+                color: white;
+            }
+        }
+
+        &__previous,
+        &__next {
+            padding: 1.5rem; // Adjusted for the 10px = 1rem ratio
+            font-size: 1.6rem;
+        }
+    }
+}

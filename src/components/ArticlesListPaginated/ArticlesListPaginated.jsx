@@ -9,9 +9,10 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
+    PaginationEllipsis,
 } from "@/components/ui/pagination";
 import { ArticleCardSkeleton } from "@/components/ArticleCardSkeleton/ArticleCardSkeleton";
-import { SearchX, Unplug } from "lucide-react";
+import { SearchX, Unplug, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ArticlesListPaginated({
     articles = [],
@@ -21,8 +22,17 @@ export default function ArticlesListPaginated({
     pageType = "",
 }) {
     const [currentPage, setCurrentPage] = useState(1);
+    const [isMobile, setIsMobile] = useState(false);
 
-    // Calculate total pages once based on the total number of articles
+    // Check screen size to set isMobile state
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    // Calculate total pages based on the total number of articles
     const totalPages = Math.max(
         1,
         Math.ceil(articles.length / articlesPerPage)
@@ -54,7 +64,53 @@ export default function ArticlesListPaginated({
         }
     };
 
-    // Loading state
+    // Generate pagination items based on the screen size and current page
+    const getPaginationItems = () => {
+        const pages = [];
+
+        if (isMobile) {
+            // Mobile: Show a simplified pagination
+            if (currentPage > 2) pages.push(1, "...");
+            if (currentPage > 1) pages.push(currentPage - 1);
+            pages.push(currentPage);
+            if (currentPage < totalPages) pages.push(currentPage + 1);
+            if (currentPage < totalPages - 1) pages.push("...", totalPages);
+        } else {
+            // Desktop: Show a full pagination
+            if (totalPages <= 7) {
+                for (let i = 1; i <= totalPages; i++) {
+                    pages.push(i);
+                }
+            } else {
+                if (currentPage <= 4) {
+                    pages.push(1, 2, 3, 4, 5, "...", totalPages);
+                } else if (currentPage > totalPages - 4) {
+                    pages.push(
+                        1,
+                        "...",
+                        totalPages - 4,
+                        totalPages - 3,
+                        totalPages - 2,
+                        totalPages - 1,
+                        totalPages
+                    );
+                } else {
+                    pages.push(
+                        1,
+                        "...",
+                        currentPage - 1,
+                        currentPage,
+                        currentPage + 1,
+                        "...",
+                        totalPages
+                    );
+                }
+            }
+        }
+
+        return pages;
+    };
+
     if (loading) {
         return (
             <div className="article-list__loading">
@@ -65,7 +121,6 @@ export default function ArticlesListPaginated({
         );
     }
 
-    // Error state
     if (error) {
         return (
             <div className="article-list__error">
@@ -77,7 +132,6 @@ export default function ArticlesListPaginated({
         );
     }
 
-    // Empty state
     if (articles.length === 0) {
         return (
             <div className="article-list__empty-state">
@@ -126,46 +180,77 @@ export default function ArticlesListPaginated({
                 <Pagination className="pagination">
                     <PaginationContent className="pagination__content">
                         <PaginationItem className="pagination__item">
-                            <PaginationPrevious
-                                href="#"
-                                className="pagination__previous"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    handlePageChange(currentPage - 1);
-                                }}
-                            />
-                        </PaginationItem>
-                        {[...Array(totalPages)].map((_, i) => (
-                            <PaginationItem
-                                key={i}
-                                className="pagination__item"
-                            >
-                                <PaginationLink
-                                    href="#"
-                                    isActive={currentPage === i + 1}
-                                    className={`pagination__link ${
-                                        currentPage === i + 1
-                                            ? "pagination__link--active"
-                                            : ""
-                                    }`}
+                            {isMobile ? (
+                                <ChevronLeft
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        handlePageChange(i + 1);
+                                        handlePageChange(currentPage - 1);
                                     }}
+                                    className="pagination__icon"
+                                />
+                            ) : (
+                                <PaginationPrevious
+                                    href="#"
+                                    className="pagination__previous"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handlePageChange(currentPage - 1);
+                                    }}
+                                />
+                            )}
+                        </PaginationItem>
+
+                        {getPaginationItems().map((item, index) =>
+                            item === "..." ? (
+                                <PaginationItem
+                                    key={index}
+                                    className="pagination__item"
                                 >
-                                    {i + 1}
-                                </PaginationLink>
-                            </PaginationItem>
-                        ))}
+                                    <PaginationEllipsis />
+                                </PaginationItem>
+                            ) : (
+                                <PaginationItem
+                                    key={index}
+                                    className="pagination__item"
+                                >
+                                    <PaginationLink
+                                        href="#"
+                                        isActive={currentPage === item}
+                                        className={`pagination__link ${
+                                            currentPage === item
+                                                ? "pagination__link--active"
+                                                : ""
+                                        }`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handlePageChange(item);
+                                        }}
+                                    >
+                                        {item}
+                                    </PaginationLink>
+                                </PaginationItem>
+                            )
+                        )}
+
                         <PaginationItem className="pagination__item">
-                            <PaginationNext
-                                href="#"
-                                className="pagination__next"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    handlePageChange(currentPage + 1);
-                                }}
-                            />
+                            {isMobile ? (
+                                <ChevronRight
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handlePageChange(currentPage + 1);
+                                    }}
+                                    className="pagination__icon"
+                                />
+                            ) : (
+                                <PaginationNext
+                                    href="#"
+                                    className="pagination__next"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handlePageChange(currentPage + 1);
+                                    }}
+                                />
+                            )}
                         </PaginationItem>
                     </PaginationContent>
                 </Pagination>
