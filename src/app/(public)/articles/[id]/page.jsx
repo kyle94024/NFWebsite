@@ -28,6 +28,8 @@ const ArticlePage = ({ params }) => {
 
                 const data = await response.json();
                 setArticle(data);
+
+                console.log(data);
             } catch (err) {
                 setError(err.message);
                 toast.error(err.message);
@@ -164,7 +166,11 @@ const ArticlePage = ({ params }) => {
                                 <h2 className="article-page__summary-title">
                                     Summary
                                 </h2>
-                                <p>{article.summary}</p>
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: article.summary,
+                                    }}
+                                ></div>
                             </div>
                             <div
                                 className="article-page__content-text"

@@ -143,7 +143,11 @@ function ArticleCard({
                     {truncateText(title, 80)}
                 </h2>
                 <p className="article-card__summary">
-                    {truncateText(summary, 180)}
+                    <span
+                        dangerouslySetInnerHTML={{
+                            __html: truncateText(summary, 180),
+                        }}
+                    ></span>
                     {pageType !== "pending" && (
                         <a
                             href={`/articles/${id}`}
@@ -153,6 +157,7 @@ function ArticleCard({
                         </a>
                     )}
                 </p>
+
                 <div className="article-card__author">
                     {authorImageUrl ? (
                         <Image
