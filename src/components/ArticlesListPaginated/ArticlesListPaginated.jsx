@@ -1,6 +1,6 @@
 "use client";
 import "./ArticlesListPaginated.scss";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ArticleCard from "@/components/ArticleCard/ArticleCard";
 import {
     Pagination,
@@ -15,36 +15,57 @@ import { SearchX, Unplug } from "lucide-react";
 
 export default function ArticlesListPaginated({
     articles = [],
-    articlesPerPage = 10,
+    articlesPerPage = 6,
     loading = false,
     error = false,
     pageType = "",
 }) {
     const [currentPage, setCurrentPage] = useState(1);
 
-    const totalPages = Math.ceil(articles.length / articlesPerPage);
-
-    const startIndex = (currentPage - 1) * articlesPerPage;
-    const selectedArticles = articles.slice(
-        startIndex,
-        startIndex + articlesPerPage
+    // Calculate total pages once based on the total number of articles
+    const totalPages = Math.max(
+        1,
+        Math.ceil(articles.length / articlesPerPage)
     );
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
+    // Ensure current page is within valid bounds
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            setCurrentPage(totalPages);
+        }
+    }, [articles.length, totalPages, currentPage]);
+
+    // Get the current page's articles
+    const getCurrentPageArticles = () => {
+        const startIndex = (currentPage - 1) * articlesPerPage;
+        const endIndex = Math.min(
+            startIndex + articlesPerPage,
+            articles.length
+        );
+        return articles.slice(startIndex, endIndex);
     };
 
-    // Conditional rendering based on loading, error state, and empty articles
+    const selectedArticles = getCurrentPageArticles();
+
+    const handlePageChange = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+            window.scrollTo(0, 0); // Optional: scroll to top on page change
+        }
+    };
+
+    // Loading state
     if (loading) {
         return (
             <div className="article-list__loading">
-                {[...Array(6)].map((_, index) => (
+                {[...Array(articlesPerPage)].map((_, index) => (
                     <ArticleCardSkeleton key={index} />
                 ))}
             </div>
         );
     }
 
+    // Error state
     if (error) {
         return (
             <div className="article-list__error">
@@ -56,7 +77,8 @@ export default function ArticlesListPaginated({
         );
     }
 
-    if (selectedArticles.length === 0) {
+    // Empty state
+    if (articles.length === 0) {
         return (
             <div className="article-list__empty-state">
                 <SearchX className="article-list__empty-icon" />
@@ -71,7 +93,6 @@ export default function ArticlesListPaginated({
         <div className="article-list">
             <div className="article-list__items">
                 {selectedArticles.map((article) => {
-                    // Parse publisher if it exists and is a JSON string
                     let authorName = article.authorName;
                     if (article.publisher) {
                         try {
@@ -88,7 +109,7 @@ export default function ArticlesListPaginated({
                     return (
                         <ArticleCard
                             pageType={pageType}
-                            key={article.title}
+                            key={article.id || article.title}
                             id={article.id}
                             imageUrl={article.image_url}
                             date={article.date}
@@ -101,52 +122,54 @@ export default function ArticlesListPaginated({
                 })}
             </div>
 
-            {/* Pagination */}
-            <Pagination className="pagination">
-                <PaginationContent className="pagination__content">
-                    <PaginationItem className="pagination__item">
-                        <PaginationPrevious
-                            href="#"
-                            className="pagination__previous"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                if (currentPage > 1)
-                                    handlePageChange(currentPage - 1);
-                            }}
-                        />
-                    </PaginationItem>
-                    {[...Array(totalPages)].map((_, i) => (
-                        <PaginationItem key={i} className="pagination__item">
-                            <PaginationLink
+            {totalPages > 1 && (
+                <Pagination className="pagination">
+                    <PaginationContent className="pagination__content">
+                        <PaginationItem className="pagination__item">
+                            <PaginationPrevious
                                 href="#"
-                                isActive={currentPage === i + 1}
-                                className={`pagination__link ${
-                                    currentPage === i + 1
-                                        ? "pagination__link--active"
-                                        : ""
-                                }`}
+                                className="pagination__previous"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    handlePageChange(i + 1);
+                                    handlePageChange(currentPage - 1);
                                 }}
-                            >
-                                {i + 1}
-                            </PaginationLink>
+                            />
                         </PaginationItem>
-                    ))}
-                    <PaginationItem className="pagination__item">
-                        <PaginationNext
-                            href="#"
-                            className="pagination__next"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                if (currentPage < totalPages)
+                        {[...Array(totalPages)].map((_, i) => (
+                            <PaginationItem
+                                key={i}
+                                className="pagination__item"
+                            >
+                                <PaginationLink
+                                    href="#"
+                                    isActive={currentPage === i + 1}
+                                    className={`pagination__link ${
+                                        currentPage === i + 1
+                                            ? "pagination__link--active"
+                                            : ""
+                                    }`}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handlePageChange(i + 1);
+                                    }}
+                                >
+                                    {i + 1}
+                                </PaginationLink>
+                            </PaginationItem>
+                        ))}
+                        <PaginationItem className="pagination__item">
+                            <PaginationNext
+                                href="#"
+                                className="pagination__next"
+                                onClick={(e) => {
+                                    e.preventDefault();
                                     handlePageChange(currentPage + 1);
-                            }}
-                        />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+                                }}
+                            />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
+            )}
         </div>
     );
 }
