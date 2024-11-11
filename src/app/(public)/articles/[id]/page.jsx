@@ -11,6 +11,7 @@ import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import useAuthStore from "@/store/useAuthStore";
 
 const ArticlePage = ({ params }) => {
     const router = useRouter();
@@ -20,6 +21,8 @@ const ArticlePage = ({ params }) => {
     const [error, setError] = useState(null);
     const [deleting, setDeleting] = useState(false);
 
+    const { isAdmin } = useAuthStore(); // Access user and admin state from Zustand
+
     useEffect(() => {
         const fetchArticle = async () => {
             try {
@@ -28,8 +31,6 @@ const ArticlePage = ({ params }) => {
 
                 const data = await response.json();
                 setArticle(data);
-
-                console.log(data);
             } catch (err) {
                 setError(err.message);
                 toast.error(err.message);
@@ -189,28 +190,32 @@ const ArticlePage = ({ params }) => {
                                         Read original article
                                     </Link>
                                 )}
-                                <Link
-                                    href={`/articles/edit/${article.id}`}
-                                    className="btn btn-primary"
-                                    rel="noopener noreferrer"
-                                >
-                                    Edit Article
-                                </Link>
-                                <Button
-                                    type="button"
-                                    className="btn btn-primary-red"
-                                    onClick={handleDelete}
-                                    disabled={deleting}
-                                >
-                                    {deleting ? (
-                                        <>
-                                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
-                                            Deleting...
-                                        </>
-                                    ) : (
-                                        "Delete"
-                                    )}
-                                </Button>
+                                {isAdmin && (
+                                    <>
+                                        <Link
+                                            href={`/articles/edit/${article.id}`}
+                                            className="btn btn-primary"
+                                            rel="noopener noreferrer"
+                                        >
+                                            Edit Article
+                                        </Link>
+                                        <Button
+                                            type="button"
+                                            className="btn btn-primary-red"
+                                            onClick={handleDelete}
+                                            disabled={deleting}
+                                        >
+                                            {deleting ? (
+                                                <>
+                                                    <Loader2 className="mr-2 h-8 w-8 animate-spin" />
+                                                    Deleting...
+                                                </>
+                                            ) : (
+                                                "Delete"
+                                            )}
+                                        </Button>
+                                    </>
+                                )}
                             </div>
                         </article>
                     )}

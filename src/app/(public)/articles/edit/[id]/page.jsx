@@ -9,6 +9,7 @@ import EditArticleForm from "@/components/EditArticleForm/EditArticleForm";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SectionLoader from "@/components/SectionLoader/SectionLoader";
+import { withAuth } from "@/components/withAuth/withAuth";
 
 const EditArticle = ({ params }) => {
     const { id } = params;
@@ -133,4 +134,4 @@ const EditArticle = ({ params }) => {
     );
 };
 
-export default EditArticle;
+export default withAuth(EditArticle);

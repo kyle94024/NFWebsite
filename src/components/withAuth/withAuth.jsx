@@ -17,10 +17,11 @@ export const withAuth = (WrappedComponent) => {
                         const response = await fetch("/api/auth/session");
                         if (response.ok) {
                             const user = await response.json();
-                            if (user.isLoggedIn) {
-                                setAuthenticated(true); // User is authenticated
+
+                            if (user.isLoggedIn && user.isAdmin) {
+                                setAuthenticated(true); // User is authenticated and an admin
                             } else {
-                                router.push("/login"); // Redirect if not logged in
+                                router.push("/login"); // Redirect if not logged in or not an admin
                             }
                         } else {
                             router.push("/login"); // Redirect if API check fails

@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SectionLoader from "@/components/SectionLoader/SectionLoader";
 import useAuthStore from "@/store/useAuthStore";
+import { withAuth } from "@/components/withAuth/withAuth";
 
 const ReviewArticle = ({ params }) => {
     const { id } = params;
@@ -144,4 +145,4 @@ const ReviewArticle = ({ params }) => {
     );
 };
 
-export default ReviewArticle;
+export default withAuth(ReviewArticle);

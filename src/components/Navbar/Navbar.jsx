@@ -20,13 +20,13 @@ function Navbar() {
         { name: "Articles", path: "/articles" },
         { name: "About", path: "/about" },
         { name: "Contact Us", path: "/contact" },
-        ...(user ? [{ name: "Add Articles", path: "/add-article" }] : []), // Show Add Articles link if logged in
         ...(isAdmin
             ? [
+                  { name: "Add Articles", path: "/add-article" },
                   { name: "Pending Articles", path: "/pending-articles" },
                   { name: "Featured", path: "/featured" },
               ]
-            : []), // Show Pending and Featured links if user is admin
+            : []), // Show Add Articles, Pending Articles, and Featured links only if the user is an admin
     ];
 
     return (
