@@ -91,12 +91,12 @@ export default function LoginForm() {
                                 </button>
                             </div>
                         </div>
-                        <a
+                        {/* <a
                             href="#forgot-password"
                             className="login-form__forgot-password"
                         >
                             Forgot password?
-                        </a>
+                        </a> */}
                         <Button
                             type="submit"
                             className="login-form__submit"

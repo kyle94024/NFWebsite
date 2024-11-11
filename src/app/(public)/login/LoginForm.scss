@@ -145,3 +145,135 @@
         }
     }
 }
+
+// media queries for responsiveness
+
+@media only screen and (max-width: 850px) {
+    .login-page {
+        &__body {
+            padding-block: 4rem;
+            padding-inline: 2rem;
+        }
+
+        & .login-form {
+            transform: translateY(0);
+
+            padding: 3rem 2rem;
+            width: 100%;
+
+            &__title {
+                font-size: 2.4rem;
+                font-weight: bold;
+                margin-bottom: 2.4rem;
+                color: #333;
+            }
+
+            &__error {
+                color: red;
+                font-size: 1.6rem;
+                font-weight: 500;
+                margin-inline: auto;
+            }
+
+            &__form {
+                display: flex;
+                flex-direction: column;
+            }
+
+            &__input-group {
+                margin-bottom: 1.6rem;
+            }
+
+            &__label {
+                display: block;
+                margin-bottom: 0.8rem;
+                font-weight: 500;
+                color: #333;
+            }
+
+            &__input {
+                width: 100%;
+                padding: 1.2rem;
+                border: 1px solid #e0e0e0;
+                border-radius: 0.8rem;
+                font-size: 1.6rem;
+
+                &::placeholder {
+                    color: #aaa;
+                }
+
+                &:focus {
+                    outline: none;
+                    border-color: #4cb19f;
+                }
+            }
+
+            &__password-input {
+                position: relative;
+            }
+
+            &__password-toggle {
+                position: absolute;
+                right: 1.2rem;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 2rem;
+            }
+
+            &__forgot-password {
+                align-self: flex-end;
+                color: #4cb19f;
+                text-decoration: none;
+                font-size: 1.6rem;
+                margin-bottom: 1.6rem;
+
+                font-weight: 500;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            &__submit {
+                margin-top: 2rem;
+                background-color: #1a1a1a;
+                color: #ffffff;
+                border: none;
+                border-radius: 0.8rem;
+                padding: 1.2rem;
+                font-size: 1.6rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                height: 5rem;
+
+                transition: all 0.2s;
+
+                &:hover {
+                    background-color: #333;
+                }
+            }
+
+            &__signup {
+                margin-top: 1.6rem;
+                text-align: center;
+                font-size: 1.6rem;
+                color: #666;
+
+                font-weight: 500;
+            }
+
+            &__signup-link {
+                color: #4cb19f;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
