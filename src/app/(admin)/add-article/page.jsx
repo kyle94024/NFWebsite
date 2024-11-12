@@ -3,7 +3,6 @@ import Footer from "@/components/Footer/Footer";
 import "./AddArticle.scss";
 import AddArticleForm from "@/components/AddArticleForm/AddArticleForm";
 import Navbar from "@/components/Navbar/Navbar";
-import { withAuth } from "@/components/withAuth/withAuth";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -29,4 +28,4 @@ const AddArticle = () => {
     );
 };
 
-export default withAuth(AddArticle);
+export default AddArticle;

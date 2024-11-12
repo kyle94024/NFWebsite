@@ -84,32 +84,10 @@ const ArticlePage = ({ params }) => {
                                         <p className="article-page__id">
                                             Article ID: {article.id}
                                         </p>
-                                        {article.publisher && (
-                                            <p className="article-page__publisher">
-                                                Publisher:{" "}
-                                                {(() => {
-                                                    try {
-                                                        const publisherData =
-                                                            typeof article.publisher ===
-                                                            "string"
-                                                                ? JSON.parse(
-                                                                      article.publisher
-                                                                  )
-                                                                : article.publisher;
-                                                        return publisherData.name;
-                                                    } catch (err) {
-                                                        console.error(
-                                                            "Error parsing publisher:",
-                                                            err
-                                                        );
-                                                        return "Unknown Publisher";
-                                                    }
-                                                })()}
-                                            </p>
-                                        )}
+
                                         {article.certifiedby && (
                                             <p className="article-page__certified">
-                                                Certified by:{" "}
+                                                Published By:{" "}
                                                 {(() => {
                                                     try {
                                                         const certifiedData =

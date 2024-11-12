@@ -28,9 +28,9 @@ const ArticlesSection = ({ articles, loading, error, sectionTitle }) => {
                             let authorName = "Anonymous"; // Default value
                             try {
                                 const publisherData =
-                                    typeof article.publisher === "string"
-                                        ? JSON.parse(article.publisher)
-                                        : article.publisher;
+                                    typeof article.certifiedby === "string"
+                                        ? JSON.parse(article.certifiedby)
+                                        : article.certifiedby;
 
                                 authorName = publisherData.name; // Get the name from the parsed object
                             } catch (err) {

@@ -147,13 +147,13 @@ export default function ArticlesListPaginated({
         <div className="article-list">
             <div className="article-list__items">
                 {selectedArticles.map((article) => {
-                    let authorName = article.authorName;
-                    if (article.publisher) {
+                    let authorName = "Anonymous";
+                    if (article.certifiedby) {
                         try {
                             const publisherData =
-                                typeof article.publisher === "string"
-                                    ? JSON.parse(article.publisher)
-                                    : article.publisher;
+                                typeof article.certifiedby === "string"
+                                    ? JSON.parse(article.certifiedby)
+                                    : article.certifiedby;
                             authorName = publisherData.name || authorName;
                         } catch (err) {
                             console.error("Error parsing publisher:", err);
