@@ -68,7 +68,7 @@ body {
     font-weight: 600;
     line-height: normal;
 
-    @media only screen and (max-width: 850px) {
+    @media only screen and (max-width: 1025px) {
         font-size: 3.6rem;
     }
 }

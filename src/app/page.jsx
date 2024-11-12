@@ -101,7 +101,7 @@ export default function Home() {
 
             {/* Recent articles section */}
             <RecentArticlesSection />
-
+            {/* 
             <section className="home__affiliates padding">
                 <div className="boxed">
                     <Image
@@ -110,7 +110,7 @@ export default function Home() {
                         className="home__affiliates__img"
                     />
                 </div>
-            </section>
+            </section> */}
 
             {/* <section className="home__participate-articles padding">
                 <div className="boxed">
