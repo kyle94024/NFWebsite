@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const { Pool } = require('pg');
 const path = require('path');
 // const pg = require('pg'); // PGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPGPG
-
+// export const maxDuration = 40;
 
 
 const app = express();
@@ -156,10 +156,78 @@ router.post('/add-article', async (req, res) => {
     const { title, tags, innertext, article_link, simplifyLength} = req.body;
     try {
         // Summarize the innertext before saving
-        const summary = await summarizeArticle(innertext);
+        const content = innertext;
+        let summary = "";
 
-        const simplified = await simplifyArticle(innertext, simplifyLength);
+        try {
+            console.log("SUMMARIZE ARTICLE CHECKPOINT 0")
+            try {
+                const response = await openai.chat.completions.create({
+                    model: "gpt-4o", 
+                    messages: [{ role: "system", content: "You read long scientific articles and state the main point or conclusion from the article, in one sentence. HARD Maximum of 280 characters" },
+                            //     { role: "user", content: "Background: The publication norms of the American Psychological Association recommend the use of a serif font in the manuscripts (Times New Roman). However, there seems to be no well-substantiated reason why serif fonts would produce any advantage during letter/word processing. Method: This study presents an experiment in which sentences were presented either with a serif or sans serif font from the same family while participants' eye movements were monitored. Results: Results did not reveal any differences of type of font in eye movement measures -except for a minimal effect in the number of progressive saccades. Conclusions: There is no reason why the APA publication norms recommend the use of serif fonts other than uniformity in the elaboration/presentation of the manuscripts." },
+                            //    {role: "assistant", content: "The choosing of serif for APA publication norms is not supported by tangible differences."},
+                               { role: "user", content }]
+                  });
+                
+        
+
+                summary = response.choices[0].message.content.trim();
+            } catch (error) {
+                console.error('Error calling the OpenAI API:', error);
+                throw error;
+            }
+            console.log("SUMMARIZE ARTICLE CHECKPOINT 1")
+        } catch (error) {
+            console.error('Error summarizing article:', error);
+            throw error; // Rethrow or handle as needed
+        }
+
+        if (!summary) {
+            throw new Error('Failed to get summary');
+        }
+
+
+
+
+
+        //const simplified = await simplifyArticle(innertext, simplifyLength);
+        const lengthString = simplifyLength;
+        let simplified = "";
+        try {
+            console.log("SIMPLIFY ARTICLE CHECKPOINT 3")
+            console.log(`Content: ${innertext}`);
+            console.log(`Length String: ${lengthString}`);
+
+            try {
+                console.log(`Content: ${innertext}`);
+                const response = await openai.chat.completions.create({
+                    model: "gpt-4o", // Update to the specific GPT-4 model you're using
+                    messages: [
+                        { role: "system", content: `You read long scientific articles and simplify them to ${lengthString}.` },
+                        { role: "user", content:innertext }
+                    ]
+                });
+                console.log("SIMPLIFY ARTICLE CHECKPOINT 5")
+                simplified = response.choices[0].message.content.trim();
+
+            } catch (error) {
+                console.error('Error calling the OpenAI API:', error);
+            }
+
+
+        } catch (error) {
+            console.error('Error simplifying article:', error);
+            throw error; // Rethrow or handle as needed
+        }
+
+
+
+
         console.log("SIMPLIFIED IN AA", simplified);
+
+
+
 
         const result = await pool.query(
             'INSERT INTO pending_article (title, tags, innertext, summary, article_link) VALUES ($1, $2, $3, $4, $5) RETURNING *;',
@@ -353,86 +421,90 @@ router.get('/get-article/:id', async (req, res) => {
 //     apiKey: process.env.OPENAI_API_KEY
 // });
 
-router.post('/article-summarize', async (req, res) => {
-    const { content } = req.body; // Assuming 'content' holds the article text
+// router.post('/article-summarize', async (req, res) => {
+//     const { content } = req.body; // Assuming 'content' holds the article text
+//     console.log("SUMMARIZE ARTICLE CHECKPOINT 2")
 
-    console.log(content);
-    try {
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o", // Update this to the specific GPT-4 model you're using
-            messages: [{ role: "system", content: "You read long scientific articles and state the main point or conclusion from the article, in one sentence. HARD Maximum of 280 characters" },
-                    //     { role: "user", content: "Background: The publication norms of the American Psychological Association recommend the use of a serif font in the manuscripts (Times New Roman). However, there seems to be no well-substantiated reason why serif fonts would produce any advantage during letter/word processing. Method: This study presents an experiment in which sentences were presented either with a serif or sans serif font from the same family while participants' eye movements were monitored. Results: Results did not reveal any differences of type of font in eye movement measures -except for a minimal effect in the number of progressive saccades. Conclusions: There is no reason why the APA publication norms recommend the use of serif fonts other than uniformity in the elaboration/presentation of the manuscripts." },
-                    //    {role: "assistant", content: "The choosing of serif for APA publication norms is not supported by tangible differences."},
-                       { role: "user", content }]
-            // stream: true, // Use if you're handling streaming responses
-          });
+//     console.log(content);
+//     try {
+//         const response = await openai.chat.completions.create({
+//             model: "gpt-4o", // Update this to the specific GPT-4 model you're using
+//             messages: [{ role: "system", content: "You read long scientific articles and state the main point or conclusion from the article, in one sentence. HARD Maximum of 280 characters" },
+//                     //     { role: "user", content: "Background: The publication norms of the American Psychological Association recommend the use of a serif font in the manuscripts (Times New Roman). However, there seems to be no well-substantiated reason why serif fonts would produce any advantage during letter/word processing. Method: This study presents an experiment in which sentences were presented either with a serif or sans serif font from the same family while participants' eye movements were monitored. Results: Results did not reveal any differences of type of font in eye movement measures -except for a minimal effect in the number of progressive saccades. Conclusions: There is no reason why the APA publication norms recommend the use of serif fonts other than uniformity in the elaboration/presentation of the manuscripts." },
+//                     //    {role: "assistant", content: "The choosing of serif for APA publication norms is not supported by tangible differences."},
+//                        { role: "user", content }]
+//             // stream: true, // Use if you're handling streaming responses
+//           });
         
 
-        // Sending back the summary generated
-        console.log(response.choices[0].message.content.trim());
-        res.json({ summary: response.choices[0].message.content.trim() });
-    } catch (error) {
-        console.error('Error calling the OpenAI API:', error);
-        res.status(500).json({ message: 'Failed to summarize article' });
-    }
-});
+//         // Sending back the summary generated
+//         console.log(response.choices[0].message.content.trim());
+//         res.json({ summary: response.choices[0].message.content.trim() });
+//     } catch (error) {
+//         console.error('Error calling the OpenAI API:', error);
+//         res.status(500).json({ message: 'Failed to summarize article' });
+//     }
+// });
 
-async function summarizeArticle(content) {
-    try {
-        const response = await axios.post('/api/article-summarize', { content });
-        if(response.data && response.data.summary) {
-            return response.data.summary;
-        } else {
-            throw new Error('Failed to get summary');
-        }
-    } catch (error) {
-        console.error('Error summarizing article:', error);
-        throw error; // Rethrow or handle as needed
-    }
-}
+// async function summarizeArticle(content) {
+//     try {
+//         console.log("SUMMARIZE ARTICLE CHECKPOINT 0")
+//         const response = await axios.post('/api/article-summarize', { content });
+//         console.log("SUMMARIZE ARTICLE CHECKPOINT 1")
+//         if(response.data && response.data.summary) {
+//             return response.data.summary;
+//         } else {
+//             throw new Error('Failed to get summary');
+//         }
+//     } catch (error) {
+//         console.error('Error summarizing article:', error);
+//         throw error; // Rethrow or handle as needed
+//     }
+// }
 
-async function simplifyArticle(content, lengthString) {
-    try {
-        const response = await axios.post('/api/article-simplify', { content, lengthString });
-        console.log("RESPONSE: ",response.data.simplified);
-        if (response.data && response.data.simplified) {
-            return response.data.simplified;
-        } else {
-            console.log("failed to simplify");
-            throw new Error('Failed to simplify article');
-        }
-    } catch (error) {
-        console.error('Error simplifying article:', error);
-        throw error; // Rethrow or handle as needed
-    }
-}
+// async function simplifyArticle(content, lengthString) {
+//     try {
+//         console.log("SIMPLIFY ARTICLE CHECKPOINT 3")
+//         const response = await axios.post('/api/article-simplify', { content, lengthString });
+//         console.log("RESPONSE: ",response.data.simplified);
+//         if (response.data && response.data.simplified) {
+//             return response.data.simplified;
+//         } else {
+//             console.log("failed to simplify");
+//             throw new Error('Failed to simplify article');
+//         }
+//     } catch (error) {
+//         console.error('Error simplifying article:', error);
+//         throw error; // Rethrow or handle as needed
+//     }
+// }
 
 
 
-router.post('/article-simplify', async (req, res) => {
-    const { content, lengthString } = req.body; // Extract content and lengthString from the request body
+// router.post('/article-simplify', async (req, res) => {
+//     const { content, lengthString } = req.body; // Extract content and lengthString from the request body
+//     console.log("SIMPLIFY ARTICLE CHECKPOINT 4")
+//     console.log(`Content: ${content}`);
+//     console.log(`Length String: ${lengthString}`);
 
-    console.log(`Content: ${content}`);
-    console.log(`Length String: ${lengthString}`);
+//     try {
+//         const response = await openai.chat.completions.create({
+//             model: "gpt-4o", // Update to the specific GPT-4 model you're using
+//             messages: [
+//                 { role: "system", content: `You read long scientific articles and simplify them to ${lengthString}.` },
+//                 { role: "user", content }
+//             ]
+//         });
 
-    try {
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o", // Update to the specific GPT-4 model you're using
-            messages: [
-                { role: "system", content: `You read long scientific articles and simplify them to ${lengthString}.` },
-                { role: "user", content }
-            ]
-        });
+//         const simplifiedContent = response.choices[0].message.content.trim();
 
-        const simplifiedContent = response.choices[0].message.content.trim();
-
-        // Send back the simplified content
-        res.json({ simplified: simplifiedContent });
-    } catch (error) {
-        console.error('Error calling the OpenAI API:', error);
-        res.status(500).json({ message: 'Failed to simplify article' });
-    }
-});
+//         // Send back the simplified content
+//         res.json({ simplified: simplifiedContent });
+//     } catch (error) {
+//         console.error('Error calling the OpenAI API:', error);
+//         res.status(500).json({ message: 'Failed to simplify article' });
+//     }
+// });
 
 
 router.post('/create-account', async (req, res) => {
