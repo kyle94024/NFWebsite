@@ -4,7 +4,7 @@ import { marked } from "marked"; // You may need to install this package
 export async function summarizeArticle(content) {
     try {
         const response = await openai.chat.completions.create({
-            model: "gpt-4",
+            model: "gpt-4o", //GPT model
             messages: [
                 {
                     role: "system",
@@ -25,7 +25,7 @@ export async function summarizeArticle(content) {
 export async function simplifyArticle(content, lengthString) {
     try {
         const response = await openai.chat.completions.create({
-            model: "gpt-4",
+            model: "gpt-4o", //GPT Model
             messages: [
                 {
                     role: "system",

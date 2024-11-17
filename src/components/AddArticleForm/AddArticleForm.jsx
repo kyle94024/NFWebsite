@@ -26,6 +26,8 @@ import { Loader2 } from "lucide-react";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import Image from "next/image";
 
+import pdfToText from "react-pdftotext";
+
 // Predefined list of tags
 const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS"];
 
@@ -59,6 +61,21 @@ const AddArticleForm = () => {
 
     const handleRemoveTag = (tagToRemove) => {
         setTags(tags.filter((tag) => tag !== tagToRemove));
+    };
+
+    const handlePDFUpload = async (event) => {
+        const file = event.target.files[0];
+        if (file && file.type === "application/pdf") {
+            try {
+                const text = await pdfToText(file);
+                setContent(text);
+                toast.success("PDF content extracted successfully!");
+            } catch (error) {
+                toast.error("Failed to extract PDF content: " + error.message);
+            }
+        } else {
+            toast.error("Please upload a valid PDF file.");
+        }
     };
 
     const handleRunSimplification = async () => {
@@ -146,6 +163,21 @@ const AddArticleForm = () => {
     return (
         <form className="add-article-form">
             <div className="add-article-form__row">
+                <div className="add-article-form__field">
+                    <Label htmlFor="title" className="add-article-form__label">
+                        Upload PDF (Optional)
+                    </Label>
+                    <Input
+                    id="pdfUpload"
+                    type="file"
+                    accept="application/pdf"
+                    className="add-article-form__input"
+                        onChange={handlePDFUpload}
+                    />
+                </div>
+            </div>
+            <div className="add-article-form__row">
+                
                 <div className="add-article-form__field">
                     <Label htmlFor="title" className="add-article-form__label">
                         Article Title
