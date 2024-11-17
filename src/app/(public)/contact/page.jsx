@@ -138,7 +138,7 @@ export default function ContactPage() {
                                         as soon as possible.
                                     </p>
                                     <Link
-                                        href="mailto:moazzam@devtrox.com"
+                                        href="mailto:kyle94024@gmail.com"
                                         className="btn btn-primary"
                                     >
                                         <Mail className="contact-page__email-icon" />
