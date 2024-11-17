@@ -26,7 +26,13 @@ import { Loader2 } from "lucide-react";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import Image from "next/image";
 
-import pdfToText from "react-pdftotext";
+// import pdfToText from "react-pdftotext";
+// import * as pdfjsLib from 'pdfjs-dist';
+// pdfjsLib.GlobalWorkerOptions.workerSrc = '/path/to/node_modules/pdfjs-dist/build/pdf.worker.min.js';
+
+
+
+
 
 // Predefined list of tags
 const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS"];
@@ -63,20 +69,67 @@ const AddArticleForm = () => {
         setTags(tags.filter((tag) => tag !== tagToRemove));
     };
 
-    const handlePDFUpload = async (event) => {
-        const file = event.target.files[0];
-        if (file && file.type === "application/pdf") {
-            try {
-                const text = await pdfToText(file);
-                setContent(text);
-                toast.success("PDF content extracted successfully!");
-            } catch (error) {
-                toast.error("Failed to extract PDF content: " + error.message);
-            }
-        } else {
-            toast.error("Please upload a valid PDF file.");
-        }
-    };
+
+
+    // const extractTextFromPDF = async (file) => {
+    //     const arrayBuffer = await file.arrayBuffer();
+    //     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    //     let extractedText = '';
+
+    //     for (let i = 1; i <= pdf.numPages; i++) {
+    //         const page = await pdf.getPage(i);
+    //         const textContent = await page.getTextContent();
+    //         const pageText = textContent.items.map((item) => item.str).join(' ');
+    //         extractedText += pageText + '\n';
+    //     }
+
+    //     return extractedText;
+    // };
+
+    // const handlePDFUpload = async (event) => {
+    //     const file = event.target.files[0];
+    //     if (file && file.type === 'application/pdf') {
+    //         try {
+    //             const text = await extractTextFromPDF(file);
+    //             setContent(text); // Assuming you have setContent to update the content state
+    //             toast.success('PDF content extracted successfully!');
+    //         } catch (error) {
+    //             toast.error('Failed to extract PDF content: ' + error.message);
+    //         }
+    //     } else {
+    //         toast.error('Please upload a valid PDF file.');
+    //     }
+    // };
+
+    // const handlePDFUpload = async (event) => {
+    //     const file = event.target.files[0];
+    //     if (file && file.type === "application/pdf") {
+    //         try {
+    //             const text = await pdfToText(file);
+    //             setContent(text);
+    //             toast.success("PDF content extracted successfully!");
+    //         } catch (error) {
+    //             toast.error("Failed to extract PDF content: " + error.message);
+    //         }
+    //     } else {
+    //         toast.error("Please upload a valid PDF file.");
+    //     }
+    // };
+    // const handlePDFUpload = async (event) => {
+    //     const file = event.target.files[0];
+    //     if (file && file.type === "application/pdf") {
+    //         try {
+    //             const arrayBuffer = await file.arrayBuffer();
+    //             const data = await pdfParse(Buffer.from(arrayBuffer));
+    //             setContent(data.text);
+    //             toast.success("PDF content extracted successfully!");
+    //         } catch (error) {
+    //             toast.error("Failed to extract PDF content: " + error.message);
+    //         }
+    //     } else {
+    //         toast.error("Please upload a valid PDF file.");
+    //     }
+    // };
 
     const handleRunSimplification = async () => {
         // Validate required fields
@@ -162,7 +215,7 @@ const AddArticleForm = () => {
 
     return (
         <form className="add-article-form">
-            <div className="add-article-form__row">
+            {/* <div className="add-article-form__row">
                 <div className="add-article-form__field">
                     <Label htmlFor="title" className="add-article-form__label">
                         Upload PDF (Optional)
@@ -175,7 +228,7 @@ const AddArticleForm = () => {
                         onChange={handlePDFUpload}
                     />
                 </div>
-            </div>
+            </div> */}
             <div className="add-article-form__row">
                 
                 <div className="add-article-form__field">
