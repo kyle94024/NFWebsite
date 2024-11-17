@@ -1,3 +1,10 @@
+## UI/UX Redesign 
+Feature development by kyle94024 (See pre_uiux_design branch for competition submission-related code)
+
+UI/UX redesign by moazzam-ali (pre_uiux_design commits not reflected in commit history) - not for competition use
+
+pre_uiux_design nfsimplified.com version not currently hosted: ask directly for code and environmental variables: kyle94024@gmail.com (use official competition email)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
