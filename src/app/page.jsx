@@ -79,7 +79,7 @@ export default function Home() {
                                 Collection of simplified NF articles certified
                                 by experts.{" "}
                                 <span className="w-700 color-green-dark">
-                                    Powered by REiNS.
+                                    Powered by Innovation.
                                 </span>
                             </p>
                             <SearchArticles

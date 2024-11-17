@@ -115,7 +115,7 @@ export default function LoginForm() {
                     <p className="login-form__signup">
                         Don&apos;t have an account?{" "}
                         <a href="/signup" className="login-form__signup-link">
-                            Signup here
+                            Sign up here
                         </a>
                     </p>
                 </div>

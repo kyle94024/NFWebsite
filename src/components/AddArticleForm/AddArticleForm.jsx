@@ -101,7 +101,7 @@ const AddArticleForm = () => {
     //     }
     // };
 
-    // const handlePDFUpload = async (event) => {
+    // const handlePDFUpload = async (event) => { //this is pdf to text one
     //     const file = event.target.files[0];
     //     if (file && file.type === "application/pdf") {
     //         try {
