@@ -115,6 +115,7 @@ const AddArticleForm = () => {
     //         toast.error("Please upload a valid PDF file.");
     //     }
     // };
+
     // const handlePDFUpload = async (event) => {
     //     const file = event.target.files[0];
     //     if (file && file.type === "application/pdf") {
