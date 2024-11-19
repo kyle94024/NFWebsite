@@ -29,7 +29,7 @@ const faqsData = [
     {
         question:
             "Who reviews the information on Neurofibromatosis Simplified?",
-        answer: "All articles and resources on our website are reviewed by NF experts from REiNS, ensuring that the information provided is accurate, reliable, and up-to-date.",
+        answer: "All articles and resources on our website are (soon to be) reviewed by NF experts from REiNS, ensuring that the information provided is accurate, reliable, and up-to-date.",
     },
     {
         question:

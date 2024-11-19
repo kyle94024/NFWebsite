@@ -39,7 +39,7 @@ export default function AboutPage() {
                         <h2 className={sectionTitleClass}>What We Offer</h2>
                         <p className={textClass}>
                             Our website offers simplified articles on NF, added
-                            and reviewed by NF experts from REiNS. We believe in
+                            and (pending) reviewed by NF experts from REiNS. We believe in
                             the power of education and community support to make
                             a positive impact on the lives of those living with
                             Neurofibromatosis.
