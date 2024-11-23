@@ -9,7 +9,7 @@ export async function summarizeArticle(content) {
                 {
                     role: "system",
                     content:
-                        "You read long scientific articles and state the main point or conclusion from the article, in one sentence. HARD Maximum of 280 characters",
+                        "Can you write this as 2-3 sentence teaser summary for a Scientific American article for a lay person. Please define key medical terms. Maximum of 280 characters",
                 },
                 { role: "user", content },
             ],
@@ -30,7 +30,7 @@ export async function simplifyArticle(content, lengthString) {
                 {
                     role: "system",
                     content: `You read long scientific articles and simplify them to ${lengthString}. 
-                              Please maintain paragraph breaks, bullet points, and list formatting where relevant.
+                              You summarize scientific articles into a full article in Scientific American style that would be understandable to an 8th grader. Emphasize innovation, significance, findings and  impact as well as any relevance to persons with neurofibromatosis or schwannomatosis. Please define key medical terms when needed and include limitations of the study.
                               
                               Here’s how to handle each length unit:
                               - If it's "paragraphs", limit the response to the specified number of paragraphs.
@@ -39,7 +39,7 @@ export async function simplifyArticle(content, lengthString) {
                               - If it's "characters", shorten the content to the specified number of characters.
                               - If it's "sentences", condense the content to the specified number of sentences.
                               
-                              Respond using Markdown formatting.`,
+                              Respond using Markdown formatting, and add in headers and different sized or fonted text to be visually appealing. Make sure to add in sufficient whitespace for clarity.`,
                 },
                 { role: "user", content },
             ],
