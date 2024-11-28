@@ -47,6 +47,7 @@ const AddArticleForm = () => {
     const [simplifyUnit, setSimplifyUnit] = useState("words");
     const [isLoading, setIsLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
+    const [pdfLoader, setPdfLoader] = useState(false);
 
     const quillRef = useRef(null);
 
@@ -69,7 +70,38 @@ const AddArticleForm = () => {
         setTags(tags.filter((tag) => tag !== tagToRemove));
     };
 
-
+    const handlePDFUpload = async (event) => {
+        const file = event.target.files[0];
+        if (file && file.type === "application/pdf") {
+          setPdfLoader(true);
+          try {
+            const formData = new FormData();
+            formData.append("file", file);
+            const response = await fetch("/api/pdfToText", {
+              method: "POST",
+              body: formData,
+            });
+    
+            const data = await response?.json();
+            if (response.ok) {
+              setPdfLoader(false);
+              setContent(data.text);
+              toast.success("PDF content extracted successfully!");
+            } else {
+              setPdfLoader(false);
+              console.log(data.error);
+              toast.error("Error: " + data.error);
+            }
+          } catch (error) {
+            setPdfLoader(false);
+            toast.error("Failed to extract PDF content: " + error.message);
+          } finally {
+            setPdfLoader(false);
+          }
+        } else {
+          toast.error("Please upload a valid PDF file.");
+        }
+      };
 
     // const extractTextFromPDF = async (file) => {
     //     const arrayBuffer = await file.arrayBuffer();
@@ -230,6 +262,24 @@ const AddArticleForm = () => {
                     />
                 </div>
             </div> */}
+            <div className="add-article-form__row">
+                <div className="add-article-form__field">
+                    <Label htmlFor="title" className="add-article-form__label">
+                        Upload PDF (Optional)
+                    </Label>
+                    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                        <Input
+                        id="pdfUpload"
+                        type="file"
+                        accept="application/pdf"
+                        className="add-article-form__input"
+                        onChange={handlePDFUpload}
+                        />
+                        {pdfLoader && <Loader2 className="mr-2 h-8 w-8 animate-spin" />}
+                    </div>
+                </div>
+            </div>
+
             <div className="add-article-form__row">
                 
                 <div className="add-article-form__field">
