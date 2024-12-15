@@ -85,11 +85,55 @@
     &__content-text {
         line-height: 1.6;
         margin-bottom: 3.2rem;
-
+    
         p {
             margin-bottom: 1.6rem;
         }
+    
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+    
+        h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1.8rem;
+        }
+    
+        h3 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin-bottom: 1.6rem;
+        }
     }
+
+    &__content-text h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+    }
+    
+    &__content-text h2 {
+        font-size: 2.65rem;
+        font-weight: bold;
+        margin-bottom: 1.8rem;
+    }
+    
+    &__content-text h3 {
+        font-size: 2.45rem;
+        font-weight: bold;
+        margin-bottom: 1.6rem;
+    }
+
+    &__content-text h4 {
+        font-size: 2.25rem;
+        font-weight: bold;
+        margin-bottom: 1.6rem;
+    }
+    
+    
 
     &__actions {
         display: flex;

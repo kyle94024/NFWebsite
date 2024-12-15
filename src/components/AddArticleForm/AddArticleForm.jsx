@@ -43,8 +43,8 @@ const AddArticleForm = () => {
     const [tags, setTags] = useState([]);
     const [currentTag, setCurrentTag] = useState("");
     const [content, setContent] = useState("");
-    const [simplifyLength, setSimplifyLength] = useState(100);
-    const [simplifyUnit, setSimplifyUnit] = useState("words");
+    const [simplifyLength, setSimplifyLength] = useState(7);
+    const [simplifyUnit, setSimplifyUnit] = useState("paragraphs");
     const [isLoading, setIsLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
     const [pdfLoader, setPdfLoader] = useState(false);

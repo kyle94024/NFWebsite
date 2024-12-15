@@ -137,13 +137,13 @@ export default function ContactPage() {
                                         inquiry, and we&apos;ll get back to you
                                         as soon as possible.
                                     </p>
-                                    <Link
+                                    <a
                                         href="mailto:kyle94024@gmail.com"
                                         className="btn btn-primary"
                                     >
                                         <Mail className="contact-page__email-icon" />
                                         <span>Send us an Email</span>
-                                    </Link>
+                                    </a>
                                 </div>
 
                                 <div className="contact-page__article-section contact-page__section">
