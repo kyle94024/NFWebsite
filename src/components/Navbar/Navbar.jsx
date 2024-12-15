@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import useAuthStore from "@/store/useAuthStore"; // Adjust the import path as necessary
-import { useAuth } from "@/hooks/useAuth"; // Adjust the import path as necessary
+import useAuthStore from "@/store/useAuthStore";
+import { useAuth } from "@/hooks/useAuth";
 import "./Navbar.scss";
 import Link from "next/link";
 import navbrand from "../../assets/navbrand.png";
@@ -25,8 +25,9 @@ function Navbar() {
             ? [
                   { name: "Pending Articles", path: "/pending-articles" },
                   { name: "Featured", path: "/featured" },
+                  { name: "Profile", path: "/profile" },
               ]
-            : []), // Show Pending and Featured links if user is admin
+            : []), // admin only routes
     ];
 
     return (

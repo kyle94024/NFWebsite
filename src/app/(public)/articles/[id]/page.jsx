@@ -74,41 +74,62 @@ const ArticlePage = ({ params }) => {
                         <div className="article-page__error">{error}</div>
                     ) : (
                         <article className="article-page__article">
-                            <div className="flex flex-col md:flex-row gap-16">
+                            <div className="flex flex-col gap-16">
                                 <div className="article-page__article-details">
                                     <h1 className="article-page__title heading-tertiary">
                                         {article.title}
                                     </h1>
-
                                     <div className="article-page__meta">
-                                        <p className="article-page__id">
-                                            Article ID: {article.id}
-                                        </p>
-
-                                        {article.certifiedby && (
-                                            <p className="article-page__certified">
-                                                Published By:{" "}
-                                                {(() => {
-                                                    try {
-                                                        const certifiedData =
-                                                            typeof article.certifiedby ===
-                                                            "string"
-                                                                ? JSON.parse(
-                                                                      article.certifiedby
-                                                                  )
-                                                                : article.certifiedby;
-                                                        return certifiedData.name;
-                                                    } catch (err) {
-                                                        console.error(
-                                                            "Error parsing certifiedby:",
-                                                            err
-                                                        );
-                                                        return "Unknown Certifier";
-                                                    }
-                                                })()}
-                                            </p>
+                                        <h3 className="body-lg w-700">
+                                            Edited By:
+                                        </h3>
+                                        {article.photo && (
+                                            <div className="article-page__photo">
+                                                <Image
+                                                    src={article.photo}
+                                                    alt={article.name}
+                                                    width={50}
+                                                    height={50}
+                                                    objectFit="cover"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
                                         )}
+                                        <div className="article-page__meta__description">
+                                            <div className="flex items-center gap-[10px]">
+                                                {article.name && (
+                                                    <p className="article-page__name">
+                                                        {article.name},
+                                                    </p>
+                                                )}
+
+                                                {article.degree && (
+                                                    <p className="article-page__degree">
+                                                        {article.degree}
+                                                    </p>
+                                                )}
+                                            </div>
+
+                                            {article.university && (
+                                                <p className="article-page__university">
+                                                    {article.university}
+                                                </p>
+                                            )}
+                                        </div>
                                     </div>
+                                    {article.image_url && (
+                                        <Image
+                                            className="article-page__image"
+                                            src={article.image_url}
+                                            alt={article.title}
+                                            width={420}
+                                            height={290}
+                                            objectFit="contain"
+                                            objectPosition="center"
+                                            loading="lazy"
+                                        />
+                                    )}
+
                                     <div className="article-page__tags">
                                         {article.tags &&
                                         article.tags.length > 0 ? (
@@ -126,23 +147,11 @@ const ArticlePage = ({ params }) => {
                                             </span>
                                         )}
                                     </div>
-                                </div>{" "}
-                                {article.image_url && (
-                                    <Image
-                                        className="article-page__image"
-                                        src={article.image_url}
-                                        alt={article.title}
-                                        width={420}
-                                        height={290}
-                                        objectFit="contain"
-                                        objectPosition="center"
-                                        loading="lazy"
-                                    />
-                                )}
+                                </div>
                             </div>
 
                             <div className="article-page__summary">
-                                <h2 className="article-page__summary-title">
+                                <h2 className="article-page__summary-title w-700">
                                     Summary
                                 </h2>
                                 <div

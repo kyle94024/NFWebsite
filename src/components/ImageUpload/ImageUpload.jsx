@@ -2,7 +2,13 @@ import { useState, useEffect } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
-const ImageUpload = ({ onImageUpload, initialImageUrl }) => {
+const ImageUpload = ({
+    onImageUpload,
+    initialImageUrl,
+    uploadUrl = "/api/images/upload-image",
+    deleteUrl = "/api/images/delete-image",
+    imageType = "default",
+}) => {
     const [file, setFile] = useState(null);
     const [uploadedUrl, setUploadedUrl] = useState(initialImageUrl || null);
     const [uploading, setUploading] = useState(false);
@@ -28,9 +34,10 @@ const ImageUpload = ({ onImageUpload, initialImageUrl }) => {
         setUploading(true);
         const formData = new FormData();
         formData.append("file", file);
+        formData.append("imageType", imageType); // Add image type for backend routing
 
         try {
-            const response = await fetch("/api/images/upload-image", {
+            const response = await fetch(uploadUrl, {
                 method: "POST",
                 body: formData,
             });
@@ -65,12 +72,15 @@ const ImageUpload = ({ onImageUpload, initialImageUrl }) => {
             // Extract the public ID from the URL (between the last "/" and the first ".")
             const publicId = uploadedUrl.split("/").pop().split(".")[0];
 
-            const response = await fetch("/api/images/delete-image", {
+            const response = await fetch(deleteUrl, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ public_id: publicId }),
+                body: JSON.stringify({
+                    public_id: publicId,
+                    imageType: imageType, // Add image type for backend routing
+                }),
             });
 
             if (!response.ok) {
@@ -99,7 +109,7 @@ const ImageUpload = ({ onImageUpload, initialImageUrl }) => {
                 onChange={handleChange}
                 className="image-upload__input w-full md:w-max file:mr-2.4rem file:py-[2rem] file:mr-8 file:mb-8 file:px-[3.5rem] file:rounded-[10px] file:border-0 file:text-2.1rem file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
                 accept="image/*"
-                disabled={uploading} // Only disable during upload, not when image exists
+                disabled={uploading || uploadedUrl} // Only disable during upload, not when image exists
             />
             {!uploadedUrl ? (
                 <Button

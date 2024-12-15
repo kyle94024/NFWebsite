@@ -4,9 +4,6 @@ import Footer from "@/components/Footer/Footer";
 
 import { ToastContainer } from "react-toastify";
 
-
-
-
 // Importing Outfit font from Google Fonts
 const outfitFont = Outfit({
     subsets: ["latin"],

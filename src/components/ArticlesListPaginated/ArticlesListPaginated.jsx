@@ -147,17 +147,20 @@ export default function ArticlesListPaginated({
         <div className="article-list">
             <div className="article-list__items">
                 {selectedArticles.map((article) => {
+                    // Default to "Anonymous" if no name is found
                     let authorName = "Anonymous";
+
+                    // Check if `certifiedby` is available and has a name
                     if (article.certifiedby) {
                         try {
-                            const publisherData =
-                                typeof article.certifiedby === "string"
-                                    ? JSON.parse(article.certifiedby)
-                                    : article.certifiedby;
-                            authorName = publisherData.name || authorName;
+                            // Use the name from `certifiedby` if available
+                            authorName = article.name || "Anonymous";
                         } catch (err) {
-                            console.error("Error parsing publisher:", err);
+                            console.error("Error parsing certifiedby:", err);
                         }
+                    } else if (article.publisher_name) {
+                        // Use `publisher_name` if available
+                        authorName = article.publisher_name;
                     }
 
                     return (
@@ -169,7 +172,7 @@ export default function ArticlesListPaginated({
                             date={article.date}
                             title={article.title}
                             summary={article.summary}
-                            authorImageUrl={article.authorImageUrl}
+                            authorImageUrl={article.photo}
                             authorName={authorName}
                         />
                     );

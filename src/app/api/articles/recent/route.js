@@ -5,12 +5,22 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        // Fetch recent 6 articles from the database
+        // Fetch recent 6 articles along with profile photos and names
         const result = await query(
-            "SELECT * FROM article ORDER BY id DESC LIMIT 6"
+            `
+            SELECT 
+                a.*, 
+                p.photo, 
+                p.name 
+            FROM article a
+            LEFT JOIN profile p 
+            ON (a.certifiedby->>'userId')::INTEGER = p.user_id
+            ORDER BY a.id DESC
+            LIMIT 6
+            `
         );
 
-        return NextResponse.json(result.rows);
+        return NextResponse.json(result.rows); // Return recent articles with user photos and names
     } catch (error) {
         console.error("Error fetching recent articles:", error);
         return NextResponse.json(

@@ -8,15 +8,29 @@ export async function GET(request, { params }) {
     const { id } = params; // Extract the article ID from the URL parameters
 
     try {
-        // Fetch the article from the database using the provided ID
+        // Fetch the article along with selected profile fields from the database
         const articleResult = await query(
-            "SELECT * FROM article WHERE id = $1",
+            `
+            SELECT 
+                a.*, 
+                p.email, 
+                p.name, 
+                p.photo, 
+                p.bio, 
+                p.degree, 
+                p.university, 
+                p.linkedin, 
+                p.lablink
+            FROM article a
+            LEFT JOIN profile p ON (a.certifiedby->>'userId')::INTEGER = p.user_id
+            WHERE a.id = $1
+            `,
             [id]
         );
 
         // Check if the article exists
         if (articleResult.rows.length > 0) {
-            return NextResponse.json(articleResult.rows[0]); // Send the article as a JSON response
+            return NextResponse.json(articleResult.rows[0]); // Send the article with selected profile data as a JSON response
         } else {
             return NextResponse.json(
                 { message: "Article not found" },

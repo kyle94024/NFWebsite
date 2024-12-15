@@ -11,17 +11,26 @@ export async function GET() {
         );
         const articleIds = featuredResult.rows[0]?.article_ids;
 
-        const articles = [];
+        let articles = [];
         if (articleIds && articleIds.length) {
-            // Fetch articles based on the fetched IDs
+            // Fetch articles along with profile photos and names based on the fetched IDs
             const articlesResult = await query(
-                "SELECT * FROM article WHERE id = ANY($1)",
+                `
+                SELECT 
+                    a.*, 
+                    p.photo, 
+                    p.name 
+                FROM article a
+                LEFT JOIN profile p 
+                ON (a.certifiedby->>'userId')::INTEGER = p.user_id
+                WHERE a.id = ANY($1)
+                `,
                 [articleIds]
             );
-            articles.push(...articlesResult.rows);
+            articles = articlesResult.rows;
         }
 
-        return NextResponse.json(articles);
+        return NextResponse.json(articles); // Return articles with user photos and names
     } catch (error) {
         console.error("Error fetching featured articles:", error);
         return NextResponse.json(

@@ -23,6 +23,36 @@
         padding: 3.2rem;
     }
 
+    &__meta {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-weight: 500;
+
+        overflow-x: auto;
+
+        &__description {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            & > * {
+                text-wrap: nowrap;
+            }
+        }
+    }
+
+    &__photo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid #eee;
+        flex-shrink: 0;
+    }
+
     &__article {
         max-width: 128rem;
         margin: 0 auto;
@@ -35,25 +65,20 @@
 
     &__image {
         width: 50%;
-        height: 200px;
+        height: auto;
         max-width: 100%;
+        max-height: 70vh;
         object-fit: contain;
         margin-bottom: 2.4rem;
-        border: 1px solid rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.02);
         border-radius: 0.64rem;
-        margin-left: auto;
+        margin-inline: auto;
     }
 
     &__meta {
         font-size: 1.44rem;
         color: #666;
         margin-bottom: 1.6rem;
-    }
-
-    &__id,
-    &__publisher,
-    &__certified {
-        margin-bottom: 0.8rem;
     }
 
     &__tags {
@@ -85,55 +110,11 @@
     &__content-text {
         line-height: 1.6;
         margin-bottom: 3.2rem;
-    
+
         p {
             margin-bottom: 1.6rem;
         }
-    
-        h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-        }
-    
-        h2 {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 1.8rem;
-        }
-    
-        h3 {
-            font-size: 1.75rem;
-            font-weight: bold;
-            margin-bottom: 1.6rem;
-        }
     }
-
-    &__content-text h1 {
-        font-size: 3rem;
-        font-weight: bold;
-        margin-bottom: 2rem;
-    }
-    
-    &__content-text h2 {
-        font-size: 2.65rem;
-        font-weight: bold;
-        margin-bottom: 1.8rem;
-    }
-    
-    &__content-text h3 {
-        font-size: 2.45rem;
-        font-weight: bold;
-        margin-bottom: 1.6rem;
-    }
-
-    &__content-text h4 {
-        font-size: 2.25rem;
-        font-weight: bold;
-        margin-bottom: 1.6rem;
-    }
-    
-    
 
     &__actions {
         display: flex;
@@ -150,6 +131,23 @@
         &__content {
             padding-top: 4rem;
             padding-bottom: 4rem;
+        }
+
+        &__meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            &__description {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+
+                & > * {
+                    text-wrap: nowrap;
+                }
+            }
         }
 
         &__title {
