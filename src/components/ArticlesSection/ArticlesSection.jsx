@@ -25,16 +25,23 @@ const ArticlesSection = ({ articles, loading, error, sectionTitle }) => {
                 ) : (
                     <div className="articles-section__list">
                         {articles.map((article) => {
-                            let authorName = "Anonymous"; // Default value
-                            try {
-                                const publisherData =
-                                    typeof article.certifiedby === "string"
-                                        ? JSON.parse(article.certifiedby)
-                                        : article.certifiedby;
+                            // Default to "Anonymous" if no name is found
+                            let authorName = "Anonymous";
 
-                                authorName = publisherData.name; // Get the name from the parsed object
-                            } catch (err) {
-                                console.error("Error parsing publisher:", err);
+                            // Check if `certifiedby` is available and has a name
+                            if (article.certifiedby) {
+                                try {
+                                    // Use the name from `certifiedby` if available
+                                    authorName = article.name || "Anonymous";
+                                } catch (err) {
+                                    console.error(
+                                        "Error parsing certifiedby:",
+                                        err
+                                    );
+                                }
+                            } else if (article.publisher_name) {
+                                // Use `publisher_name` if available
+                                authorName = article.publisher_name;
                             }
 
                             return (
@@ -45,7 +52,7 @@ const ArticlesSection = ({ articles, loading, error, sectionTitle }) => {
                                     date={article.date}
                                     title={article.title}
                                     summary={article.summary}
-                                    authorImageUrl={article.authorImageUrl}
+                                    authorImageUrl={article.photo}
                                     authorName={authorName} // Pass the author's name
                                 />
                             );

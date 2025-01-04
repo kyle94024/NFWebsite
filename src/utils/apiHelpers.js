@@ -9,7 +9,7 @@ export async function summarizeArticle(content) {
                 {
                     role: "system",
                     content:
-                        "Can you write this as 2-3 sentence teaser summary for a Scientific American article for a lay person. Please define key medical terms. Maximum of 280 characters",
+                        "Can you write this as 2-3 sentence teaser summary for a Scientific American article for a lay person. Please define key medical terms. Specify the year the article was written. Maximum of 280 characters",
                 },
                 { role: "user", content },
             ],
@@ -25,8 +25,8 @@ export async function summarizeArticle(content) {
 export async function simplifyArticle(content, lengthString) { 
     //Emphasize innovation, significance, findings and impact as well as any relevance to persons with neurofibromatosis or schwannomatosis.Please explain key medical terms if they show up and include limitations of the study, and
     try {
-        var prompt = `You simplify scientific articles into a science article that would be understandable to an 8th grader, but with medical terms explained. Briefly mention the authors of the study, with "Original article by [...]" as the first line, but dont include the title. However, this should still be structured as an casual science article, but each paragraph should be medium length.
-                             Respond using html formatting, with inline css (colors, bolding, format) to make it beautiful, and add in headers sized and different sized text to be visually appealing, but still in article style. Use different styles to make it look really nice, like paragraph headings, etc. Any css should start with "apicss-[name]" as to not interfere with existing css. "Make sure to add in sufficient whitespace for clarity, such as lines after paragraphs, bigger headers for broader section titles, etc. This will be on a HTML page, but dont start your response with ''' html. Likely, these will be multiple long paragraphs of text.`;
+        var prompt = `You simplify scientific articles into a science article that would be understandable to an 8th grader, but with medical terms explained. Briefly mention the authors of the study and the year it was published, with "Original article by [...]" as the first line. Dont include the title. However, this should still be structured as an casual science article, but each paragraph should be medium length. Include limitations of the study if applicable..
+                     Respond using html formatting, with inline css (colors, bolding, format) to make it beautiful, and add in headers sized and different sized text to be visually appealing, but still in article style. Use different styles to make it look really nice, like paragraph headings, etc. Any css should start with "apicss-[name]" as to not interfere with existing css. "Make sure to add in sufficient whitespace for clarity, such as lines after paragraphs, bigger headers for broader section titles, etc. This will be on a HTML page, but dont start your response with ''' html. Likely, these will be multiple long paragraphs of text. Don't include a copyright sign in the end of the article.`;
         var exampleoutput = `Here is an example output:
         Improving the Quality of Life for People with NF1: A New Approach to Addressing Appearance Concerns in Clinical Trials
         For people living with Neurofibromatosis type 1 (NF1), the visible impact of the condition can be as challenging as its physical symptoms. Tumors like cutaneous and plexiform neurofibromas, while non-cancerous, often lead to visible differences that can deeply affect confidence, emotional well-being, and quality of life.

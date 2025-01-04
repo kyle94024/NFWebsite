@@ -142,9 +142,12 @@ const ArticlePage = ({ params }) => {
                                                 </span>
                                             ))
                                         ) : (
-                                            <span className="article-page__no-tags">
-                                                No tags
-                                            </span>
+                                            <div>
+                                            </div>
+
+                                            // <span className="article-page__no-tags">
+                                            //     No tags
+                                            // </span>
                                         )}
                                     </div>
                                 </div>

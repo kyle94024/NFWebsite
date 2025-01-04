@@ -153,7 +153,7 @@ function ArticleCard({
                             href={`/articles/${id}`}
                             className="article-card__read-more"
                         >
-                            Read more
+                            read more
                         </a>
                     )}
                 </p>

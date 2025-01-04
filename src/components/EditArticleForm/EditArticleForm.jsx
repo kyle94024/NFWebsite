@@ -21,7 +21,7 @@ import ImageUpload from "../ImageUpload/ImageUpload";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS"];
+const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS","Clinical Research","Basic Science","Artificial Intelligence","Original Research","Case Studies", "Methodologies","Other"];
 
 const EditArticleForm = ({
     articleData,
