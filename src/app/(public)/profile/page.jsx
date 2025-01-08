@@ -23,6 +23,7 @@ import ImageUpload from "@/components/ImageUpload/ImageUpload";
 import { withAuth } from "@/components/withAuth/withAuth";
 import Footer from "@/components/Footer/Footer";
 import Image from "next/image";
+import UpdatePassword from "@/components/UpdatePassword/UpdatePassword";
 
 const ProfilePage = () => {
     const { user } = useAuthStore();
@@ -208,6 +209,8 @@ const ProfilePage = () => {
                                     src={profileData.photo}
                                     alt="Profile"
                                     className="profile__photo mb-4"
+                                    width={100}
+                                    height={100}
                                 />
                             </div>
                         ) : (
@@ -391,6 +394,9 @@ const ProfilePage = () => {
                             disabled={!isEditing}
                         />
                     </div>
+                    <div className="profile__form-group">
+                        <UpdatePassword isEditing={isEditing} />
+                    </div>
                 </form>
             </section>
             <Footer />
@@ -398,4 +404,4 @@ const ProfilePage = () => {
     );
 };
 
-export default withAuth(ProfilePage);
+export default ProfilePage;

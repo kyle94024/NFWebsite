@@ -21,10 +21,20 @@
 
         border-radius: 20px;
 
+        @media screen and (max-width: 850px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
         &__buttons {
             display: flex;
             align-items: center;
             gap: 20px;
+
+            @media screen and (max-width: 850px) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     }
 

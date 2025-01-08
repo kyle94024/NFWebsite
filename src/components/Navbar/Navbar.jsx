@@ -20,18 +20,19 @@ function Navbar() {
         { name: "Articles", path: "/articles" },
         { name: "About", path: "/about" },
         { name: "Contact Us", path: "/contact" },
+
         ...(user ? [{ name: "Add Articles", path: "/add-article" }] : []), // Show Add Articles link if logged in
         ...(isAdmin
             ? [
                   { name: "Pending Articles", path: "/pending-articles" },
                   { name: "Assign Articles", path: "/assign-articles" },
                   { name: "Featured", path: "/featured" },
-                  { name: "Profile", path: "/profile" },
               ]
             : []),
         ...(role === "editor"
             ? [{ name: "Assigned Articles", path: "/assigned-articles" }]
             : []), // Show Add Articles link if logged in
+        { name: "Profile", path: "/profile" },
     ];
 
     return (
