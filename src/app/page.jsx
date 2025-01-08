@@ -2,47 +2,12 @@
 
 import "./Home.scss";
 import Navbar from "@/components/Navbar/Navbar";
-import ArticleCard from "@/components/ArticleCard/ArticleCard";
 
-import img from "../assets/article-thumbnail.jpeg";
 import HomeServiceBanner from "@/components/HomeServiceBanner/HomeServiceBanner";
-import Image from "next/image";
+
 import { useRouter } from "next/navigation";
 
-// participate in reserach articles
-const articles = [
-    {
-        imageUrl: img,
-        date: "30 Jan 2024",
-        title: "Testing Cabozantinib for Nerve Tumor Treatment",
-        summary:
-            "The study concluded that cabozantinib could potentially treat NF1-related nerve tumors....",
-        authorImageUrl: img,
-        authorName: "Dr. Norman Fox",
-    },
-    {
-        imageUrl: img,
-        date: "30 Jan 2024",
-        title: "Testing Cabozantinib for Nerve Tumor Treatment",
-        summary:
-            "The study concluded that cabozantinib could potentially treat NF1-related nerve tumors....",
-        authorImageUrl: img,
-        authorName: "Dr. Norman Fox",
-    },
-    {
-        imageUrl: img,
-        date: "30 Jan 2024",
-        title: "Testing Cabozantinib for Nerve Tumor Treatment",
-        summary:
-            "The study concluded that cabozantinib could potentially treat NF1-related nerve tumors....",
-        authorImageUrl: img,
-        authorName: "Dr. Norman Fox",
-    },
-    // Add more articles here if needed
-];
-
-// affiliate partners
-import partnerLogos from "../assets/affiliates-logos.webp";
+import useAuthStore from "@/store/useAuthStore";
 
 // custom components
 import SubscriptionBanner from "@/components/SubscriptionBanner/SubscriptionBanner";
@@ -53,6 +18,9 @@ import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
     const router = useRouter();
+
+    const { role } = useAuthStore();
+    console.log("User: ", role);
 
     const handleSearchSubmit = (query) => {
         // Navigate to the article search page with the query
@@ -101,37 +69,6 @@ export default function Home() {
 
             {/* Recent articles section */}
             <RecentArticlesSection />
-            {/* 
-            <section className="home__affiliates padding">
-                <div className="boxed">
-                    <Image
-                        src={partnerLogos}
-                        alt="Affiliates"
-                        className="home__affiliates__img"
-                    />
-                </div>
-            </section> */}
-
-            {/* <section className="home__participate-articles padding">
-                <div className="boxed">
-                    <h2 className="heading-tertiary">
-                        Participate in Research
-                    </h2>
-                    <div className="home__participate-articles__list">
-                        {articles.map((article) => (
-                            <ArticleCard
-                                key={article.title}
-                                imageUrl={article.imageUrl}
-                                date={article.date}
-                                title={article.title}
-                                summary={article.summary}
-                                authorImageUrl={article.authorImageUrl}
-                                authorName={article.authorName}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section> */}
 
             <section className="home__subscription-cta padding">
                 <div className="boxed">

@@ -10,7 +10,7 @@ import { Menu, X, ArrowRight } from "lucide-react";
 
 function Navbar() {
     const [navbar, setNavbar] = useState(false);
-    const { user, isAdmin } = useAuthStore(); // Access user and admin state from Zustand
+    const { user, isAdmin, role } = useAuthStore(); // Access user and admin state from Zustand
     const { logout } = useAuth();
     const toggleNavbar = () => setNavbar(!navbar);
 
@@ -24,10 +24,14 @@ function Navbar() {
         ...(isAdmin
             ? [
                   { name: "Pending Articles", path: "/pending-articles" },
+                  { name: "Assign Articles", path: "/assign-articles" },
                   { name: "Featured", path: "/featured" },
                   { name: "Profile", path: "/profile" },
               ]
-            : []), // admin only routes
+            : []),
+        ...(role === "editor"
+            ? [{ name: "Assigned Articles", path: "/assigned-articles" }]
+            : []), // Show Add Articles link if logged in
     ];
 
     return (

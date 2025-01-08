@@ -1,0 +1,101 @@
+.assign-articles {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &__title {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+
+        @media (min-width: 768px) {
+            grid-template-columns: 4fr 2fr;
+        }
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding-block: 2rem;
+
+        max-height: 58vh;
+        overflow-y: auto;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    &__skeleton {
+        height: 4rem;
+        width: 100%;
+        border-radius: 0.5rem;
+    }
+
+    &__image {
+        width: 5rem;
+        height: 5rem;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+
+    &__checkbox {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.4rem;
+    }
+
+    &__label {
+        font-size: 1.3rem;
+        display: flex;
+        flex-direction: column;
+
+        & > .editor-name {
+            font-weight: 600;
+            font-size: 1.6rem;
+        }
+    }
+
+    &__empty {
+        font-size: 1rem;
+        color: gray;
+    }
+
+    &__button {
+        align-self: flex-end;
+    }
+}
+
+.author-image {
+    &__fallback {
+        width: 4rem;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #4cb19f;
+        border-radius: 50%;
+    }
+
+    &__initial {
+        font-size: 1.6rem;
+        color: white;
+    }
+}

@@ -65,6 +65,10 @@ function ArticleCard({
         router.push(`/pending-articles/${id}`);
     };
 
+    const handleAssignedArticles = () => {
+        router.push(`/assigned-articles/${id}`);
+    };
+
     const renderButton = () => {
         if (pageType === "featured") {
             return (
@@ -120,6 +124,24 @@ function ArticleCard({
                 </Button>
             );
         }
+        if (pageType === "assigned") {
+            return (
+                <Button
+                    className="article-card__button btn btn-primary-green"
+                    onClick={handleAssignedArticles}
+                    disabled={isLoading}
+                >
+                    {isLoading ? (
+                        <>
+                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
+                            Please wait
+                        </>
+                    ) : (
+                        "Review"
+                    )}
+                </Button>
+            );
+        }
         return null;
     };
 
@@ -148,7 +170,7 @@ function ArticleCard({
                             __html: truncateText(summary, 180),
                         }}
                     ></span>
-                    {pageType !== "pending" && (
+                    {pageType !== "pending" && pageType !== "assigned" && (
                         <a
                             href={`/articles/${id}`}
                             className="article-card__read-more"

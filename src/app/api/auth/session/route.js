@@ -22,6 +22,7 @@ export async function GET(req) {
                 userId: decoded.id,
                 name: decoded.name,
                 isAdmin: decoded.isAdmin,
+                role: decoded.role,
             },
             { status: 200 }
         );

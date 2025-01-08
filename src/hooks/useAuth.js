@@ -22,6 +22,7 @@ export function useAuth() {
                             userId: user.userId,
                             name: user.name,
                             isAdmin: user.isAdmin,
+                            role: user.role,
                         }); // Pass complete user data
                     } else {
                         clearUser();
