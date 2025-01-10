@@ -18,8 +18,8 @@ import {
     SelectValue,
 } from "../ui/select";
 import ImageUpload from "../ImageUpload/ImageUpload";
-
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import Editor from "../ContentEditor";
+// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS","Clinical Research","Basic Science","Artificial Intelligence","Original Research","Case Studies", "Methodologies","Other"];
 
@@ -40,7 +40,7 @@ const EditArticleForm = ({
     const [content, setContent] = useState(articleData?.innertext || "");
     const [summary, setSummary] = useState(articleData?.summary || "");
     const [imageUrl, setImageUrl] = useState(articleData?.image_url || null);
-    const quillRef = useRef(null);
+    // const quillRef = useRef(null);
 
     const handleAddTag = (tag) => {
         if (tag && !tags.includes(tag)) {
@@ -69,27 +69,27 @@ const EditArticleForm = ({
         });
     };
 
-    const modules = {
-        toolbar: [
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["link", "image"],
-            ["clean"],
-        ],
-    };
+    // const modules = {
+    //     toolbar: [
+    //         [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    //         ["bold", "italic", "underline", "strike"],
+    //         [{ list: "ordered" }, { list: "bullet" }],
+    //         ["link", "image"],
+    //         ["clean"],
+    //     ],
+    // };
 
-    const formats = [
-        "header",
-        "bold",
-        "italic",
-        "underline",
-        "strike",
-        "list",
-        "bullet",
-        "link",
-        "image",
-    ];
+    // const formats = [
+    //     "header",
+    //     "bold",
+    //     "italic",
+    //     "underline",
+    //     "strike",
+    //     "list",
+    //     "bullet",
+    //     "link",
+    //     "image",
+    // ];
 
     return (
         <form className="edit-article-form">
@@ -171,12 +171,17 @@ const EditArticleForm = ({
 
             <div className="edit-article-form__field">
                 <Label className="edit-article-form__label">Summary</Label>
-                <ReactQuill
+                {/* <ReactQuill
                     value={summary}
                     onChange={setSummary}
                     modules={modules}
                     formats={formats}
                     theme="snow"
+                    className="edit-article-form__editor"
+                /> */}
+                <Editor
+                    content={summary}
+                    onChange={setSummary}
                     className="edit-article-form__editor"
                 />
             </div>
@@ -185,13 +190,18 @@ const EditArticleForm = ({
                 <Label className="edit-article-form__label">
                     Article Content
                 </Label>
-                <ReactQuill
+                {/* <ReactQuill
                     ref={quillRef}
                     value={content}
                     onChange={setContent}
                     modules={modules}
                     formats={formats}
                     theme="snow"
+                    className="edit-article-form__editor"
+                /> */}
+                <Editor
+                    content={content}
+                    onChange={setContent}
                     className="edit-article-form__editor"
                 />
             </div>
