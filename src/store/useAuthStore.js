@@ -13,8 +13,9 @@ const useAuthStore = create((set) => ({
                 name: user.name,
             },
             isAdmin: user.isAdmin,
+            role: user.role,
         }),
-    clearUser: () => set({ user: null, isAdmin: false }),
+    clearUser: () => set({ user: null, isAdmin: false, role: null }),
 }));
 
 export default useAuthStore;
