@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import React, { useState, useRef } from "react";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { X } from "lucide-react";
 import "./AddArticleForm.scss";
@@ -25,6 +25,8 @@ import {
 import { Loader2 } from "lucide-react";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import Image from "next/image";
+
+import Editor from "../ContentEditor";
 
 // import pdfToText from "react-pdftotext";
 // import * as pdfjsLib from 'pdfjs-dist';
@@ -81,6 +83,9 @@ const AddArticleForm = () => {
             if (response.ok) {
               setPdfLoader(false);
               setContent(data.text);
+              
+              
+              console.log(data.text)
               toast.success("PDF content extracted successfully!");
             } else {
               setPdfLoader(false);
@@ -212,27 +217,27 @@ const AddArticleForm = () => {
         }
     };
 
-    const modules = {
-        toolbar: [
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["link", "image"],
-            ["clean"],
-        ],
-    };
+    // const modules = {
+    //     toolbar: [
+    //         [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    //         ["bold", "italic", "underline", "strike"],
+    //         [{ list: "ordered" }, { list: "bullet" }],
+    //         ["link", "image"],
+    //         ["clean"],
+    //     ],
+    // };
 
-    const formats = [
-        "header",
-        "bold",
-        "italic",
-        "underline",
-        "strike",
-        "list",
-        "bullet",
-        "link",
-        "image",
-    ];
+    // const formats = [
+    //     "header",
+    //     "bold",
+    //     "italic",
+    //     "underline",
+    //     "strike",
+    //     "list",
+    //     "bullet",
+    //     "link",
+    //     "image",
+    // ];
 
     return (
         <form className="add-article-form">
@@ -348,7 +353,7 @@ const AddArticleForm = () => {
                 <Label className="add-article-form__label">
                     Article Content
                 </Label>
-                <ReactQuill
+                {/* <ReactQuill
                     ref={quillRef}
                     value={content}
                     onChange={setContent}
@@ -356,7 +361,13 @@ const AddArticleForm = () => {
                     formats={formats}
                     theme="snow"
                     className="add-article-form__editor"
+                /> */}
+                <Editor
+                    content={content}
+                    onChange={setContent}
+                    className="add-article-form__editor"
                 />
+                
             </div>
 
             <div className="add-article-form__row">
