@@ -83,6 +83,9 @@ const AddArticleForm = () => {
             if (response.ok) {
               setPdfLoader(false);
               setContent(data.text);
+              
+              
+              console.log(data.text)
               toast.success("PDF content extracted successfully!");
             } else {
               setPdfLoader(false);

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 import { EditorContent, useEditor, BubbleMenu, useEditorState } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -76,6 +76,17 @@ export const Editor = ({ content, onChange }) => {
 			oldSelection.current = editor.state.selection;
 		},
 	});
+
+	// CHANGES MADE
+	useEffect(() => {
+		if (!editor) return;
+
+
+		const currentContent = editor.getHTML();
+		if (content && content !== currentContent) {
+			editor.commands.setContent(content);
+		}
+	}, [editor, content]);
 
 
 	const editorState = useEditorState({
