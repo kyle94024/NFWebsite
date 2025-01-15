@@ -6,13 +6,18 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/Navbar/Navbar";
 import Image from "next/image";
+import { Loader2 } from "lucide-react";
 
 const FallbackAuthorImage = ({ authorName }) => {
     const firstLetter = authorName ? authorName.charAt(0).toUpperCase() : "A";
@@ -30,7 +35,8 @@ const AssignArticles = () => {
     const [selectedEditors, setSelectedEditors] = useState([]);
     const [loadingArticles, setLoadingArticles] = useState(true);
     const [loadingEditors, setLoadingEditors] = useState(true);
-    const [error, setError] = useState(null);
+
+    const [assigningArticles, setAssigningArticles] = useState(false);
 
     useEffect(() => {
         fetchPendingArticles();
@@ -40,12 +46,13 @@ const AssignArticles = () => {
     const fetchPendingArticles = async () => {
         setLoadingArticles(true);
         try {
-            const response = await fetch("/api/articles/pending");
+            const response = await fetch(
+                "/api/articles/pending-with-assignments"
+            );
             if (!response.ok) throw new Error("Failed to fetch articles");
             const data = await response.json();
             setPendingArticles(data);
         } catch (err) {
-            setError(err.message);
             toast.error(err.message);
         } finally {
             setLoadingArticles(false);
@@ -60,7 +67,6 @@ const AssignArticles = () => {
             const data = await response.json();
             setEditors(data);
         } catch (err) {
-            setError(err.message);
             toast.error(err.message);
         } finally {
             setLoadingEditors(false);
@@ -76,6 +82,21 @@ const AssignArticles = () => {
     };
 
     const handleEditorSelection = (editorId) => {
+        const conflict = selectedArticles.some((articleId) => {
+            const article = pendingArticles.find((a) => a.id === articleId);
+            return article?.assigned_editor?.id === editorId;
+        });
+
+        if (conflict) {
+            const conflictingArticle = pendingArticles.find((article) =>
+                selectedArticles.includes(article.id)
+            );
+            toast.error(
+                `Article "${conflictingArticle.title}" is already assigned to the selected editor`
+            );
+            return;
+        }
+
         setSelectedEditors((prev) =>
             prev.includes(editorId)
                 ? prev.filter((id) => id !== editorId)
@@ -90,6 +111,7 @@ const AssignArticles = () => {
         }
 
         try {
+            setAssigningArticles(true);
             const response = await fetch("/api/articles/assign", {
                 method: "POST",
                 headers: {
@@ -103,13 +125,16 @@ const AssignArticles = () => {
 
             if (response.ok) {
                 toast.success("Articles assigned successfully!");
+                setAssigningArticles(false);
                 setSelectedArticles([]);
                 setSelectedEditors([]);
                 fetchPendingArticles();
             } else {
+                setAssigningArticles(false);
                 throw new Error("Failed to assign articles");
             }
         } catch (err) {
+            setAssigningArticles(false);
             toast.error(err.message);
         }
     };
@@ -131,14 +156,7 @@ const AssignArticles = () => {
                         </CardHeader>
                         <CardContent className="assign-articles__content">
                             {loadingArticles ? (
-                                Array(5)
-                                    .fill(null)
-                                    .map((_, index) => (
-                                        <Skeleton
-                                            key={index}
-                                            className="assign-articles__skeleton"
-                                        />
-                                    ))
+                                <p>Loading articles...</p>
                             ) : pendingArticles.length > 0 ? (
                                 pendingArticles.map((article) => (
                                     <div
@@ -157,17 +175,74 @@ const AssignArticles = () => {
                                                 )
                                             }
                                         />
-                                        <img
-                                            src={article.image_url}
-                                            alt={article.title}
-                                            className="assign-articles__image"
-                                        />
-                                        <label
-                                            htmlFor={`article-${article.id}`}
-                                            className="assign-articles__label"
-                                        >
-                                            {article.title}
-                                        </label>
+                                        <div className="assign-articles__details">
+                                            <div className="assign-articles__header">
+                                                <img
+                                                    src={
+                                                        article.image_url ||
+                                                        "/default-article-image.png"
+                                                    }
+                                                    alt={article.title}
+                                                    className="assign-articles__image"
+                                                />
+                                                <div>
+                                                    <label
+                                                        htmlFor={`article-${article.id}`}
+                                                        className="assign-articles__label"
+                                                    >
+                                                        {article.title}
+                                                    </label>
+                                                    <div className="assign-articles__editors">
+                                                        {article.assigned_editor ? (
+                                                            <TooltipProvider>
+                                                                <Tooltip>
+                                                                    <TooltipTrigger>
+                                                                        <div className="flex items-center gap-2">
+                                                                            <span className="text-[12px]">
+                                                                                Editor
+                                                                                :
+                                                                            </span>
+                                                                            <div className="editor-avatar">
+                                                                                <div className="author-image__fallback article-card">
+                                                                                    <p className="author-image__initial article-card">
+                                                                                        {
+                                                                                            article
+                                                                                                .assigned_editor
+                                                                                                .name[0]
+                                                                                        }
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </TooltipTrigger>
+                                                                    <TooltipContent>
+                                                                        <p className="text-lg">
+                                                                            {
+                                                                                article
+                                                                                    .assigned_editor
+                                                                                    .name
+                                                                            }{" "}
+                                                                            (
+                                                                            {
+                                                                                article
+                                                                                    .assigned_editor
+                                                                                    .email
+                                                                            }
+                                                                            )
+                                                                        </p>
+                                                                    </TooltipContent>
+                                                                </Tooltip>
+                                                            </TooltipProvider>
+                                                        ) : (
+                                                            <p>
+                                                                Not assigned to
+                                                                any editor
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 ))
                             ) : (
@@ -187,16 +262,8 @@ const AssignArticles = () => {
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="assign-articles__content">
-                            {" "}
                             {loadingEditors ? (
-                                Array(5)
-                                    .fill(null)
-                                    .map((_, index) => (
-                                        <Skeleton
-                                            key={index}
-                                            className="assign-articles__skeleton"
-                                        />
-                                    ))
+                                <p>Loading editors...</p>
                             ) : editors.length > 0 ? (
                                 editors.map((editor) => (
                                     <div
@@ -216,8 +283,8 @@ const AssignArticles = () => {
                                         {editor.image ? (
                                             <Image
                                                 src={editor.image}
-                                                alt={`Author image for ${editor.name}`}
-                                                className="author-image"
+                                                alt={`Editor image for ${editor.name}`}
+                                                className="editor-image"
                                                 width={50}
                                                 height={50}
                                             />
@@ -230,14 +297,7 @@ const AssignArticles = () => {
                                             htmlFor={`editor-${editor.id}`}
                                             className="assign-articles__label"
                                         >
-                                            <span className="editor-name">
-                                                {" "}
-                                                {editor.name}
-                                            </span>
-                                            <span className="editor-email">
-                                                {" "}
-                                                {editor.email}
-                                            </span>
+                                            {editor.name} ({editor.email})
                                         </label>
                                     </div>
                                 ))
@@ -253,8 +313,20 @@ const AssignArticles = () => {
                 <Button
                     onClick={handleAssignment}
                     className="btn btn-primary ml-auto"
+                    disabled={
+                        selectedArticles.length === 0 ||
+                        selectedEditors.length === 0 ||
+                        assigningArticles
+                    }
                 >
-                    Assign Selected Articles to Editors
+                    {assigningArticles ? (
+                        <>
+                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
+                            <span>Assigning ...</span>
+                        </>
+                    ) : (
+                        "Assign Articles"
+                    )}
                 </Button>
             </div>
         </>
