@@ -48,12 +48,14 @@
         padding: 20px;
         background-color: rgba(76, 177, 159, 0.05);
         border-radius: 0.8rem;
+
     }
 
     &__item-content {
         display: flex;
         flex-grow: 1;
         gap: 1rem;
+
     }
 
     &__skeleton {
@@ -89,6 +91,7 @@
     }
 
     &__label {
+
         font-size: 1.8rem;
         display: flex;
         flex-direction: column;
@@ -98,6 +101,7 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
     }
+
 
     &__editors-container {
         background-color: rgba(76, 177, 159, 0.1);
@@ -131,6 +135,18 @@
 
         &:hover {
             background-color: darken(#4cb19f, 10%);
+
+        // clip after 1 liine
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+
+        & > .editor-name {
+            font-weight: 600;
+            font-size: 1.6rem;
+
         }
     }
 
@@ -183,6 +199,7 @@
     }
 }
 
+
 .assign-articles__author-image-fallback {
     width: 5rem;
     height: 5rem;
@@ -195,8 +212,25 @@
     &.article-card {
         width: 2.5rem;
         height: 2.5rem;
+
+.author-image {
+    &__fallback {
+        width: 4rem;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #4cb19f;
+        border-radius: 50%;
+
+        &.article-card {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+
     }
 }
+
 
 .assign-articles__author-image-initial {
     font-size: 1.6rem;
@@ -213,5 +247,14 @@
     }
     to {
         transform: rotate(360deg);
+
+    &__initial {
+        font-size: 1.6rem;
+        color: white;
+
+        &.article-card {
+            font-size: 1.2rem;
+        }
+
     }
 }

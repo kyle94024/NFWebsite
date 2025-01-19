@@ -1,3 +1,6 @@
+
+// app/api/articles/assign/route.js
+
 export const revalidate = 0; // Disable caching for this API route
 
 import { query } from "@/lib/db";
@@ -9,6 +12,7 @@ export async function POST(request) {
 
         // Start a transaction
         await query("BEGIN");
+
 
         // Check for existing assignments
         const existingAssignments = await query(
@@ -30,6 +34,17 @@ export async function POST(request) {
         // Insert new assignments
         for (const articleId of articleIds) {
             for (const editorId of editorIds) {
+
+//         for (const editorId of editorIds) {
+//             for (const articleId of articleIds) {
+//                 // Delete the old assignment if it exists
+//                 await query(
+//                     "DELETE FROM article_assignments WHERE article_id = $1",
+//                     [articleId]
+//                 );
+
+//                 // Insert the new assignment
+
                 await query(
                     "INSERT INTO article_assignments (editor_id, article_id) VALUES ($1, $2) ON CONFLICT DO NOTHING",
                     [editorId, articleId]
