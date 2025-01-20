@@ -1,0 +1,12 @@
+.editor-button {
+    background: #fff;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: inline;
+
+    &:hover,
+    &[aria-selected="true"] {
+        color: #06c;
+    }
+}

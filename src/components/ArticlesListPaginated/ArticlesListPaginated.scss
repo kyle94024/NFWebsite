@@ -1,0 +1,135 @@
+.article-list {
+    &__items {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+        row-gap: 6rem;
+    }
+
+    &__loading {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+        row-gap: 6rem;
+    }
+
+    &__error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 4rem;
+
+        min-height: 30vh;
+
+        &__icon {
+            width: 5rem;
+            height: 5rem;
+            color: #888;
+        }
+    }
+
+    &__empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4rem;
+        padding: 20px;
+        text-align: center;
+    }
+
+    &__empty-icon {
+        width: 5rem;
+        height: 5rem;
+        color: #888;
+    }
+}
+
+.pagination {
+    &__content {
+        display: flex;
+        justify-content: center;
+        margin-top: 8rem;
+    }
+
+    &__item {
+        margin: 0 1rem;
+    }
+
+    &__link {
+        padding: 1.5rem 2rem; // Adjusted for the 10px = 1rem ratio
+        font-size: 1.6rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: #333;
+
+        &--active {
+            background-color: #4cb19f;
+            color: white;
+        }
+    }
+
+    &__previous,
+    &__next {
+        padding: 1.5rem 2rem; // Adjusted for the 10px = 1rem ratio
+        font-size: 1.6rem;
+        color: #4cb19f;
+        border: 1px solid #4cb19f;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover {
+            background-color: #4cb19f;
+            color: white;
+        }
+    }
+}
+
+// Media queries for responsiveness
+
+@media screen and (max-width: 850px) {
+    .article-list {
+        &__items {
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+        }
+
+        &__loading {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6rem;
+        }
+    }
+
+    .pagination {
+        &__content {
+            display: flex;
+            justify-content: center;
+            margin-top: 8rem;
+        }
+
+        &__item {
+            margin: 0 0.2rem;
+        }
+
+        &__link {
+            padding: 1.5rem; // Adjusted for the 10px = 1rem ratio
+            font-size: 1.4rem;
+
+            &--active {
+                background-color: #4cb19f;
+                color: white;
+            }
+        }
+
+        &__previous,
+        &__next {
+            padding: 1.5rem; // Adjusted for the 10px = 1rem ratio
+            font-size: 1.6rem;
+        }
+    }
+}

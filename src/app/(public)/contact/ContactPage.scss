@@ -1,0 +1,227 @@
+.contact-page {
+    &__content {
+        padding-block: 6.4rem;
+    }
+
+    &__hero {
+        text-align: center;
+        margin-bottom: 6rem;
+    }
+
+    &__title {
+        font-size: 4.8rem;
+        color: #2c3e50;
+        margin-bottom: 1.6rem;
+    }
+
+    &__subtitle {
+        font-size: 2.4rem;
+        color: #34495e;
+    }
+
+    &__section {
+        padding: 3rem 4rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+    }
+
+    &__section-title {
+        font-size: 3.2rem;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    &__section-description {
+        font-size: 2rem;
+        color: #34495e;
+        opacity: 0.7;
+        margin-bottom: 3.2rem;
+    }
+
+    &__email-section {
+        display: flex;
+        flex-direction: column;
+
+        & > .btn {
+            margin-top: auto;
+        }
+    }
+
+    &__email-link {
+        display: inline-flex;
+        align-items: center;
+        font-size: 2.88rem;
+        color: #3498db;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #2980b9;
+        }
+    }
+
+    &__email-icon {
+        margin-right: 1.28rem;
+        width: 3rem;
+        height: 3rem;
+    }
+
+    &__forms {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        &__set {
+            display: flex;
+            gap: 2rem;
+
+            width: 100%;
+            & > * {
+                width: 100%;
+            }
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__field {
+        margin-bottom: 3.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    &__label {
+        display: block;
+        margin-bottom: 0.8rem;
+        font-weight: 600;
+        font-size: 1.6rem;
+    }
+
+    &__input {
+        width: 100%;
+        padding: 1rem 2rem;
+        font-size: 1.6rem;
+        height: 5rem;
+        border-radius: 10px;
+        border: 1px solid #d8d8d8;
+        background: #fff;
+        box-shadow: 0px 6px 7.7px 0px rgba(0, 0, 0, 0.05);
+
+        &:focus {
+            outline: none;
+            border-color: #4cb19f;
+        }
+    }
+
+    &__checkbox {
+        width: 5rem;
+    }
+
+    &__textarea {
+        height: 16rem;
+        resize: vertical;
+    }
+
+    &__file-label {
+        display: inline-flex;
+        align-items: center;
+        padding: 1.28rem 2.56rem;
+        background-color: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        border-radius: 1.6rem;
+        cursor: pointer;
+        font-size: 2.24rem;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #e2e8f0;
+        }
+    }
+
+    &__file-icon {
+        margin-right: 1.28rem;
+        width: 3.2rem;
+        height: 3.2rem;
+    }
+
+    &__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.6rem 3.2rem;
+        font-size: 2.56rem;
+        color: white;
+        background-color: #4cb19f;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #3b907d;
+        }
+    }
+
+    &__button-icon {
+        margin-right: 1.28rem;
+        width: 2.88rem;
+        height: 2.88rem;
+    }
+}
+
+// media queries for responsiveness
+
+@media only screen and (max-width: 850px) {
+    .contact-page {
+        &__content {
+            padding-block: 4rem;
+        }
+
+        &__hero {
+            margin-bottom: 4rem;
+        }
+
+        &__section {
+            padding: 3rem 2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+        }
+
+        &__email-link {
+            display: inline-flex;
+            align-items: center;
+            font-size: 2.88rem;
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: #2980b9;
+            }
+        }
+
+        &__email-icon {
+            width: 2.4rem;
+            height: 2.4rem;
+        }
+
+        &__forms {
+            flex-direction: column;
+            gap: 2rem;
+
+            &__set {
+                flex-direction: column;
+            }
+        }
+
+        &__button-icon {
+            margin-right: 1.28rem;
+            width: 2.4rem;
+            height: 2.4rem;
+        }
+    }
+}

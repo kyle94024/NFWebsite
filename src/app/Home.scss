@@ -1,0 +1,160 @@
+.home {
+    &__header {
+        display: flex;
+        flex-direction: column;
+
+        background-image: url("../assets/home/home-hero-illustration.webp");
+        background-repeat: no-repeat;
+        background-position: bottom right;
+        background-size: 45vw;
+
+        // min-height: 100vh;
+    }
+    &__hero {
+        flex-grow: 1;
+
+        padding-block: 20rem; // Increased from 14rem
+
+        & > .boxed {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        &__content {
+            width: 50%;
+
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+
+            & > .body-large {
+                margin-top: 1rem;
+            }
+        }
+
+        &__filters {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &__buttons {
+                display: flex;
+                gap: 0.8rem; // Increased from 0.5rem
+            }
+
+            &__button {
+                border-radius: 9999px;
+                font-size: 1.6rem; // Added to scale up the text
+                padding: 0.8rem 1.6rem; // Added padding for better sizing
+
+                height: 5rem;
+            }
+
+            &__explore {
+                color: #4b5563;
+                font-weight: 600;
+                font-size: 2rem;
+            }
+        }
+    }
+
+    &__featured-articles {
+        // padding-top: 8rem;
+        padding-bottom: 8rem;
+
+        & > .boxed {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+
+        &__list {
+            display: flex;
+            gap: 2rem;
+        }
+    }
+
+    &__affiliates {
+        padding-top: 8rem;
+        padding-bottom: 8rem;
+
+        & > .boxed {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &__img {
+            max-width: 600px;
+        }
+    }
+
+    &__participate-articles {
+        padding-top: 8rem;
+        padding-bottom: 8rem;
+
+        & > .boxed {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+
+        &__list {
+            display: flex;
+            gap: 2rem;
+        }
+    }
+}
+
+// Media queries for responsiveness
+
+@media screen and (max-width: 850px) {
+    .home {
+        &__header {
+            background-size: 45vw;
+
+            // min-height: 100vh;
+        }
+        &__hero {
+            flex-grow: 1;
+
+            padding-block: 6rem;
+
+            &__content {
+                width: 100%;
+
+                & h1 {
+                    font-size: 3.6rem;
+                }
+            }
+        }
+
+        &__featured-articles {
+            padding-bottom: 4rem;
+        }
+
+        &__affiliates {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+
+            &__img {
+                max-width: 800px;
+                width: 100%;
+            }
+        }
+
+        &__participate-articles {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+
+            &__list {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+.add-article {
+    display: flex;
+    flex-direction: column;
+
+    &__content {
+        flex-grow: 1;
+        padding-top: 5rem;
+        padding-bottom: 8rem;
+
+        & > .boxed {
+            display: flex;
+            flex-direction: column;
+            gap: 8rem;
+        }
+    }
+}
+
+// responsiveness media queries
+
+@media only screen and (max-width: 850px) {
+    .add-article {
+        &__content {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+
+            & > .boxed {
+                gap: 4rem;
+            }
+        }
+    }
+}

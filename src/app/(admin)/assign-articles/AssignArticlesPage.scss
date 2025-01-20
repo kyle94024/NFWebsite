@@ -1,0 +1,217 @@
+.assign-articles {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &__title {
+        font-size: 3.2rem;
+        font-weight: bold;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+
+        @media (min-width: 768px) {
+            grid-template-columns: 4fr 2fr;
+        }
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    &__selected-count {
+        font-size: 2rem;
+        color: #4cb19f;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding-block: 2rem;
+        max-height: 58vh;
+        overflow-y: auto;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 20px;
+        background-color: rgba(76, 177, 159, 0.05);
+        border-radius: 0.8rem;
+    }
+
+    &__item-content {
+        display: flex;
+        flex-grow: 1;
+        gap: 1rem;
+    }
+
+    &__skeleton {
+        height: 4rem;
+        width: 100%;
+        border-radius: 0.5rem;
+    }
+
+    &__image {
+        width: 6rem;
+        height: 6rem;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+
+    &__checkbox {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.4rem;
+        margin-top: 1rem;
+        margin-right: 1rem;
+    }
+
+    &__details {
+        flex-grow: 1;
+    }
+
+    &__article-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    &__label {
+        font-size: 1.8rem;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    &__editors-container {
+        background-color: rgba(76, 177, 159, 0.1);
+        padding: 1rem;
+        border-radius: 0.5rem;
+    }
+
+    &__editors-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    &__editors-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    &__editor-tag {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: #4cb19f;
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border-radius: 1rem;
+        font-size: 1.6rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: darken(#4cb19f, 10%);
+        }
+    }
+
+    &__editor-popover {
+        width: 300px;
+        padding: 1rem;
+    }
+
+    &__editor-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    &__editor-header {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    &__editor-name {
+        font-size: 2.6rem;
+        font-weight: 600;
+    }
+
+    &__editor-email {
+        font-size: 1.6rem;
+        color: #666;
+    }
+
+    &__unassign-button {
+        width: 100%;
+        font-size: 1.8rem;
+        padding: 2rem 3rem;
+        border-radius: 1.2rem;
+    }
+
+    &__empty {
+        font-size: 1rem;
+        color: gray;
+    }
+
+    &__assign-button {
+        align-self: flex-end;
+    }
+
+    &__loader {
+        margin-right: 0.5rem;
+        animation: spin 1s linear infinite;
+    }
+}
+
+.assign-articles__author-image-fallback {
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #4cb19f;
+    border-radius: 50%;
+
+    &.article-card {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+.assign-articles__author-image-initial {
+    font-size: 1.6rem;
+    color: white;
+
+    &.article-card {
+        font-size: 1.2rem;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

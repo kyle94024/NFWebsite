@@ -1,0 +1,92 @@
+.dropdown {
+    &__trigger {
+      border: none;
+      outline: none;
+      background: none;
+      cursor: pointer;
+      min-width: 5rem;
+      height: 100%;
+      font-family: 1.2rem;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+  
+    &__content {
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid #d8d8d8;
+      background: #fff;
+      box-shadow: 0px 6px 7.7px 0px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+  
+    &__group {}
+  
+    &__item {
+      padding: 0.5rem;
+      background: #fff;
+      outline: none;
+      font-family: sans-serif;
+  
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  
+    &__selected > * {
+      color: #06c;
+    }
+  
+    &__item:hover {
+      color: #06c;
+    }
+  
+    &__item {
+      h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+      }
+  
+      h1 {
+        font-size: 1.4rem;
+      }
+  
+      h2 {
+        font-size: 1.25rem;
+      }
+  
+      h3 {
+        font-size: 1.17rem;
+        margin: 0;
+      }
+  
+      h4 {
+        font-size: 1rem;
+        margin: 0;
+      }
+  
+      h5 {
+        font-size: 0.83rem;
+        margin: 0;
+      }
+  
+      h6 {
+        font-size: 0.67rem;
+        margin: 0;
+      }
+    }
+  
+    &__item[data-state="checked"] span[data-state="checked"] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    &__item[data-state="unchecked"] > *:first-child {
+      left: 0.5rem;
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+  }

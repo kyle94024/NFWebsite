@@ -1,0 +1,63 @@
+.subscription-banner {
+    margin-block: 8rem;
+    border-radius: 2rem;
+    padding: 4rem 4rem 7rem;
+
+    background: url("../../assets/subscription-banner-bg-left.webp"),
+        url("../../assets/subscription-banner-bg-right.webp"),
+        linear-gradient(90deg, #4cb19f 0%, #4cb19f 100%);
+
+    background-repeat: no-repeat;
+    background-position: bottom left, top right;
+    background-size: 250px, 200px, 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+
+    & > .body-large {
+        font-size: 18px;
+    }
+
+    .btn-primary-white {
+        padding: 1.2rem 2rem;
+        border-radius: 8px;
+        font-size: 1.6rem;
+        color: #4cb19f;
+        background-color: #fff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+
+        .icon {
+            font-size: 1.8rem;
+            color: inherit;
+        }
+
+        .text {
+            font-size: inherit;
+        }
+    }
+}
+
+// MEDIA QUERIES
+
+@media screen and (max-width: 850px) {
+    .subscription-banner {
+        margin-block: 6rem;
+        border-radius: 2rem;
+        padding: 4rem 2rem;
+
+        background-size: 100px, 70px, 100%;
+        text-align: center;
+
+        & > .body-large {
+            font-size: 16px;
+        }
+    }
+}

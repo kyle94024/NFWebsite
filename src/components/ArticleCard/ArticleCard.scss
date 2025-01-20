@@ -1,0 +1,111 @@
+.article-card {
+    width: 100%;
+    font-family: Outfit, sans-serif;
+    display: flex;
+    flex-direction: column;
+
+    &__image-container {
+        width: 100%;
+        position: relative;
+
+        border-radius: 15px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+
+        width: 100%;
+        height: 320px;
+
+        overflow: hidden;
+    }
+
+    &__image {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+    }
+
+    .fallback-author-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px; /* Match the image size */
+        height: 40px; /* Match the image size */
+        border-radius: 50%; /* Circular shape */
+        background-color: rgb(34, 46, 49); /* Background color for the circle */
+        color: white; /* Text color */
+        font-size: 20px; /* Adjust font size as needed */
+        font-weight: bold; /* Make the letter bold */
+    }
+
+    &__button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        // display: none; // Hide by default, only show on hover
+    }
+
+    // &:hover .article-card__button {
+    //     display: block; // Show button on hover
+    // }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 16px 0 0 11px;
+        flex-grow: 1;
+    }
+
+    &__date {
+        font-size: 14px;
+        color: rgba(115, 132, 135, 1);
+        font-weight: 400;
+        line-height: 1.2;
+    }
+
+    &__title {
+        color: var(--Main-Bg, #0b1618);
+        font-size: 25px;
+        font-weight: 600;
+        margin-top: 16px;
+
+        // Trim after three lines
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    &__summary {
+        color: rgba(115, 132, 135, 1);
+        font-size: 16px;
+        font-weight: 400;
+        margin-top: 9px;
+    }
+
+    &__read-more {
+        margin-left: 0.5rem;
+        font-weight: 700;
+        text-decoration: underline;
+        color: rgba(76, 177, 159, 1);
+    }
+
+    &__author {
+        display: flex;
+        padding-top: 1.6rem;
+        margin-top: auto;
+        align-items: center;
+        overflow: hidden;
+        gap: 1.5rem;
+        font-size: 16px;
+        color: rgba(76, 177, 159, 1);
+        font-weight: 700;
+    }
+
+    &__author-image {
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+        aspect-ratio: 1/1;
+        background-color: #0b1618;
+    }
+}

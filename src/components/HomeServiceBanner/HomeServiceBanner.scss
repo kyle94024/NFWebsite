@@ -1,0 +1,58 @@
+.service-banner {
+    margin-block: 8rem;
+
+    background: url("../../assets/home/home-cta-1-bg.webp"),
+        linear-gradient(90deg, #0b1618 0%, #233437 100%);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: top right;
+
+    padding: 7rem;
+    border-radius: 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        color: #fff;
+
+        & > .heading-quaternary {
+            width: 80%;
+        }
+
+        & > .body-large {
+            font-size: 1.8rem;
+        }
+    }
+}
+
+// Media queries
+@media screen and (max-width: 850px) {
+    .service-banner {
+        margin-block: 4rem;
+
+        background-size: cover;
+
+        padding: 4rem 2rem;
+        border-radius: 2rem;
+
+        flex-direction: column;
+        text-align: center;
+
+        &__content {
+            & > .heading-quaternary {
+                width: 100%;
+            }
+
+            & > .body-large {
+                font-size: 1.6rem;
+            }
+        }
+    }
+}

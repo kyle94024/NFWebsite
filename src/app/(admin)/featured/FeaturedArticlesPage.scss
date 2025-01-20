@@ -1,0 +1,26 @@
+.featured-articles {
+    &__content {
+        padding-top: 5rem;
+        padding-bottom: 8rem;
+        & > .boxed {
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+        }
+    }
+}
+
+// responsiveness media queries
+
+@media only screen and (max-width: 850px) {
+    .featured-articles {
+        &__content {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+
+            & > .boxed {
+                gap: 4rem;
+            }
+        }
+    }
+}

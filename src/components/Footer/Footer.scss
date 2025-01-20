@@ -1,0 +1,136 @@
+.footer {
+    background-color: #e6f8f4;
+
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+
+    &__content {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        gap: 5.12rem;
+    }
+
+    &__branding {
+        max-width: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+    }
+
+    &__logo {
+        width: 18rem;
+    }
+
+    &__description {
+        color: #676767;
+
+        font-size: 1.8rem;
+        line-height: 1.5;
+    }
+
+    &__social {
+        display: flex;
+        gap: 2.56rem;
+    }
+
+    &__social-link {
+        color: #676767;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #1f2937;
+        }
+    }
+
+    &__social-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    &__links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-items: end;
+        gap: 5.12rem;
+    }
+
+    &__links-column {
+        // Styles for the links column
+    }
+
+    &__links-title {
+        color: #0b1618;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2.56rem;
+    }
+
+    &__links-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__links-item {
+        margin-bottom: 1rem;
+    }
+
+    &__link {
+        color: #676767;
+        text-decoration: none;
+        font-size: 1.8rem;
+
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #1f2937;
+        }
+    }
+}
+
+// Media queries for responsive design
+
+@media screen and (max-width: 850px) {
+    .footer {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+
+        &__content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 5rem;
+        }
+
+        &__branding {
+            max-width: 100%;
+        }
+
+        &__logo {
+            width: 14rem;
+        }
+
+        &__description {
+            color: #676767;
+
+            font-size: 1.6rem;
+        }
+
+        &__social {
+            display: flex;
+            gap: 2rem;
+        }
+
+        &__social-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+
+        &__links {
+            justify-items: start;
+        }
+
+        &__link {
+            font-size: 1.6rem;
+        }
+    }
+}

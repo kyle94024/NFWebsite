@@ -1,0 +1,51 @@
+.privacy-policy {
+    &__content {
+        padding-top: 5rem;
+        padding-bottom: 10rem;
+
+        & > .boxed {
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+
+        & > .heading-tertiary {
+            margin-bottom: 2rem;
+        }
+
+        max-width: 1000px;
+        margin-inline: auto;
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+
+// responsiveness media queries
+
+@media screen and (max-width: 850px) {
+    .privacy-policy {
+        &__content {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        &__body {
+            gap: 3rem;
+
+            & > .heading-tertiary {
+                margin-bottom: 1rem;
+            }
+        }
+
+        &__section {
+            gap: 1.5rem;
+        }
+    }
+}
