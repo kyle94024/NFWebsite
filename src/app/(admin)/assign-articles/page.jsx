@@ -7,70 +7,24 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
-
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "@/components/Navbar/Navbar";
 import Image from "next/image";
-
-import { Loader2, Edit } from "lucide-react";
-
+import { Loader2 } from "lucide-react";
 
 const FallbackAuthorImage = ({ authorName }) => {
     const firstLetter = authorName ? authorName.charAt(0).toUpperCase() : "A";
     return (
-        <div className="assign-articles__author-image-fallback">
-            <p className="assign-articles__author-image-initial">
-                {firstLetter}
-            </p>
+        <div className="author-image__fallback">
+            <p className="author-image__initial">{firstLetter}</p>
         </div>
-    );
-};
-
-const EditorTag = ({ editor, articleId, onUnassign }) => {
-    return (
-        <Popover>
-            <PopoverTrigger asChild>
-                <div className="assign-articles__editor-tag">
-                    <Edit size={14} />
-                    <span>{editor.name}</span>
-                </div>
-            </PopoverTrigger>
-            <PopoverContent className="assign-articles__editor-popover">
-                <div className="assign-articles__editor-details">
-                    <div className="assign-articles__editor-header">
-                        <FallbackAuthorImage authorName={editor.name} />
-                        <div>
-                            <h3 className="assign-articles__editor-name">
-                                {editor.name}
-                            </h3>
-                            <p className="assign-articles__editor-email">
-                                {editor.email}
-                            </p>
-                        </div>
-                    </div>
-                    <Button
-                        onClick={() => onUnassign(editor.id, articleId)}
-                        variant="destructive"
-                        className="assign-articles__unassign-button"
-                    >
-                        Unassign
-                    </Button>
-                </div>
-            </PopoverContent>
-        </Popover>
     );
 };
 
@@ -81,6 +35,7 @@ const AssignArticles = () => {
     const [selectedEditors, setSelectedEditors] = useState([]);
     const [loadingArticles, setLoadingArticles] = useState(true);
     const [loadingEditors, setLoadingEditors] = useState(true);
+
     const [assigningArticles, setAssigningArticles] = useState(false);
 
     useEffect(() => {
@@ -175,34 +130,8 @@ const AssignArticles = () => {
                 setSelectedEditors([]);
                 fetchPendingArticles();
             } else {
-
-                const data = await response.json();
-                throw new Error(data.message || "Failed to assign articles");
-            }
-        } catch (err) {
-            setAssigningArticles(false);
-            toast.error(err.message);
-        }
-    };
-
-    const handleUnassign = async (editorId, articleId) => {
-        try {
-            const response = await fetch("/api/articles/unassign", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ editorId, articleId }),
-            });
-
-            if (response.ok) {
-                toast.success("Editor unassigned successfully!");
-                fetchPendingArticles();
-            } else {
-                throw new Error("Failed to unassign editor");
-//                 setAssigningArticles(false);
-//                 throw new Error("Failed to assign articles");
-
+                setAssigningArticles(false);
+                throw new Error("Failed to assign articles");
             }
         } catch (err) {
             setAssigningArticles(false);
@@ -221,7 +150,7 @@ const AssignArticles = () => {
                     <Card>
                         <CardHeader className="assign-articles__header">
                             <CardTitle>Pending Articles</CardTitle>
-                            <CardTitle className="assign-articles__selected-count">
+                            <CardTitle className="w-400 text-md">
                                 Selected ({selectedArticles.length})
                             </CardTitle>
                         </CardHeader>
@@ -234,131 +163,78 @@ const AssignArticles = () => {
                                         key={article.id}
                                         className="assign-articles__item"
                                     >
-                                        <div className="assign-articles__item-content">
-                                            <Checkbox
-                                                className="assign-articles__checkbox"
-                                                id={`article-${article.id}`}
-                                                checked={selectedArticles.includes(
+                                        <Checkbox
+                                            className="assign-articles__checkbox"
+                                            id={`article-${article.id}`}
+                                            checked={selectedArticles.includes(
+                                                article.id
+                                            )}
+                                            onCheckedChange={() =>
+                                                handleArticleSelection(
                                                     article.id
-
-                                                )}
-                                                onCheckedChange={() =>
-                                                    handleArticleSelection(
-                                                        article.id
-                                                    )
-                                                }
-                                            />
-                                            <div className="assign-articles__details">
-                                                <div className="assign-articles__article-header">
-                                                    <img
-                                                        src={
-                                                            article.image_url ||
-                                                            "/default-article-image.png"
-                                                        }
-                                                        alt={article.title}
-                                                        className="assign-articles__image"
-                                                    />
-                                                    <div>
-                                                        <label
-                                                            htmlFor={`article-${article.id}`}
-                                                            className="assign-articles__label"
-                                                        >
-                                                            {article.title}
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="assign-articles__editors-container">
-                                                    <h4 className="assign-articles__editors-title">
-                                                        Assigned Editors:
-                                                    </h4>
-                                                    <div className="assign-articles__editors-list">
-                                                        {article
-                                                            .assigned_editors
-                                                            .length > 0 ? (
-                                                            article.assigned_editors.map(
-                                                                (editor) => (
-                                                                    <EditorTag
-                                                                        key={
-                                                                            editor.id
-                                                                        }
-                                                                        editor={
-                                                                            editor
-                                                                        }
-                                                                        articleId={
-                                                                            article.id
-                                                                        }
-                                                                        onUnassign={
-                                                                            handleUnassign
-                                                                        }
-                                                                    />
-                                                                )
-                                                            )
+                                                )
+                                            }
+                                        />
+                                        <div className="assign-articles__details">
+                                            <div className="assign-articles__header">
+                                                <img
+                                                    src={
+                                                        article.image_url ||
+                                                        "/default-article-image.png"
+                                                    }
+                                                    alt={article.title}
+                                                    className="assign-articles__image"
+                                                />
+                                                <div>
+                                                    <label
+                                                        htmlFor={`article-${article.id}`}
+                                                        className="assign-articles__label"
+                                                    >
+                                                        {article.title}
+                                                    </label>
+                                                    <div className="assign-articles__editors">
+                                                        {article.assigned_editor ? (
+                                                            <TooltipProvider>
+                                                                <Tooltip>
+                                                                    <TooltipTrigger>
+                                                                        <div className="flex items-center gap-2">
+                                                                            <span className="text-[12px]">
+                                                                                Editor
+                                                                                :
+                                                                            </span>
+                                                                            <div className="editor-avatar">
+                                                                                <div className="author-image__fallback article-card">
+                                                                                    <p className="author-image__initial article-card">
+                                                                                        {
+                                                                                            article
+                                                                                                .assigned_editor
+                                                                                                .name[0]
+                                                                                        }
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </TooltipTrigger>
+                                                                    <TooltipContent>
+                                                                        <p className="text-lg">
+                                                                            {
+                                                                                article
+                                                                                    .assigned_editor
+                                                                                    .name
+                                                                            }{" "}
+                                                                            (
+                                                                            {
+                                                                                article
+                                                                                    .assigned_editor
+                                                                                    .email
+                                                                            }
+                                                                            )
+                                                                        </p>
+                                                                    </TooltipContent>
+                                                                </Tooltip>
+                                                            </TooltipProvider>
                                                         ) : (
-                                                            <p className="assign-articles__no-editors">
-
-//                                                 )
-//                                             }
-//                                         />
-//                                         <div className="assign-articles__details">
-//                                             <div className="assign-articles__header">
-//                                                 <img
-//                                                     src={
-//                                                         article.image_url ||
-//                                                         "/default-article-image.png"
-//                                                     }
-//                                                     alt={article.title}
-//                                                     className="assign-articles__image"
-//                                                 />
-//                                                 <div>
-//                                                     <label
-//                                                         htmlFor={`article-${article.id}`}
-//                                                         className="assign-articles__label"
-//                                                     >
-//                                                         {article.title}
-//                                                     </label>
-//                                                     <div className="assign-articles__editors">
-//                                                         {article.assigned_editor ? (
-//                                                             <TooltipProvider>
-//                                                                 <Tooltip>
-//                                                                     <TooltipTrigger>
-//                                                                         <div className="flex items-center gap-2">
-//                                                                             <span className="text-[12px]">
-//                                                                                 Editor
-//                                                                                 :
-//                                                                             </span>
-//                                                                             <div className="editor-avatar">
-//                                                                                 <div className="author-image__fallback article-card">
-//                                                                                     <p className="author-image__initial article-card">
-//                                                                                         {
-//                                                                                             article
-//                                                                                                 .assigned_editor
-//                                                                                                 .name[0]
-//                                                                                         }
-//                                                                                     </p>
-//                                                                                 </div>
-//                                                                             </div>
-//                                                                         </div>
-//                                                                     </TooltipTrigger>
-//                                                                     <TooltipContent>
-//                                                                         <p className="text-lg">
-//                                                                             {
-//                                                                                 article
-//                                                                                     .assigned_editor
-//                                                                                     .name
-//                                                                             }{" "}
-//                                                                             (
-//                                                                             {
-//                                                                                 article
-//                                                                                     .assigned_editor
-//                                                                                     .email
-//                                                                             }
-//                                                                             )
-//                                                                         </p>
-//                                                                     </TooltipContent>
-//                                                                 </Tooltip>
-//                                                             </TooltipProvider>
-//                                                         ) : (
-//                                                             <p>
+                                                            <p>
                                                                 Not assigned to
                                                                 any editor
                                                             </p>
@@ -381,7 +257,7 @@ const AssignArticles = () => {
                     <Card>
                         <CardHeader className="assign-articles__header">
                             <CardTitle>Editors</CardTitle>
-                            <CardTitle className="assign-articles__selected-count">
+                            <CardTitle className="w-400 text-md">
                                 Selected ({selectedEditors.length})
                             </CardTitle>
                         </CardHeader>
@@ -406,18 +282,9 @@ const AssignArticles = () => {
                                         />
                                         {editor.image ? (
                                             <Image
-
-                                                src={
-                                                    editor.image ||
-                                                    "/placeholder.svg"
-                                                }
+                                                src={editor.image}
                                                 alt={`Editor image for ${editor.name}`}
-                                                className="assign-articles__editor-image"
-
-//                                                 src={editor.image}
-//                                                 alt={`Editor image for ${editor.name}`}
-//                                                 className="editor-image"
-
+                                                className="editor-image"
                                                 width={50}
                                                 height={50}
                                             />
@@ -454,11 +321,7 @@ const AssignArticles = () => {
                 >
                     {assigningArticles ? (
                         <>
-
-                            <Loader2 className="assign-articles__loader" />
-
-//                             <Loader2 className="mr-2 h-8 w-8 animate-spin" />
-
+                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
                             <span>Assigning ...</span>
                         </>
                     ) : (
