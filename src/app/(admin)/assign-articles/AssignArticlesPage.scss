@@ -191,6 +191,7 @@
     justify-content: center;
     background-color: #4cb19f;
     border-radius: 50%;
+    flex-shrink: 0;
 
     &.article-card {
         width: 2.5rem;
@@ -201,6 +202,7 @@
 .assign-articles__author-image-initial {
     font-size: 1.6rem;
     color: white;
+    flex-shrink: 0;
 
     &.article-card {
         font-size: 1.2rem;
