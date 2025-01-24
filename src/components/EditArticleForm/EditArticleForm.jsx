@@ -6,6 +6,7 @@ import { Loader2, X } from "lucide-react";
 import "react-quill/dist/quill.snow.css";
 import "./EditArticleForm.scss";
 import Image from "next/image";
+import sanitizeHtml from "sanitize-html";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,9 +20,20 @@ import {
 } from "../ui/select";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import Editor from "../ContentEditor";
-// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS","Clinical Research","Basic Science","Artificial Intelligence","Original Research","Case Studies", "Methodologies","Other"];
+const predefinedTags = [
+    "Clinical Trial",
+    "Meta-Analysis",
+    "Review",
+    "REiNS",
+    "Clinical Research",
+    "Basic Science",
+    "Artificial Intelligence",
+    "Original Research",
+    "Case Studies",
+    "Methodologies",
+    "Other",
+];
 
 const EditArticleForm = ({
     articleData,
@@ -37,10 +49,55 @@ const EditArticleForm = ({
     );
     const [tags, setTags] = useState(articleData?.tags || []);
     const [currentTag, setCurrentTag] = useState("");
-    const [content, setContent] = useState(articleData?.innertext || "");
-    const [summary, setSummary] = useState(articleData?.summary || "");
+    const [content, setContent] = useState(
+        sanitizeHtml(articleData?.innertext || "", {
+            allowedTags: [
+                "p",
+                "br",
+                "strong",
+                "em",
+                "u",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "ul",
+                "ol",
+                "li",
+                "a",
+            ],
+            allowedAttributes: {
+                a: ["href", "target"],
+            },
+        })
+    );
+    const [summary, setSummary] = useState(
+        sanitizeHtml(articleData?.summary || "", {
+            allowedTags: [
+                "p",
+                "br",
+                "strong",
+                "em",
+                "u",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "ul",
+                "ol",
+                "li",
+                "a",
+            ],
+            allowedAttributes: {
+                a: ["href", "target"],
+            },
+        })
+    );
     const [imageUrl, setImageUrl] = useState(articleData?.image_url || null);
-    // const quillRef = useRef(null);
 
     const handleAddTag = (tag) => {
         if (tag && !tags.includes(tag)) {
@@ -62,34 +119,54 @@ const EditArticleForm = ({
         onSaveEdits({
             title,
             tags,
-            innertext: content,
-            summary,
+            innertext: sanitizeHtml(content, {
+                allowedTags: [
+                    "p",
+                    "br",
+                    "strong",
+                    "em",
+                    "u",
+                    "h1",
+                    "h2",
+                    "h3",
+                    "h4",
+                    "h5",
+                    "h6",
+                    "ul",
+                    "ol",
+                    "li",
+                    "a",
+                ],
+                allowedAttributes: {
+                    a: ["href", "target"],
+                },
+            }),
+            summary: sanitizeHtml(summary, {
+                allowedTags: [
+                    "p",
+                    "br",
+                    "strong",
+                    "em",
+                    "u",
+                    "h1",
+                    "h2",
+                    "h3",
+                    "h4",
+                    "h5",
+                    "h6",
+                    "ul",
+                    "ol",
+                    "li",
+                    "a",
+                ],
+                allowedAttributes: {
+                    a: ["href", "target"],
+                },
+            }),
             article_link: sourceLink,
             image_url: imageUrl,
         });
     };
-
-    // const modules = {
-    //     toolbar: [
-    //         [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    //         ["bold", "italic", "underline", "strike"],
-    //         [{ list: "ordered" }, { list: "bullet" }],
-    //         ["link", "image"],
-    //         ["clean"],
-    //     ],
-    // };
-
-    // const formats = [
-    //     "header",
-    //     "bold",
-    //     "italic",
-    //     "underline",
-    //     "strike",
-    //     "list",
-    //     "bullet",
-    //     "link",
-    //     "image",
-    // ];
 
     return (
         <form className="edit-article-form">
@@ -171,14 +248,6 @@ const EditArticleForm = ({
 
             <div className="edit-article-form__field">
                 <Label className="edit-article-form__label">Summary</Label>
-                {/* <ReactQuill
-                    value={summary}
-                    onChange={setSummary}
-                    modules={modules}
-                    formats={formats}
-                    theme="snow"
-                    className="edit-article-form__editor"
-                /> */}
                 <Editor
                     content={summary}
                     onChange={setSummary}
@@ -190,15 +259,6 @@ const EditArticleForm = ({
                 <Label className="edit-article-form__label">
                     Article Content
                 </Label>
-                {/* <ReactQuill
-                    ref={quillRef}
-                    value={content}
-                    onChange={setContent}
-                    modules={modules}
-                    formats={formats}
-                    theme="snow"
-                    className="edit-article-form__editor"
-                /> */}
                 <Editor
                     content={content}
                     onChange={setContent}
