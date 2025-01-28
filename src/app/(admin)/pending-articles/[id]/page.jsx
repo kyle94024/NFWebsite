@@ -69,15 +69,19 @@ const ReviewArticle = ({ params }) => {
         }
     };
 
-    const handlePublish = async () => {
+    const handlePublish = async (updatedArticle) => {
         setLoadingStates((prev) => ({ ...prev, publishing: true }));
         try {
+            // First, save the changes
+            await handleSaveEdits(updatedArticle);
+
+            // Then, publish the article (using the original API structure)
             const response = await fetch(
                 `/api/articles/pending/actions/publish`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ id, certifiedby: user }), // Use certifiedby field
+                    body: JSON.stringify({ id, certifiedby: user }), // Maintain original structure
                 }
             );
             if (!response.ok) throw new Error("Failed to publish article");
