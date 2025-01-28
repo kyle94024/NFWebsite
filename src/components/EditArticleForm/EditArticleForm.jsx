@@ -116,7 +116,7 @@ const EditArticleForm = ({
     };
 
     const handleSave = () => {
-        onSaveEdits({
+        return {
             title,
             tags,
             innertext: sanitizeHtml(content, {
@@ -165,7 +165,12 @@ const EditArticleForm = ({
             }),
             article_link: sourceLink,
             image_url: imageUrl,
-        });
+        };
+    };
+
+    const handlePublishWithSave = async () => {
+        const updatedArticle = handleSave();
+        await onPublishOrRetract(updatedArticle);
     };
 
     return (
@@ -276,7 +281,7 @@ const EditArticleForm = ({
                         />
                         {imageUrl && (
                             <Image
-                                src={imageUrl}
+                                src={imageUrl || "/placeholder.svg"}
                                 alt={title}
                                 width={320}
                                 height={200}
@@ -295,7 +300,7 @@ const EditArticleForm = ({
                 <Button
                     type="button"
                     className="btn btn-primary"
-                    onClick={handleSave}
+                    onClick={() => onSaveEdits(handleSave())}
                     disabled={loadingStates.saving}
                 >
                     {loadingStates.saving ? (
@@ -310,7 +315,11 @@ const EditArticleForm = ({
                 <Button
                     type="button"
                     className="btn btn-primary-green"
-                    onClick={onPublishOrRetract}
+                    onClick={
+                        formType === "review"
+                            ? handlePublishWithSave
+                            : onPublishOrRetract
+                    }
                     disabled={loadingStates.publishing}
                 >
                     {loadingStates.publishing ? (
