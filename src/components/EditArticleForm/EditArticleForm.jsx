@@ -290,6 +290,7 @@ const EditArticleForm = ({
             </div>
 
             {/* Button actions */}
+            
             <div className="edit-article-form__actions">
                 <Button
                     type="button"
