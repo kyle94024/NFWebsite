@@ -1,0 +1,45 @@
+.liked-articles {
+    &__content {
+        padding-top: 5rem;
+        padding-bottom: 8rem;
+    }
+
+    &__loading {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+        row-gap: 6rem;
+    }
+
+    &__error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 3rem;
+        min-height: 30vh;
+
+        &__icon {
+            width: 5rem;
+            height: 5rem;
+        }
+    }
+
+    &__title {
+        margin-bottom: 3.5rem;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .liked-articles-page {
+        &__content {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        &__loading {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}
