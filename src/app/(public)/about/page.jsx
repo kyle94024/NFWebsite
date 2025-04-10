@@ -66,7 +66,7 @@ export default async function AboutPage() {
                     <section
                         className={`${sectionClass} ${sectionClass}--hero`}
                     >
-                        <h1 className="heading-secondary">
+                        <h1 className="heading-secondary text-center">
                             About NF Simplified
                         </h1>
                         <div className={`${aboutPageClass}__mission-container`}>
@@ -186,7 +186,7 @@ export default async function AboutPage() {
                                     <p
                                         className={`${aboutPageClass}__team-member-title`}
                                     >
-                                        Faculty Mentor
+                                        Faculty Advisor
                                     </p>
                                     <p
                                         className={`${aboutPageClass}__team-member-bio`}
@@ -224,7 +224,7 @@ export default async function AboutPage() {
                                     <p
                                         className={`${aboutPageClass}__team-member-title`}
                                     >
-                                        Faculty Mentor
+                                        Faculty Advisor
                                     </p>
                                     <p
                                         className={`${aboutPageClass}__team-member-bio`}
@@ -244,7 +244,7 @@ export default async function AboutPage() {
                         className={`${sectionClass} ${sectionClass}--experts`}
                     >
                         <h3 className={sectionTitleClass}>
-                            Scientific Expert Editors
+                            Scientific Contributors
                         </h3>
                         <p className={textClass}>
                             We're a growing network of scientists who volunteer
@@ -360,7 +360,7 @@ export default async function AboutPage() {
                                     place for you on our team.
                                 </p>
                                 <Link
-                                    href="mailto:contact@nfsimplified.org"
+                                    href="/contact"
                                     className="btn btn-primary"
                                 >
                                     <Mail size={20} />
