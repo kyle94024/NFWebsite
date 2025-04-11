@@ -32,7 +32,12 @@ function Navbar() {
         ...(role === "editor"
             ? [{ name: "Assigned Articles", path: "/assigned-articles" }]
             : []), // Show Assigned Articles link if the role is editor
-        ...(user ? [{ name: "Profile", path: "/profile" }] : []), // Show Profile link if logged in
+        ...(user
+            ? [
+                  { name: "Profile", path: "/profile" },
+                  { name: "Liked Articles", path: "/liked-articles" },
+              ]
+            : []), // Show Profile link if logged in
     ];
 
     return (

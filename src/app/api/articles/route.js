@@ -14,6 +14,7 @@ export async function GET() {
             FROM article a
             LEFT JOIN profile p 
             ON (a.certifiedby->>'userId')::INTEGER = p.user_id
+            ORDER BY a.id DESC
             `
         );
 

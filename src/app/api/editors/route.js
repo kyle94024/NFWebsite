@@ -13,7 +13,10 @@ export async function GET() {
                 ec.id,
                 ec.email,
                 p.name,
-                p.photo
+                p.photo,
+                p.title,
+                p.degree,
+                p.university
             FROM
                 email_credentials ec
             LEFT JOIN

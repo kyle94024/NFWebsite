@@ -5,13 +5,14 @@ import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
 import SectionLoader from "@/components/SectionLoader/SectionLoader";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Heart, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
+import { HeartFilledIcon } from "@radix-ui/react-icons";
 
 const ArticlePage = ({ params }) => {
     const router = useRouter();
@@ -21,7 +22,60 @@ const ArticlePage = ({ params }) => {
     const [error, setError] = useState(null);
     const [deleting, setDeleting] = useState(false);
 
-    const { isAdmin } = useAuthStore(); // Access user and admin state from Zustand
+    // Like state
+    const [isLiked, setIsLiked] = useState(false);
+    const [liking, setLiking] = useState(false);
+
+    const { isAdmin, user } = useAuthStore(); // Access user and admin state from Zustand
+    const { email, userId, name } = user || {};
+
+    console.log(userId);
+
+    // Fetch the like status for the article
+    const fetchLikeStatus = async () => {
+        if (!userId) return;
+        try {
+            const res = await fetch(
+                `/api/articles/${id}/like?userId=${userId}`,
+                {
+                    method: "GET",
+                }
+            );
+            const { success, data, message } = await res.json();
+            if (!success) throw new Error(message);
+            setIsLiked(data.isLiked || false);
+        } catch (e) {
+            console.error("Error fetching like status:", e);
+        }
+    };
+
+    // Toggle like/unlike
+    const toggleLikeArticle = async () => {
+        if (!userId) {
+            toast.info("Please log in to like articles.");
+            return;
+        }
+
+        setLiking(true);
+        try {
+            const method = isLiked ? "DELETE" : "POST";
+            const res = await fetch(`/api/articles/${id}/like`, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId }), // Send userId in the body
+            });
+
+            const { success, message } = await res.json();
+            if (!success) throw new Error(message);
+
+            setIsLiked(!isLiked);
+            toast.success(isLiked ? "Article unliked!" : "Article liked!");
+        } catch (e) {
+            toast.error(e.message || "Action failed");
+        } finally {
+            setLiking(false);
+        }
+    };
 
     useEffect(() => {
         const fetchArticle = async () => {
@@ -38,8 +92,10 @@ const ArticlePage = ({ params }) => {
                 setLoading(false);
             }
         };
+
         fetchArticle();
-    }, [id]);
+        if (userId) fetchLikeStatus(); // Fetch like status when user is logged in
+    }, [id, userId]);
 
     const handleDelete = async () => {
         setDeleting(true);
@@ -79,42 +135,63 @@ const ArticlePage = ({ params }) => {
                                     <h1 className="article-page__title heading-tertiary">
                                         {article.title}
                                     </h1>
-                                    <div className="article-page__meta">
-                                        <h3 className="body-lg w-700">
-                                            Edited By:
-                                        </h3>
-                                        {article.photo && (
-                                            <div className="article-page__photo">
-                                                <Image
-                                                    src={article.photo}
-                                                    alt={article.name}
-                                                    width={50}
-                                                    height={50}
-                                                    objectFit="cover"
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            </div>
-                                        )}
-                                        <div className="article-page__meta__description">
-                                            <div className="flex items-center gap-[10px]">
-                                                {article.name && (
-                                                    <p className="article-page__name">
-                                                        {article.name},
-                                                    </p>
-                                                )}
-
-                                                {article.degree && (
-                                                    <p className="article-page__degree">
-                                                        {article.degree}
-                                                    </p>
-                                                )}
-                                            </div>
-
-                                            {article.university && (
-                                                <p className="article-page__university">
-                                                    {article.university}
-                                                </p>
+                                    <div className="flex">
+                                        <div className="article-page__meta hidden">
+                                            <h3 className="body-lg w-700">
+                                                Edited By:
+                                            </h3>
+                                            {article.photo && (
+                                                <div className="article-page__photo">
+                                                    <Image
+                                                        src={article.photo}
+                                                        alt={article.name}
+                                                        width={50}
+                                                        height={50}
+                                                        objectFit="cover"
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
                                             )}
+                                            <div className="article-page__meta__description">
+                                                <div className="flex items-center gap-[10px]">
+                                                    {article.name && (
+                                                        <p className="article-page__name">
+                                                            {article.name},
+                                                        </p>
+                                                    )}
+                                                    {article.degree && (
+                                                        <p className="article-page__degree">
+                                                            {article.degree}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                                {article.university && (
+                                                    <p className="article-page__university">
+                                                        {article.university}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="md:ml-auto">
+                                            {user &&
+                                                (liking ? (
+                                                    <Loader2 className="h-10 w-10 animate-spin" />
+                                                ) : isLiked ? (
+                                                    <HeartFilledIcon
+                                                        className="article-page__heart-filled cursor-pointer w-10 h-10"
+                                                        color="red"
+                                                        onClick={
+                                                            toggleLikeArticle
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <Heart
+                                                        className="article-page__heart cursor-pointer w-10 h-10"
+                                                        onClick={
+                                                            toggleLikeArticle
+                                                        }
+                                                    />
+                                                ))}
                                         </div>
                                     </div>
                                     {article.image_url && (
@@ -129,7 +206,6 @@ const ArticlePage = ({ params }) => {
                                             loading="lazy"
                                         />
                                     )}
-
                                     <div className="article-page__tags">
                                         {article.tags &&
                                         article.tags.length > 0 ? (
@@ -142,12 +218,7 @@ const ArticlePage = ({ params }) => {
                                                 </span>
                                             ))
                                         ) : (
-                                            <div>
-                                            </div>
-
-                                            // <span className="article-page__no-tags">
-                                            //     No tags
-                                            // </span>
+                                            <div></div>
                                         )}
                                     </div>
                                 </div>

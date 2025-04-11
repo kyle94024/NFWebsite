@@ -32,7 +32,19 @@ import Editor from "../ContentEditor";
 // import * as pdfjsLib from 'pdfjs-dist';
 // pdfjsLib.GlobalWorkerOptions.workerSrc = '/path/to/node_modules/pdfjs-dist/build/pdf.worker.min.js';
 // Predefined list of tags
-const predefinedTags = ["Clinical Trial", "Meta-Analysis", "Review", "REiNS","Clinical Research","Basic Science","Artificial Intelligence","Original Research","Case Studies", "Methodologies","Other"];
+const predefinedTags = [
+    "Clinical Trial",
+    "Meta-Analysis",
+    "Review",
+    "REiNS",
+    "Clinical Research",
+    "Basic Science",
+    "Artificial Intelligence",
+    "Original Research",
+    "Case Studies",
+    "Methodologies",
+    "Other",
+];
 
 const AddArticleForm = () => {
     const [title, setTitle] = useState("");
@@ -48,7 +60,7 @@ const AddArticleForm = () => {
 
     const quillRef = useRef(null);
 
-    const { user } = useAuthStore();
+    const { user, role } = useAuthStore();
 
     const handleImageUpload = (url) => {
         console.log("Image uploaded: ", url);
@@ -70,38 +82,37 @@ const AddArticleForm = () => {
     const handlePDFUpload = async (event) => {
         const file = event.target.files[0];
         if (file && file.type === "application/pdf") {
-          setPdfLoader(true);
-          try {
-            const formData = new FormData();
-            formData.append("file", file);
-            const response = await fetch("/api/pdfToText", {
-              method: "POST",
-              body: formData,
-            });
-    
-            const data = await response?.json();
-            if (response.ok) {
-              setPdfLoader(false);
-              setContent(data.text);
-              
-              
-              console.log(data.text)
-              toast.success("PDF content extracted successfully!");
-            } else {
-              setPdfLoader(false);
-              console.log(data.error);
-              toast.error("Error: " + data.error);
+            setPdfLoader(true);
+            try {
+                const formData = new FormData();
+                formData.append("file", file);
+                const response = await fetch("/api/pdfToText", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const data = await response?.json();
+                if (response.ok) {
+                    setPdfLoader(false);
+                    setContent(data.text);
+
+                    console.log(data.text);
+                    toast.success("PDF content extracted successfully!");
+                } else {
+                    setPdfLoader(false);
+                    console.log(data.error);
+                    toast.error("Error: " + data.error);
+                }
+            } catch (error) {
+                setPdfLoader(false);
+                toast.error("Failed to extract PDF content: " + error.message);
+            } finally {
+                setPdfLoader(false);
             }
-          } catch (error) {
-            setPdfLoader(false);
-            toast.error("Failed to extract PDF content: " + error.message);
-          } finally {
-            setPdfLoader(false);
-          }
         } else {
-          toast.error("Please upload a valid PDF file.");
+            toast.error("Please upload a valid PDF file.");
         }
-      };
+    };
     // const extractTextFromPDF = async (file) => {
     //     const arrayBuffer = await file.arrayBuffer();
     //     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -200,6 +211,8 @@ const AddArticleForm = () => {
                     simplifyLength: `${simplifyLength} ${simplifyUnit}`,
                     publisher: user,
                     image_url: imageUrl,
+                    role: role,
+                    userId: user.userId,
                 }),
             });
 
@@ -209,7 +222,15 @@ const AddArticleForm = () => {
 
             const result = await response.json();
             toast.success("Article added successfully!");
-            window.location.href = "/pending-articles";
+
+            // Redirect based on role
+            if (role === "editor") {
+                window.location.href = "/assigned-articles";
+            } else if (role === "admin") {
+                window.location.href = "/pending-articles";
+            } else {
+                window.location.href = "/";
+            }
         } catch (error) {
             toast.error("Failed to add article: " + error.message);
         } finally {
@@ -260,20 +281,27 @@ const AddArticleForm = () => {
                     <Label htmlFor="title" className="add-article-form__label">
                         Upload PDF (Optional)
                     </Label>
-                    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                    <div
+                        style={{
+                            display: "flex",
+                            gap: "1rem",
+                            alignItems: "center",
+                        }}
+                    >
                         <Input
-                        id="pdfUpload"
-                        type="file"
-                        accept="application/pdf"
-                        className="add-article-form__input"
-                        onChange={handlePDFUpload}
+                            id="pdfUpload"
+                            type="file"
+                            accept="application/pdf"
+                            className="add-article-form__input"
+                            onChange={handlePDFUpload}
                         />
-                        {pdfLoader && <Loader2 className="mr-2 h-8 w-8 animate-spin" />}
+                        {pdfLoader && (
+                            <Loader2 className="mr-2 h-8 w-8 animate-spin" />
+                        )}
                     </div>
                 </div>
             </div>
             <div className="add-article-form__row">
-                
                 <div className="add-article-form__field">
                     <Label htmlFor="title" className="add-article-form__label">
                         Article Title
@@ -367,7 +395,6 @@ const AddArticleForm = () => {
                     onChange={setContent}
                     className="add-article-form__editor"
                 />
-                
             </div>
 
             <div className="add-article-form__row">
