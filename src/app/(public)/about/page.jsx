@@ -1,4 +1,4 @@
-import "./Aboutpage.scss";
+import "./AboutPage.scss";
 import Link from "next/link";
 import { Mail, ExternalLink } from "lucide-react";
 import Footer from "@/components/Footer/Footer";
