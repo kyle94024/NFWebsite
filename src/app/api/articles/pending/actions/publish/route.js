@@ -21,9 +21,9 @@ export async function POST(req) {
             );
         }
 
-        // Insert the article into the article table, including the certifiedby and image_url fields
+        // Insert the article into the article table, including the certifiedby, image_url, and publication_date fields
         await query(
-            "INSERT INTO article (title, tags, innertext, summary, article_link, publisher, certifiedby, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8)",
+            "INSERT INTO article (title, tags, innertext, summary, article_link, publisher, certifiedby, image_url, publication_date) VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, CURRENT_TIMESTAMP)",
             [
                 article.title,
                 article.tags,
