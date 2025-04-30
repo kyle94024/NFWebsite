@@ -23,8 +23,8 @@ export default function RootLayout({ children }) {
             <body className={`${outfitFont.variable} antialiased`}>
                 <ToastContainer
                     position="top-right"
-                    autoClose={3000}
-                    hideProgressBar={false}
+                    autoClose={2000}
+                    hideProgressBar={true}
                     closeOnClick
                     pauseOnHover
                     draggable

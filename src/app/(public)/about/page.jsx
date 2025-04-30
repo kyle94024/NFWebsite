@@ -73,7 +73,7 @@ export default async function AboutPage() {
                             <div
                                 className={`${aboutPageClass}__mission-content`}
                             >
-                                <h2 className="heading-quinary color-green">
+                                <h2 className={sectionTitleClass}>
                                     Our Mission
                                 </h2>
                                 <p className="body-large">
@@ -247,9 +247,9 @@ export default async function AboutPage() {
                             Scientific Contributors
                         </h3>
                         <p className={textClass}>
-                            We're a growing network of scientists who volunteer
-                            to edit article summaries and share the amazing
-                            research being done in Neurofibromatosis and
+                            We&apos;re a growing network of scientists who
+                            volunteer to edit article summaries and share the
+                            amazing research being done in Neurofibromatosis and
                             Schwannomatosis with the community.
                         </p>
                         <div className={`${aboutPageClass}__experts-container`}>
@@ -353,11 +353,12 @@ export default async function AboutPage() {
                                 </h3>
                                 <p className={textClass}>
                                     NF Simplified is 100% volunteer-led, and
-                                    we're always looking for passionate people
-                                    to join us! Whether you're into web
-                                    development, research, database management,
-                                    design, or community outreach—there's a
-                                    place for you on our team.
+                                    we&apos;re always looking for passionate
+                                    people to join us! Whether you&apos;re into
+                                    web development, research, database
+                                    management, design, or community
+                                    outreach—there&apos;s a place for you on our
+                                    team.
                                 </p>
                                 <Link
                                     href="/contact"
@@ -392,8 +393,9 @@ export default async function AboutPage() {
                                 Community Supporters
                             </h3>
                             <p className={textClass}>
-                                We're proud to work alongside and be supported
-                                by organizations dedicated to the NF community:
+                                We&apos;re proud to work alongside and be
+                                supported by organizations dedicated to the NF
+                                community:
                             </p>
                         </div>
                         <div className={`${aboutPageClass}__supporters-logos`}>
