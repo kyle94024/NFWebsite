@@ -14,7 +14,6 @@ import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
 import { HeartFilledIcon } from "@radix-ui/react-icons";
 
-import { format } from "date-fns";
 
 const ArticlePage = ({ params }) => {
     const router = useRouter();
@@ -30,6 +29,10 @@ const ArticlePage = ({ params }) => {
 
     const { isAdmin, user } = useAuthStore(); // Access user and admin state from Zustand
     const { email, userId, name } = user || {};
+
+
+    console.log(userId);
+
 
     // Fetch the like status for the article
     const fetchLikeStatus = async () => {
@@ -49,51 +52,34 @@ const ArticlePage = ({ params }) => {
         }
     };
 
-    // Toggle like/unlike with optimistic update
+
+    // Toggle like/unlike
+
     const toggleLikeArticle = async () => {
         if (!userId) {
             toast.info("Please log in to like articles.");
             return;
         }
 
-        // Store previous state for rollback
-        const prevIsLiked = isLiked;
-        const prevLikeCount = Number(article?.like_count || 0); // Ensure number
 
-        // Optimistic update
         setLiking(true);
-        setIsLiked(!isLiked);
-        setArticle((prev) => ({
-            ...prev,
-            like_count: prevIsLiked
-                ? Number(prev.like_count) - 1
-                : Number(prev.like_count) + 1, // Ensure numeric operation
-        }));
-
         try {
-            const method = prevIsLiked ? "DELETE" : "POST";
+            const method = isLiked ? "DELETE" : "POST";
             const res = await fetch(`/api/articles/${id}/like`, {
                 method,
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId }),
+                body: JSON.stringify({ userId }), // Send userId in the body
+
             });
 
             const { success, message } = await res.json();
             if (!success) throw new Error(message);
 
-            // Optionally refetch article to sync with server
-            const response = await fetch(`/api/articles/${id}`);
-            const updatedArticle = await response.json();
-            setArticle(updatedArticle);
 
-            toast.success(prevIsLiked ? "Article unliked!" : "Article liked!");
+            setIsLiked(!isLiked);
+            toast.success(isLiked ? "Article unliked!" : "Article liked!");
         } catch (e) {
-            // Revert optimistic update on error
-            setIsLiked(prevIsLiked);
-            setArticle((prev) => ({
-                ...prev,
-                like_count: prevLikeCount,
-            }));
+
             toast.error(e.message || "Action failed");
         } finally {
             setLiking(false);
@@ -159,21 +145,6 @@ const ArticlePage = ({ params }) => {
                                     <h1 className="article-page__title heading-tertiary">
                                         {article.title}
                                     </h1>
-                                    <div className="flex items-center justify-start w-full gap-2 mb-8">
-                                        <h3 className="text-xl font-semibold text-gray-500 w-700">
-                                            Published On:
-                                        </h3>
-                                        <p className="text-2xl font-bold text-gray-600">
-                                            {article.publication_date
-                                                ? format(
-                                                      new Date(
-                                                          article.publication_date
-                                                      ),
-                                                      "MMMM d, yyyy"
-                                                  )
-                                                : "N/A"}
-                                        </p>
-                                    </div>
                                     <div className="flex">
                                         <div className="article-page__meta hidden">
                                             <h3 className="body-lg w-700">
@@ -211,7 +182,9 @@ const ArticlePage = ({ params }) => {
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="md:ml-auto flex items-center space-x-2">
+
+                                        <div className="md:ml-auto">
+
                                             {user &&
                                                 (liking ? (
                                                     <Loader2 className="h-10 w-10 animate-spin" />
@@ -222,7 +195,7 @@ const ArticlePage = ({ params }) => {
                                                         onClick={
                                                             toggleLikeArticle
                                                         }
-                                                        aria-label="Unlike article"
+
                                                     />
                                                 ) : (
                                                     <Heart
@@ -230,13 +203,10 @@ const ArticlePage = ({ params }) => {
                                                         onClick={
                                                             toggleLikeArticle
                                                         }
-                                                        aria-label="Like article"
+
                                                     />
                                                 ))}
-                                            <span className="text-gray-600 text-2xl">
-                                                {Number(article?.like_count) ||
-                                                    0}
-                                            </span>
+
                                         </div>
                                     </div>
                                     {article.image_url && (
