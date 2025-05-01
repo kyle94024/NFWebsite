@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
 import { HeartFilledIcon } from "@radix-ui/react-icons";
 
+
 const ArticlePage = ({ params }) => {
     const router = useRouter();
     const { id } = params;
@@ -29,7 +30,9 @@ const ArticlePage = ({ params }) => {
     const { isAdmin, user } = useAuthStore(); // Access user and admin state from Zustand
     const { email, userId, name } = user || {};
 
+
     console.log(userId);
+
 
     // Fetch the like status for the article
     const fetchLikeStatus = async () => {
@@ -49,12 +52,15 @@ const ArticlePage = ({ params }) => {
         }
     };
 
+
     // Toggle like/unlike
+
     const toggleLikeArticle = async () => {
         if (!userId) {
             toast.info("Please log in to like articles.");
             return;
         }
+
 
         setLiking(true);
         try {
@@ -63,14 +69,17 @@ const ArticlePage = ({ params }) => {
                 method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId }), // Send userId in the body
+
             });
 
             const { success, message } = await res.json();
             if (!success) throw new Error(message);
 
+
             setIsLiked(!isLiked);
             toast.success(isLiked ? "Article unliked!" : "Article liked!");
         } catch (e) {
+
             toast.error(e.message || "Action failed");
         } finally {
             setLiking(false);
@@ -84,7 +93,8 @@ const ArticlePage = ({ params }) => {
                 if (!response.ok) throw new Error("Error fetching article");
 
                 const data = await response.json();
-                setArticle(data);
+                // Ensure like_count is a number
+                setArticle({ ...data, like_count: Number(data.like_count) });
             } catch (err) {
                 setError(err.message);
                 toast.error(err.message);
@@ -172,7 +182,9 @@ const ArticlePage = ({ params }) => {
                                                 )}
                                             </div>
                                         </div>
+
                                         <div className="md:ml-auto">
+
                                             {user &&
                                                 (liking ? (
                                                     <Loader2 className="h-10 w-10 animate-spin" />
@@ -183,6 +195,7 @@ const ArticlePage = ({ params }) => {
                                                         onClick={
                                                             toggleLikeArticle
                                                         }
+
                                                     />
                                                 ) : (
                                                     <Heart
@@ -190,8 +203,10 @@ const ArticlePage = ({ params }) => {
                                                         onClick={
                                                             toggleLikeArticle
                                                         }
+
                                                     />
                                                 ))}
+
                                         </div>
                                     </div>
                                     {article.image_url && (

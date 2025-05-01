@@ -1,4 +1,5 @@
 import "./AboutPage.scss";
+
 import Link from "next/link";
 import { Mail, ExternalLink } from "lucide-react";
 import Footer from "@/components/Footer/Footer";
@@ -73,7 +74,9 @@ export default async function AboutPage() {
                             <div
                                 className={`${aboutPageClass}__mission-content`}
                             >
+
                                 <h2 className="heading-quinary color-green">
+
                                     Our Mission
                                 </h2>
                                 <p className="body-large">
