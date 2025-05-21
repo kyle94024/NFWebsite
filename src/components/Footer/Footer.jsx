@@ -79,6 +79,14 @@ const Footer = () => {
                             <ul className="footer__links-list">
                                 <li className="footer__links-item">
                                     <Link
+                                        href="https://www.scisimplified.org/scisimplified-terms-of-use"
+                                        className="footer__link"
+                                    >
+                                        Terms of Service
+                                    </Link>
+                                </li>
+                                <li className="footer__links-item">
+                                    <Link
                                         href="/privacy-policy"
                                         className="footer__link"
                                     >
