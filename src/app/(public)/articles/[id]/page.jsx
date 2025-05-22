@@ -233,10 +233,10 @@ const ArticlePage = ({ params }) => {
                                                         aria-label="Like article"
                                                     />
                                                 ))}
-                                            <span className="text-gray-600 text-2xl">
+                                            {/* <span className="text-gray-600 text-2xl">
                                                 {Number(article?.like_count) ||
                                                     0}
-                                            </span>
+                                            </span> */}
                                         </div>
                                     </div>
                                     {article.image_url && (
